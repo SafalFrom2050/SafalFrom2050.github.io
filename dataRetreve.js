@@ -16,7 +16,7 @@
   var lastLoaded="";
   var isLoading=true;
   var categoryCurr="all";
-  var rootLocation="http://webgamesportal.ga/";
+  var rootLocation="http://wgames.me/";
 
   function getParameterByName(name, url) {
         if (!url) {
