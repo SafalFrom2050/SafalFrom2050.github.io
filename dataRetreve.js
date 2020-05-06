@@ -147,7 +147,7 @@ function newCategory(c){
 
 function gameCardClicked(e){
 	var id=e.id;
-	window.open('http://webgamesportal.ga/game/?id='+id, '_blank');
+	window.open(rootLocation + 'game/?id='+id, '_blank');
 }
 
 function categoryClicked(e){
