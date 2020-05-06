@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Web Games Portal">
+    <meta property="og:image" content="http://webgamesportal.ga/images/cover.png">
+    <meta property="og:description" content="Play 1400+ best games instantly in your browser without downloading.">
+    <meta property="og:url" content="http://webgamesportal.ga/">
+	<link rel="icon" 
+      type="image/x-icon" 
+      href="favicons/favicon.ico">
+    <title>Web Games Portal</title>
+    <!-- Bootstrap -->
+  <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
+	 <!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script> -->
+	  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+	 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	   <link href="style.css"
+      rel="stylesheet">
+	  <script src="dataRetreve.js"></script>
+	 <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120926953-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'UA-120926953-1');
+        </script>
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-2350069520167148",
+          enable_page_level_ads: true
+     });
+</script>
+  </head>
+  <body style="padding-top: 70px; background-color:#000; overflow-x: hidden;">
+  	<!-- body code goes here -->
+	  
+  <div class="container">
+      	<div class="row">
+      	  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="#">Web Games Portal</a><b style="color:#d32f2f; margin-left:-10px;">Beta</b>
+      	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      	    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+      	      <ul class="navbar-nav mr-auto">
+      	        <li class="nav-item active"> </li>
+      	        
+      	        <li class="nav-item dropdown">
+				  <div class="dropdown-menu" aria-labelledby="navbarDropdown1"> <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Something else here</a> </div>
+   	            </li>
+      	        <li class="nav-item"> </li>
+   	          </ul>
+      	      <form class="form-inline my-2 my-lg-0">
+      	        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      	        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      	        <a href="http://webgamesportal.ga/about" style="margin-left:8px; color:#fff;">About Us</a>
+      	         <a href="http://webgamesportal.ga/contact" style="margin-left:8px; color:#fff">Contact Us</a>
+      	        <a href="http://webgamesportal.ga/privacy" style="margin-left:8px; color:#fff">Privacy</a>
+   	          </form>
+   	        </div>
+   	      </nav>
+        </div>		
+  </div>
+	
+    <div class="container">
+	  <div class="row">
+				<div class="col-1 col">
+		  			<!-- Colored FAB button -->
+					<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" style=" float:right; margin-right:-10px; margin-top:7px; " onmousedown="document.getElementById('categoriesTab').scrollBy(-60, 0);">
+						<i class="material-icons">arrow_left</i>
+					</button>
+				</div>
+			<div class="col-sm-10 col-10">
+				<div class="scrollmenu"  id="categoriesTab">				
+					<script>
+						retreveCategories();
+					</script>
+				</div>
+			</div>
+			<div class="col-1 col">
+				<!-- Colored FAB button -->
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" style=" float:left; margin-left:-10px; margin-top:7px; " onmousedown="document.getElementById('categoriesTab').scrollBy(60, 0);">
+					<i class="material-icons">arrow_right</i>
+				</button>
+			</div>
+		</div>
+		
+		  	<div>
+				<br>
+					<div class="row" id="scrollView">
+    					<script>
+    					    request("all",false);
+    						setScrollListener();
+    					</script>
+					
+					</div>
+				</div>
+		</div>
+		
+	  
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+	<script src="js/jquery-3.2.1.min.js"></script>
+<link href="cookiePopupStyle.css" rel="stylesheet">
+<div id="cookieConsent">
+    <div id="closeCookieConsent">x</div>
+    This website is using cookies. <a href="#" target="_blank">More info</a>. <a class="cookieConsentOK">That's Fine</a>
+</div>
+<script src="cookiePopUp.js"></script>
+
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/popper.min.js"></script> 
+	<script src="js/bootstrap-4.0.0.js"></script>
+	
+	
+	
+	<script type="text/javascript">
+    adroll_adv_id = "FQ6T4JOC2BFBDEC4FVELYG";
+    adroll_pix_id = "FHRUV6NMFNFLXALMP464SS";
+
+    (function () {
+        var _onload = function(){
+            if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+            if (!window.__adroll_loaded){__adroll_loaded=true;setTimeout(_onload, 50);return}
+            var scr = document.createElement("script");
+            var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+            scr.setAttribute('async', 'true');
+            scr.type = "text/javascript";
+            scr.src = host + "/j/roundtrip.js";
+            ((document.getElementsByTagName('head') || [null])[0] ||
+                document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+        };
+        if (window.addEventListener) {window.addEventListener('load', _onload, false);}
+        else {window.attachEvent('onload', _onload)}
+    }());
+</script>
+	
+  </body>
+</html>

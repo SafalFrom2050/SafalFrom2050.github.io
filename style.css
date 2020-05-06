@@ -1,0 +1,90 @@
+.mdl-chip{
+    background-color:#d32f2f;
+}
+
+.mdl-chip__text{
+    color:#fff;
+    font-weight: bold;
+}
+
+.navbar-brand{
+        font-weight: bold;
+        font-size:22px;
+        float:none;
+        font-family:"Comic Sans MS";
+}
+.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+div.scrollmenu {
+    background-color: rgba(0,0,0,0);
+    overflow: auto;
+    white-space: nowrap;
+}
+
+div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 0px;
+    text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+    background-color: #777;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height:0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 1px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #d32f2f; 
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover  {
+    background: #b30000; 
+}
+.mdl-button{
+    min-width: 0px;
+  
+}
+.mdl-button--fab {
+    height:24px;
+    width: 24px;    
+}
+.mdl-button--fab.mdl-button--colored {
+    
+ 
+
+    background-color: #d32f2f; }
+    .mdl-button--fab.mdl-button--colored:hover {
+        background-color:#b30000; }
+      .mdl-button--fab.mdl-button--colored:focus:not(:active) {
+        background-color: #d32f2f; }
+      .mdl-button--fab.mdl-button--colored:active {
+        background-color: #b30000; }
+      .mdl-button--fab.mdl-button--colored .mdl-ripple {
+        background: rgb(255,255,255); }
+
+.card{
+    background-color: #191919;
+}        
+        
+@-moz-document url-prefix() {
+    .scrollmenu{overflow: hidden !important;}
+}
