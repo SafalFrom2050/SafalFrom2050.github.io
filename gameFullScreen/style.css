@@ -27,7 +27,6 @@ body{
     padding: 0;
     margin:0;
     opacity: 75%;
-    background-color: #000;
     animation: show--fullscreen--btn .5s ease-in 10 backwards alternate;
 }
 
