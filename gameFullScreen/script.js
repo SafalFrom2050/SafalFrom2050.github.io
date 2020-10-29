@@ -44,7 +44,11 @@ function gameView(url, name){
 function goFullScreen(){
     const elem = document.getElementById("gameFrame");
     elem.requestFullscreen();
-	screen.orientation.lock('landscape');
+    
+    var isPortrait = getUrlParam("isPortrait","true");
+    if(!isPortrait){
+        screen.orientation.lock('landscape');
+    }
 }
 
 loadGame(getUrlParam("id","empty"));
