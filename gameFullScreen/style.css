@@ -1,0 +1,60 @@
+body{
+    background-color:#000; 
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+#gameView{
+    height: 100vh;
+    text-align: center;
+}
+
+.floating{
+    position: fixed;
+    right: 12px;
+    top: 12px;
+}
+#full-screen-btn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#full-screen-btn>img{
+    width: 50px;
+    height: 40px;
+    padding: 0;
+    margin:0;
+    opacity: 75%;
+    background-color: #000;
+    animation: show--fullscreen--btn .5s ease-in 10 backwards alternate;
+}
+
+#full-screen-btn>#msg{
+    color: white;
+    visibility: hidden;
+    margin-right: 8px;
+    animation: show--fullscreen--msg 5s ease-in 1 backwards alternate;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@keyframes show--fullscreen--btn{
+    0%{
+        opacity: 75%;
+        transform: scale(1);
+        
+    }
+    100%{
+        opacity: 100%;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes show--fullscreen--msg{
+    100%{
+        opacity: 50%;
+        visibility: visible;
+    }
+}
+
