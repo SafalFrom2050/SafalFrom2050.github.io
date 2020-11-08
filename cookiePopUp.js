@@ -1,3 +1,11 @@
+  var config = {
+    apiKey: "AIzaSyCa21G1mEhrJKmoPLRZ8hbJikyI4lGdY5Y",
+    authDomain: "dif-instantgames.firebaseapp.com",
+    databaseURL: "https://dif-instantgames.firebaseio.com/",
+	storageBucket: "dif-instantgames.appspot.com"
+  };
+  firebase.initializeApp(config);
+
 $(document).ready(function(){   
     setTimeout(function () {
         $("#cookieConsent").fadeIn(200);
