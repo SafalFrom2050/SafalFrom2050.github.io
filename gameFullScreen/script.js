@@ -35,6 +35,8 @@ function loadGame(key){
 }
 
 function gameView(url, name){
+    document.title = name;
+
 	var content='<iframe id="gameFrame" allowfullscreen src="'+url+'" height="100%" width="100%" frameborder="0px" scrolling="no" style="border:none;overflow:hidden"></iframe>';
     document.getElementById("gameView").innerHTML=content;
 }

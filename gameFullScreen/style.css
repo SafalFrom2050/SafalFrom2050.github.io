@@ -12,9 +12,10 @@ body{
 
 .floating{
     position: fixed;
-    right: 12px;
-    top: 12px;
+    top: 0;
+    right: 8px;
 }
+
 #full-screen-btn{
     display: flex;
     flex-direction: row;
@@ -24,35 +25,38 @@ body{
 #full-screen-btn>img{
     width: 50px;
     height: 40px;
-    padding: 0;
-    margin:0;
-    opacity: 75%;
+
     animation: show--fullscreen--btn .5s ease-in 10 backwards alternate;
+
+    background-color: #000;
+    padding: 8px;
+    border-radius: 0 0 8px 8px;
 }
 
 #full-screen-btn>#msg{
     color: white;
     visibility: hidden;
     margin-right: 8px;
+    margin-top: 16px;
     animation: show--fullscreen--msg 5s ease-in 1 backwards alternate;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @keyframes show--fullscreen--btn{
     0%{
-        opacity: 75%;
+        
         transform: scale(1);
         
     }
     100%{
-        opacity: 100%;
+       
         transform: scale(1.2);
     }
 }
 
 @keyframes show--fullscreen--msg{
     100%{
-        opacity: 50%;
+       
         visibility: visible;
     }
 }
