@@ -1,3 +1,3 @@
 # SafalFrom2050.github.io
 
-http://wgames.me
+https://www.2k50.games
