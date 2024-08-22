@@ -147,7 +147,7 @@ function newCategory(c){
 
 function gameCardClicked(e){
 	var id=e.id;
-	window.open('http://wgames.me/game/?id='+id, '_blank');
+	window.open('/game/?id='+id, '_blank');
 }
 
 function categoryClicked(e){
