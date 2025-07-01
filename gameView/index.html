@@ -1,0 +1,32 @@
+<!doctype html>
+<html style="height:100%;">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" 
+		  type="image/x-icon" 
+		  href="http://wgames.me/favicons/favicon.png">
+		<title>Web Games Portal</title>
+
+	  </head>
+
+<body>
+	<div class="floating">
+		<div id = "full-screen-btn">
+			<h4 id="msg">Full Screen</h4>
+			<img src="images/fullscreen.png" alt="Full Screen" onclick="goFullScreen();">
+		</div>
+	</div>
+
+	<div id="gameView">	</div>
+
+	
+
+	<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
