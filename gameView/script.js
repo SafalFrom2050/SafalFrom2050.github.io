@@ -30,19 +30,19 @@ function loadGame(key){
 
     firestoreDb.collection("games").doc(key).get().then(function(doc) {
         if (doc.exists) {
-            gameView(gameData.url, gameData.name);
+            gameView(doc.data().url, doc.data().name);
         } else {
             console.error("No such game!");
         }
     });
 
-	database = firebase.database().ref('/Game Collection/all/'+key);
-	database.once('value').then(function(snapshot) {
-		var name = (snapshot.val().name);
-		var imageUrl=(snapshot.val().imageUrl);
-		var url=(snapshot.val().url);
-		gameView(url,name);
-	});
+	// database = firebase.database().ref('/Game Collection/all/'+key);
+	// database.once('value').then(function(snapshot) {
+	// 	var name = (snapshot.val().name);
+	// 	var imageUrl=(snapshot.val().imageUrl);
+	// 	var url=(snapshot.val().url);
+	// 	gameView(url,name);
+	// });
 }
 
 function gameView(url, name){
