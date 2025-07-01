@@ -46,13 +46,14 @@ function gameView(url, name){
 function goFullScreen(){
     const elem = document.getElementById("gameFrame");
     elem.requestFullscreen();
-    elem.webkitEnterFullscreen();
+
     
     var isPortrait = getUrlParam("isPortrait","true");
     if(isPortrait != true){
         screen.orientation.lock('landscape');
         console.log("Locking to landscape mode");
     }
+    elem.webkitEnterFullscreen();
 }
 
 loadGame(getUrlParam("id","empty"));

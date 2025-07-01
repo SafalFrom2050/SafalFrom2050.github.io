@@ -57,12 +57,13 @@ function gameView(url, name){
 function goFullScreen(){
     const elem = document.getElementById("gameFrame");
     elem.requestFullscreen();
-    elem.webkitEnterFullscreen();
+    
     
     var isPortrait = getUrlParam("isPortrait","true");
     if(isPortrait == "0" || isPortrait == "false" || isPortrait == 0 || isPortrait == "null"){
         screen.orientation.lock('landscape');
     }
+    elem.webkitEnterFullscreen();
 }
 
 loadGame(getUrlParam("id","empty"));
