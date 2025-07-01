@@ -60,7 +60,7 @@ function goFullScreen(){
     elem.webkitEnterFullscreen();
     
     var isPortrait = getUrlParam("isPortrait","true");
-    if(isPortrait != true){
+    if(isPortrait != true || isPortrait == 0){
         screen.orientation.lock('landscape');
     }
 }
