@@ -51,6 +51,7 @@ function goFullScreen(){
     var isPortrait = getUrlParam("isPortrait","true");
     if(isPortrait != true){
         screen.orientation.lock('landscape');
+        console.log("Locking to landscape mode");
     }
 }
 
