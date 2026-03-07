@@ -22,16 +22,7 @@
     <!-- Initialize Firebase -->
     <script src="../dataRetreve.js"></script>
 
-    <!-- App Check Setup -->
-    <script>
-        // Initialize Firebase App Check with reCAPTCHA v3.
-        // Replace 'YOUR_RECAPTCHA_SITE_KEY_HERE' with your actual site key from Firebase Console.
-        const appCheck = firebase.appCheck();
-        appCheck.activate(
-            '6LerGoMsAAAAAHNLdx75KLqssqSTGG4RJRIB0BUs',
-            true // Automatically generates a debug token for localhost
-        );
-    </script>
+
 
     <style>
         a {
@@ -173,6 +164,13 @@
     <script src="../js/bootstrap-4.0.0.js"></script>
 
     <script>
+        // Initialize Firebase App Check with reCAPTCHA v3.
+        const appCheck = firebase.appCheck();
+        appCheck.activate(
+            '6LerGoMsAAAAAHNLdx75KLqssqSTGG4RJRIB0BUs',
+            true // Automatically generates a debug token for localhost
+        );
+
         // Use the initialized firebase instance from dataRetreve.js
         var currentUser = null;
 
