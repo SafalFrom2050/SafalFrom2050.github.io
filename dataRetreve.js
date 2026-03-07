@@ -5,7 +5,9 @@
     apiKey: "AIzaSyCa21G1mEhrJKmoPLRZ8hbJikyI4lGdY5Y",
     authDomain: "dif-instantgames.firebaseapp.com",
     databaseURL: "https://dif-instantgames.firebaseio.com/",
-	storageBucket: "dif-instantgames.appspot.com"
+    projectId: "dif-instantgames",
+	storageBucket: "dif-instantgames.appspot.com",
+    appId: "1:555879374010:web:405a0d17f2b1b20e85b683"
   };
   firebase.initializeApp(config);
 
