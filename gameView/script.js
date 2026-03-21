@@ -22,9 +22,17 @@ function loadGame(key){
     authDomain: "dif-instantgames.firebaseapp.com",
     databaseURL: "https://dif-instantgames.firebaseio.com/",
     projectId: "dif-instantgames",
-	storageBucket: "dif-instantgames.appspot.com"
+	storageBucket: "dif-instantgames.appspot.com",
+    appId: "1:555879374010:web:405a0d17f2b1b20e85b683"
   };
   firebase.initializeApp(config);
+  
+  const appCheck = firebase.appCheck();
+  appCheck.activate(
+      '6LerGoMsAAAAAHNLdx75KLqssqSTGG4RJRIB0BUs',
+      true // Automatically generates a debug token for localhost
+  );
+  
 	var database;
     var firestoreDb = firebase.firestore();
 
