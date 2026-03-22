@@ -1,0 +1,11 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "dif.instantgames",
+    "sha256_cert_fingerprints": [
+      "18:9C:C8:0B:E1:87:48:7E:17:D6:D4:98:0C:ED:F9:C3:21:4D:B0:E0:2C:56:EF:F7:AF:99:6D:6F:BB:2F:16:93",
+      "6F:CE:36:9B:80:B8:BF:40:A7:C5:99:04:37:57:83:76:14:32:63:61:BC:94:E4:C9:9E:C0:BE:9A:B7:BD:32:ED"
+    ]
+  }
+}]
