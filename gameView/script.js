@@ -29,8 +29,8 @@ function loadGame(key){
   
   const appCheck = firebase.appCheck();
   appCheck.activate(
-      '6LerGoMsAAAAAHNLdx75KLqssqSTGG4RJRIB0BUs',
-      true // Automatically generates a debug token for localhost
+      new firebase.appCheck.ReCaptchaEnterpriseProvider('6LerGoMsAAAAAHNLdx75KLqssqSTGG4RJRIB0BUs'),
+      true
   );
   
 	var database;
