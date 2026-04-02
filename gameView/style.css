@@ -1,63 +1,73 @@
-body{
-    background-color:#000; 
-    overflow-x: hidden;
+body {
+    background-color: #000;
+    overflow: hidden;
     padding: 0;
     margin: 0;
+    font-family: 'Outfit', sans-serif;
 }
 
-#gameView{
+#gameView {
     height: 100vh;
+    width: 100vw;
     text-align: center;
+    background: #000;
 }
 
-.floating{
+#gameView iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.floating {
     position: fixed;
-    top: 0;
-    right: 8px;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
 }
 
-#full-screen-btn{
+#full-screen-btn {
     display: flex;
     flex-direction: row;
     align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#full-screen-btn>img{
-    width: 50px;
-    height: 40px;
-
-    animation: show--fullscreen--btn .5s ease-in 10 backwards alternate;
-
-    background-color: #000;
-    padding: 8px;
-    border-radius: 0 0 8px 8px;
+#full-screen-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    border-color: #d32f2f;
+    box-shadow: 0 10px 20px rgba(211, 47, 47, 0.3);
 }
 
-#full-screen-btn>#msg{
+#full-screen-btn > img {
+    width: 24px;
+    height: 24px;
+    filter: invert(1);
+}
+
+#full-screen-btn > #msg {
     color: white;
-    visibility: hidden;
-    margin-right: 8px;
-    margin-top: 16px;
-    animation: show--fullscreen--msg 5s ease-in 1 backwards alternate;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 15px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-@keyframes show--fullscreen--btn{
-    0%{
-        
-        transform: scale(1);
-        
-    }
-    100%{
-       
-        transform: scale(1.2);
-    }
+/* Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
 }
 
-@keyframes show--fullscreen--msg{
-    100%{
-       
-        visibility: visible;
-    }
+.pulse {
+    animation: pulse 1s infinite alternate;
 }
-

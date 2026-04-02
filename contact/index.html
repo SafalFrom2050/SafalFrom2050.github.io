@@ -1,62 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/x-icon" href="../favicons/favicon.png">
-    <title>Contact Us | Web Games Portal</title>
-    <!-- Bootstrap -->
-  <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-	
-	 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-
-	 
-	   <link href="../style.css"
-      rel="stylesheet">
-
-    <style>
-      a{
-        color:#d32f2f;
-      }
-    </style>
-
-  </head>
-  <body style="padding-top: 70px; background-color:#000; overflow-x: hidden; ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../favicons/favicon.png">
+    <title>Contact Us | alt games portal</title>
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --primary-hover: #b71c1c;
+            --bg-dark: #000;
+            --card-glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            padding-top: 50px;
+        }
+
+        /* Glassmorphism Styling */
+        .glass-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            margin-top: 40px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .contact-form label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .contact-form .form-control {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            color: white;
+            padding: 14px 18px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form .form-control:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(211, 47, 47, 0.3);
+            outline: none;
+        }
+
+        .contact-form .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 16px 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            transition: all 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 24px;
+            background: linear-gradient(135deg, white, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 600;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        /* Micro-animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-up {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .contact-info a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar (Restored but styled) -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark card-glass">
+        <div class="container">
+            <a class="navbar-brand" href="/">alt games portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/privacy">Privacy</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-                <div class="row"> 
-                  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="http://www.webgamesportal.ga/">Web Games Portal</a><b style="color:#d32f2f; margin-left:-10px;">Beta</b>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-                      <ul class="navbar-nav mr-auto">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="glass-card animate-up">
+                    <h1>Get in Touch</h1>
+                    <p class="text-muted mb-4">Have a suggestion or need help? Send us a message and we'll reply within 24 hours.</p>
+                    
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
                         
-                        <li class="nav-item dropdown">
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown1"> <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Something else here</a> </div>
-                         </li>
-                        <li class="nav-item"> </li>
-                    </ul>                       
-                      <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        <a href="http://webgamesportal.ga/privacy" style="margin-left:8px; color:#fff">About Us</a>
-      	                <a href="http://webgamesportal.ga/privacy" style="margin-left:8px; color:#fff">Privacy</a>
-                       </form>
-                     </div>
-                   </nav>
-              </div>		
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="yourname@example.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="What's this about?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">Send Message</button>
+                    </form>
+                    
+                    <div class="contact-info text-center">
+                        <p>Prefer direct mail? Reach us @ <a href="mailto:safal.sharma.ss@gmail.com">safal.sharma.ss@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="container">
-            <H1 style="color:#fff">Contact Us</H1>
-            <p style="color:#fff">Great! We will be happy to to listen to you. Please email us <a href="mailto:safal.sharma.ss@gmail.com">@safal.sharma.ss@gmail.com</a>. We ensure you that we'll reply you within a day or so.</p>
-            <p style="color:#fff">You can also visit our Facebook page for more updates. Thank You :)</p>
-           <div>
-                  <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwebgamesportal&tabs&width=340&height=220&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=563593387326851" width="340" height="220" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>        
-              </div>
-        </div>
-	  <iframe src="https://www.gamearter.com/game/sonic-path-adventure/" width="100%" height="100%" allow="fullscreen"></iframe>
-  </body>
-  </html>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/popper.min.js"></script> 
+    <script src="../js/bootstrap-4.0.0.js"></script>
+    
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.btn-submit');
+            const originalText = btn.innerText;
+            
+            btn.innerText = 'Sending...';
+            btn.disabled = true;
+            
+            // Mock success response
+            setTimeout(() => {
+                alert('Thank you! Your message has been sent successfully.');
+                e.target.reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,196 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="../favicons/favicon.png">
-    <title>Delete Account | Web Games Portal</title>
+    <title>Delete Account | alt games portal</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <!-- Firebase Options -->
+    <link href="../style.css" rel="stylesheet">
+    
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../style.css" rel="stylesheet">
-
-    <!-- Initialize Firebase -->
     <script src="../dataRetreve.js"></script>
 
-
-
     <style>
-        a {
-            color: #d32f2f;
-        }
-
-        .card-dark {
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            padding: 30px;
-            margin-top: 40px;
-            border: 1px solid #333;
-            text-align: center;
-        }
-
         .btn-google {
             background-color: #4285F4;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: bold;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(66, 133, 244, 0.2);
         }
-
         .btn-google:hover {
             background-color: #357ae8;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(66, 133, 244, 0.3);
         }
-
-        .btn-delete {
-            background-color: #d32f2f;
+        .btn-delete-final {
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: bold;
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 20px;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .btn-delete:hover {
-            background-color: #b71c1c;
+        .btn-delete-final:hover {
+            background-color: var(--primary-hover);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.3);
         }
-
-        #userInfo {
-            display: none;
-            margin-top: 20px;
-        }
-
         #profilePic {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            margin-bottom: 15px;
+            border: 3px solid var(--primary);
+            margin-bottom: 20px;
+        }
+        .warning-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: left;
+            margin: 25px 0;
         }
     </style>
 </head>
-
-<body style="padding-top: 70px; background-color:#000; overflow-x: hidden;">
-    <div class="container">
-        <div class="row">
-            <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/">Web
-                    Games Portal</a><b style="color:#d32f2f; margin-left:-10px;">Beta</b>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false"
-                    aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown1"> <a class="dropdown-item"
-                                    href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"> </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        <a href="/about" style="margin-left:8px; color:#fff">About Us</a>
-                        <a href="/contact" style="margin-left:8px; color:#fff">Contact Us</a>
-                        <a href="/privacy" style="margin-left:8px; color:#fff">Privacy</a>
-                    </form>
-                </div>
-            </nav>
+<body style="padding-top: 80px;">
+    
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark card-glass">
+        <div class="container">
+            <a class="navbar-brand" href="/">alt games portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/privacy">Privacy</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </nav>
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card-dark" style="color:#fff">
-                    <H2 style="color:#fff;">Delete Account</H2>
-                    <p class="text-muted mb-4">You can request to permanently delete your Web Games Portal account and
-                        all associated data here.</p>
+            <div class="col-lg-7 col-md-10">
+                <div class="glass-container animate-in text-center">
+                    <h1 class="mb-3" style="background: linear-gradient(135deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Delete Account</h1>
+                    <p class="text-muted mb-5">Permanent account and data removal request.</p>
 
                     <div id="loginSection">
-                        <p>Please sign in to verify your identity before deleting your account.</p>
-                        <button class="btn-google" onclick="signInWithGoogle()">
-                            Sign in with Google
-                        </button>
+                        <div class="p-4 mb-4" style="background: rgba(255,255,255,0.03); border-radius: 20px;">
+                            <p class="mb-4">For your security, please sign in to verify your identity before proceeding with account deletion.</p>
+                            <button class="btn-google" onclick="signInWithGoogle()">
+                                Sign in with Google
+                            </button>
+                        </div>
                     </div>
 
-                    <div id="userInfo">
-                        <img id="profilePic" src="" alt="Profile Picture" style="display:none;">
-                        <h4 id="userName"></h4>
-                        <p id="userEmail" class="text-muted"></p>
+                    <div id="userInfo" style="display:none;">
+                        <img id="profilePic" src="" alt="Profile">
+                        <h3 id="userName" class="text-white mb-1"></h3>
+                        <p id="userEmail" class="text-muted mb-4"></p>
 
-                        <div class="alert alert-warning"
-                            style="background-color: #fff3cd; color: #856404; text-align: left; margin-top: 20px;">
-                            <strong>Warning:</strong> This action is permanent and cannot be undone. All your data,
-                            including score points, favorites, and play history, will be permanently deleted.
+                        <div class="warning-box">
+                            <div class="d-flex">
+                                <i class="material-icons mr-3">warning</i>
+                                <div>
+                                    <strong style="font-weight: 800; display: block; margin-bottom: 5px;">Permanent Action</strong>
+                                    This is irreversible. All score points, achievements, favorites, and history associated with this account will be erased forever.
+                                </div>
+                            </div>
                         </div>
 
-                        <button class="btn-delete" onclick="deleteAccount()">
-                            Permanently Delete Account
+                        <button class="btn-delete-final" onclick="deleteAccount()">
+                            Permanently Delete My Data
                         </button>
                     </div>
 
-                    <div id="successMessage" style="display:none; color: #4caf50; margin-top: 20px;">
-                        <i class="material-icons" style="font-size: 48px;">check_circle</i>
-                        <h4>Account Deleted Successfully</h4>
-                        <p>Your account and all associated data have been permanently removed.</p>
-                        <a href="/" class="btn btn-outline-light mt-3">Return to Homepage</a>
+                    <div id="successMessage" style="display:none;" class="py-4">
+                        <div class="mb-4">
+                            <i class="material-icons" style="font-size: 80px; color: #4caf50;">check_circle</i>
+                        </div>
+                        <h2 class="text-white mb-3">Account Deleted</h2>
+                        <p class="text-muted mb-4">Your account and all associated data have been successfully removed from our servers.</p>
+                        <a href="/" class="btn btn-outline-light px-5 py-3" style="border-radius: 12px; font-weight: 600;">Back to Homepage</a>
                     </div>
 
-                    <div id="errorMessage" style="display:none; color: #f44336; margin-top: 20px;">
-                        <p id="errorText"></p>
+                    <div id="errorMessage" style="display:none;" class="mt-4 p-3 bg-danger text-white rounded">
+                        <p id="errorText" class="mb-0"></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- jQuery and Bootstrap plugins -->
+    <!-- Scripts -->
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script>
     <script src="../js/bootstrap-4.0.0.js"></script>
 
     <script>
-        // Initialize Firebase App Check with reCAPTCHA Enterprise.
+        // Initialize App Check
         const appCheck = firebase.appCheck();
         appCheck.activate(
             new firebase.appCheck.ReCaptchaEnterpriseProvider('6LerGoMsAAAAAHNLdx75KLqssqSTGG4RJRIB0BUs'),
             true
         );
 
-        // Use the initialized firebase instance from dataRetreve.js
         var currentUser = null;
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                // User is signed in.
                 currentUser = user;
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('userInfo').style.display = 'block';
-
-                document.getElementById('userName').innerText = user.displayName || "User";
+                document.getElementById('userName').innerText = user.displayName || "Gamer";
                 document.getElementById('userEmail').innerText = user.email || "";
 
                 if (user.photoURL) {
                     var profilePic = document.getElementById('profilePic');
                     profilePic.src = user.photoURL;
-                    profilePic.style.display = 'inline-block';
                 }
             } else {
-                // No user is signed in.
                 currentUser = null;
                 document.getElementById('loginSection').style.display = 'block';
                 document.getElementById('userInfo').style.display = 'none';
@@ -200,37 +186,26 @@
         function signInWithGoogle() {
             var provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider).catch(function (error) {
-                showError("Error signing in: " + error.message);
+                showError("Sign-in failed: " + error.message);
             });
         }
 
         async function deleteAccount() {
             if (!currentUser) return;
-
-            if (!confirm("Are you absolutely sure you want to permanently delete your account and all data? This cannot be undone.")) {
-                return;
-            }
+            if (!confirm("Are you 100% sure? This cannot be undone.")) return;
 
             var uid = currentUser.uid;
-
             try {
-                // 1. Delete user profile data from Realtime Database
-                var dbRef = firebase.database().ref('Profiles/' + uid);
-                await dbRef.remove();
-
-                // 2. Delete the user from Firebase Auth
+                await firebase.database().ref('Profiles/' + uid).remove();
                 await currentUser.delete();
-
-                // Show success
                 document.getElementById('userInfo').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
             } catch (error) {
-                // Handle cases where recent login is required before sensitive operations
                 if (error.code === 'auth/requires-recent-login') {
-                    showError("For security reasons, please refresh the page, sign in again, and try deleting your account.");
+                    showError("Please sign out and sign in again to verify your identity for this operation.");
                     firebase.auth().signOut();
                 } else {
-                    showError("Error deleting account: " + error.message);
+                    showError("Error: " + error.message);
                 }
             }
         }
@@ -242,5 +217,4 @@
         }
     </script>
 </body>
-
 </html>

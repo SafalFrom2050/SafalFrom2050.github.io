@@ -1,33 +1,33 @@
 <!doctype html>
-<html style="height:100%;">
-
+<html lang="en" style="height:100%;">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link rel="stylesheet" href="style.css">
-	<link rel="icon" type="image/x-icon" href="favicons/favicon.png">
-	<title>Web Games Portal</title>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="favicons/favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <title>alt games portal</title>
 </head>
-
 <body>
-	<div class="floating">
-		<div id="full-screen-btn">
-			<h4 id="msg">Full Screen</h4>
-			<img src="images/fullscreen.png" alt="Full Screen" onclick="goFullScreen();">
-		</div>
-	</div>
+    <div class="floating">
+        <div id="full-screen-btn" onclick="goFullScreen();">
+            <h4 id="msg">Full Screen</h4>
+            <img src="images/fullscreen.png" alt="Full Screen">
+        </div>
+    </div>
 
-	<div id="gameView"> </div>
+    <div id="gameView"></div>
 
-
-
-	<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
-	<script src="script.js"></script>
+    <!-- Firebase System -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>

@@ -136,13 +136,14 @@ function loadOne(key){
 }
 
 function createView(name, imageUrl, gameId,category){
-	var sample='<div class="col-4 col-md-2" style="padding:2px;"> <div class="card" style="cursor: pointer;" id="'+gameId+'&c='+category +'" onclick="gameCardClicked(this);"><img src="' + imageUrl + '" class="card-img"> <h6 style="color:white; font-size:12px; text-align: center;">' + name + '</h6></div></div>';
+	var sample='<div class="col-6 col-md-4 col-lg-2 p-2 animate-in"> <div class="game-card" id="'+gameId+'&c='+category +'" onclick="gameCardClicked(this);"><img src="' + imageUrl + '" loading="lazy"> <h6>' + name + '</h6></div></div>';
 	
 	document.getElementById("scrollView").innerHTML+=sample;
 }
 
 function newCategory(c){
-	var sample='<button type="button" class="mdl-chip" id="'+c+'" onclick="categoryClicked(this);" style="margin-left:4px; cursor: pointer;"> <span class="mdl-chip__text">' + c + '</span> </button> <B>  <B>';
+	var isActive = (c.toLowerCase() === categoryCurr.toLowerCase()) ? ' active' : '';
+	var sample='<div class="category-chip' + isActive + '" id="'+c+'" onclick="categoryClicked(this);">' + c + '</div>';
 		
 	document.getElementById("categoriesTab").innerHTML+=sample;
 }
