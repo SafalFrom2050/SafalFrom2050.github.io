@@ -20,6 +20,38 @@
   var categoryCurr="all";
   var rootLocation="http://wgames.me/";
 
+// Loader Logic
+var loadStartTime = 0;
+const MIN_LOAD_TIME = 1200; // 1.2s (1 loop of 1.2s animation)
+
+function showLoader() {
+    var loader = document.getElementById('loaderContainer');
+    if (loader) {
+        loader.style.display = 'flex';
+        loader.style.opacity = '1';
+        loadStartTime = Date.now();
+        // Hide scroll view till data is ready
+        document.getElementById("scrollView").style.opacity = "0";
+    }
+}
+
+function hideLoader() {
+    var loader = document.getElementById('loaderContainer');
+    if (!loader) return;
+    
+    var timeElapsed = Date.now() - loadStartTime;
+    var remainingTime = Math.max(0, MIN_LOAD_TIME - timeElapsed);
+    
+    setTimeout(function() {
+        loader.style.opacity = '0';
+        setTimeout(function() {
+            loader.style.display = 'none';
+            document.getElementById("scrollView").style.opacity = "1";
+            document.getElementById("scrollView").classList.add("animate-in");
+        }, 500);
+    }, remainingTime);
+}
+
   function getParameterByName(name, url) {
         if (!url) {
             url = window.location.href;
@@ -72,6 +104,7 @@ function request(category,loadMore){
 		database = database.orderByKey().startAt(lastLoaded).limitToFirst(27);
 	}else{
 		database = database.limitToFirst(27);
+		showLoader();
 	}
 	
 	database.once('value').then(function(snapshot) {
@@ -90,6 +123,7 @@ function request(category,loadMore){
 		
 	});
 				isLoading=false;
+				if(!loadMore) hideLoader();
 });
 }
 
@@ -104,6 +138,7 @@ function requestCategory(category ,loadMore){
 		database = database.orderByKey().startAt(lastLoaded).limitToFirst(27);
 	}else{
 		database = database.limitToFirst(25);
+		showLoader();
 	}
 	
 	database.once('value').then(function(snapshot) {
@@ -115,6 +150,7 @@ function requestCategory(category ,loadMore){
 		repeat=false;
 	});
 				isLoading=false;
+				if(!loadMore) hideLoader();
 });
 }
 

@@ -16,6 +16,30 @@ function getUrlVars() {
 }
 
 
+
+var loadStartTime = Date.now();
+const MIN_LOAD_TIME = 1200;
+
+function hideLoader() {
+    var loader = document.getElementById('loaderContainer');
+    var controls = document.getElementById('floatingControls');
+    if (!loader) return;
+    
+    var timeElapsed = Date.now() - loadStartTime;
+    var remainingTime = Math.max(0, MIN_LOAD_TIME - timeElapsed);
+    
+    setTimeout(function() {
+        loader.style.opacity = '0';
+        setTimeout(function() {
+            loader.style.display = 'none';
+            if (controls) {
+                controls.style.display = 'block';
+                controls.classList.add('animate-in');
+            }
+        }, 500);
+    }, remainingTime);
+}
+
 function loadGame(key){
 	 var config = {
     apiKey: "AIzaSyCa21G1mEhrJKmoPLRZ8hbJikyI4lGdY5Y",
@@ -58,6 +82,7 @@ function gameView(url, name){
 
 	var content='<iframe id="gameFrame" allowfullscreen src="'+url+'" height="100%" width="100%" frameborder="0px" scrolling="no" style="border:none;overflow:hidden"></iframe>';
     document.getElementById("gameView").innerHTML=content;
+    hideLoader();
 }
 
 
