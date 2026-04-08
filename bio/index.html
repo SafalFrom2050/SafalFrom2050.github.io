@@ -300,6 +300,7 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
     
     <script>
@@ -314,7 +315,7 @@
         };
         firebase.initializeApp(config);
 
-        // Optional App Check (mirrored from gameView)
+        // Optional App Check
         try {
             const appCheck = firebase.appCheck();
             appCheck.activate(
@@ -325,34 +326,26 @@
 
         const linksList = document.getElementById('linksList');
         const db = firebase.firestore();
+        const rtdb = firebase.database();
+        const CACHE_KEY = 'bio_games_cache';
 
-        // Fetch AI games
-        db.collection('ai_games')
-          .where('isPublished', '==', true)
-          .where('publishStatus', '==', 'complete')
-          .where('bio_shared', '==', true)
-          .orderBy('createdAt', 'desc')
-          .limit(10)
-          .get()
-          .then(function(querySnapshot) {
-            document.getElementById('loader').remove();
-            let index = 0;
-            querySnapshot.forEach(function(doc) {
-                const game = doc.data();
-                const id = doc.id;
-                const isPortrait = game.isPortrait || false;
-                const imageUrl = (game.screenshotUrls && game.screenshotUrls.length > 0) ? game.screenshotUrls[0] : '../images/cover.png';
+        function renderGames(games) {
+            const loader = document.getElementById('loader');
+            if (loader) loader.remove();
+            
+            // Clear existing if any (mostly for force refresh cases)
+            linksList.innerHTML = "";
 
+            games.forEach((game, index) => {
                 const card = document.createElement('a');
                 card.className = 'link-card';
                 card.style.animationDelay = (index * 0.1) + 's';
                 
-                // Deep link logic
-                const deepLinkUrl = `../gameView/?id=${id}&isPortrait=${isPortrait}`;
+                const deepLinkUrl = `../gameView/?id=${game.id}&isPortrait=${game.isPortrait}`;
                 card.href = deepLinkUrl;
 
                 card.innerHTML = `
-                    <img src="${imageUrl}" class="link-img" alt="${game.title}" onerror="this.src='../images/cover.png'">
+                    <img src="${game.imageUrl}" class="link-img" alt="${game.title}" onerror="this.src='../images/cover.png'">
                     <div class="link-content">
                         <p class="link-title">${game.title}</p>
                         <p class="link-subtitle">${game.category || 'AI Generated'}</p>
@@ -360,22 +353,93 @@
                     <i class="material-icons play-icon">play_arrow</i>
                 `;
 
-                // Handle Android Deep Linking Force
                 card.onclick = function(e) {
                     var ua = navigator.userAgent.toLowerCase();
                     if (ua.indexOf("android") > -1) {
                         e.preventDefault();
-                        const intentUrl = `intent://gameView/?id=${id}&isPortrait=${isPortrait}#Intent;package=dif.instantgames;scheme=https;S.browser_fallback_url=${encodeURIComponent(window.location.origin + '/gameView/?id=' + id + '&isPortrait=' + isPortrait)};end`;
+                        const intentUrl = `intent://gameView/?id=${game.id}&isPortrait=${game.isPortrait}#Intent;package=dif.instantgames;scheme=https;S.browser_fallback_url=${encodeURIComponent(window.location.origin + '/gameView/?id=' + game.id + '&isPortrait=' + game.isPortrait)};end`;
                         window.location.href = intentUrl;
                     }
                 };
 
                 linksList.appendChild(card);
-                index++;
             });
-        }).catch(function(error) {
-            console.error("Error getting documents: ", error);
-            document.getElementById('loader').innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Failed to load games. Check connection.</p>';
+        }
+
+        function fetchAndCache(newRtdbTimestamp) {
+            db.collection('ai_games')
+              .where('isPublished', '==', true)
+              .where('publishStatus', '==', 'complete')
+              .where('bio_shared', '==', true)
+              .orderBy('createdAt', 'desc')
+              .limit(10)
+              .get()
+              .then(function(querySnapshot) {
+                const games = [];
+                querySnapshot.forEach(function(doc) {
+                    const data = doc.data();
+                    games.push({
+                        id: doc.id,
+                        title: data.title,
+                        category: data.category,
+                        isPortrait: data.isPortrait || false,
+                        imageUrl: (data.screenshotUrls && data.screenshotUrls.length > 0) ? data.screenshotUrls[0] : '../images/cover.png'
+                    });
+                });
+
+                // Update Cache with fresh games and the timestamp from RTDB
+                const cacheData = {
+                    rtdbTimestamp: newRtdbTimestamp,
+                    localTimestamp: Date.now(),
+                    games: games
+                };
+                localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+                
+                renderGames(games);
+            }).catch(function(error) {
+                console.error("Error getting documents: ", error);
+                const loader = document.getElementById('loader');
+                if (loader) loader.innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Failed to load games.</p>';
+            });
+        }
+
+        // --- Hybrid Logic ---
+        const cachedPayload = localStorage.getItem(CACHE_KEY);
+        
+        // Always check RTDB for the master timestamp
+        rtdb.ref('/Game Collection/bio_update_timestamp').once('value').then(snapshot => {
+            const masterTimestamp = snapshot.val() || 0;
+            
+            if (cachedPayload) {
+                try {
+                    const cache = JSON.parse(cachedPayload);
+                    // If local cache matches or is newer than master timestamp, use it
+                    // No 5-hour duration check - relies purely on masterTimestamp comparison
+                    if (cache.rtdbTimestamp >= masterTimestamp && cache.games && cache.games.length > 0) {
+                        console.log("Loading bio games from valid cache (Master TS: " + masterTimestamp + ")");
+                        renderGames(cache.games);
+                    } else {
+                        console.log("Cache outdated. Refetching from Firestore...");
+                        fetchAndCache(masterTimestamp);
+                    }
+                } catch (e) {
+                    fetchAndCache(masterTimestamp);
+                }
+            } else {
+                fetchAndCache(masterTimestamp);
+            }
+        }).catch(err => {
+            console.warn("RTDB Check failed, falling back to local storage or live fetch", err);
+            // Fallback: If RTDB fails, try using cache even if we can't verify it
+            if (cachedPayload) {
+                try {
+                    renderGames(JSON.parse(cachedPayload).games);
+                } catch(e) { 
+                    fetchAndCache(Date.now()); 
+                }
+            } else {
+                fetchAndCache(Date.now()); // Use current time as mock TS
+            }
         });
     </script>
 </body>
