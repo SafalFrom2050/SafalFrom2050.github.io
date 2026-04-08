@@ -144,29 +144,38 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            padding: 0 16px;
+            flex-wrap: wrap;
             animation: fadeInDown 0.5s ease-out;
+            width: 100%;
+            max-width: 450px;
         }
 
         .typing-container {
-            display: inline-flex;
-            align-items: center;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid var(--accent);
-            animation: 
-                typing 3.5s steps(40, end) forwards,
-                blink-caret 0.75s step-end infinite;
-            max-width: 0;
+            display: inline-block;
+            position: relative;
+            white-space: pre-wrap;
+            word-break: normal;
+            overflow-wrap: break-word;
+            line-height: 1.8;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        @keyframes typing {
-            from { max-width: 0; }
-            to { max-width: 100%; }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink-caret 0.75s step-end infinite;
+            box-shadow: 0 0 8px var(--accent);
         }
 
         @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--accent); }
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .links-container {
@@ -467,6 +476,20 @@
             30% { box-shadow: 9999px 0 0 2px var(--accent); }
             60%, 100% { box-shadow: 9999px 0 0 -5px var(--accent); }
         }
+        @media (max-width: 480px) {
+            .section-header {
+                font-size: 8px !important;
+                margin: 20px 0 10px 0 !important;
+            }
+            .typing-container {
+                max-width: 100% !important;
+                text-align: center !important;
+            }
+            .cursor {
+                width: 8px;
+                height: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -488,7 +511,7 @@
     </div>
 
     <div class="section-header">
-        [ <div class="typing-container">AI AGENTS CREATE GAMES LIKE THESE IN SECONDS</div> ]
+        [ <div class="typing-container" id="typewriter">AI AGENTS CREATE GAMES LIKE THESE IN SECONDS</div> ]
     </div>
 
     <div class="links-container" id="linksList">
@@ -544,6 +567,31 @@
                 true
             );
         } catch(e) { console.warn("AppCheck failed to init", e); }
+        
+        // --- Multiline Typewriter Effect ---
+        function initTypewriter() {
+            const container = document.getElementById('typewriter');
+            const fullText = container.innerText;
+            container.innerText = "";
+            container.style.opacity = "1";
+            
+            let i = 0;
+            function type() {
+                if (i < fullText.length) {
+                    container.innerHTML = fullText.substring(0, i + 1) + '<span class="cursor"></span>';
+                    i++;
+                    setTimeout(type, 40 + Math.random() * 30); // Random typing speed for natural GenAI feel
+                } else {
+                    container.innerHTML = fullText + '<span class="cursor"></span>';
+                }
+            }
+            
+            // Start after a short delay
+            setTimeout(type, 800);
+        }
+        
+        // Initial call
+        window.addEventListener('DOMContentLoaded', initTypewriter);
 
         const linksList = document.getElementById('linksList');
         const db = firebase.firestore();
