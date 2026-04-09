@@ -1,64 +1,109 @@
-<!doctype html>
-<html lang="en" style="height:100%;">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="../favicons/favicon.png">
     <title>alt games portal</title>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
     <link href="../style.css" rel="stylesheet">
     
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
-    <script src="../dataRetreve.js"></script>
-    <script src="script.js"></script>
+    <!-- Firebase (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyCa21G1mEhrJKmoPLRZ8hbJikyI4lGdY5Y",
+            authDomain: "dif-instantgames.firebaseapp.com",
+            databaseURL: "https://dif-instantgames.firebaseio.com/",
+            projectId: "dif-instantgames",
+            storageBucket: "dif-instantgames.appspot.com",
+            appId: "1:555879374010:web:405a0d17f2b1b20e85b683"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="../js/firestoreService.js"></script>
 
     <style>
-        #gameView iframe {
-            width: 100%;
-            height: 80vh;
-            border-radius: 20px;
-            border: 1px solid var(--border-glass);
+        #gameView {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 24px;
+            background: #000;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            background: #111;
+            border: 1px solid var(--border-glass);
         }
-        .section-title {
-            font-weight: 800;
+        #gameView iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .game-detail-container {
             margin-top: 40px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        }
+        .recommendation-sidebar {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 100px;
+        }
+        .sidebar-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .sidebar-item:hover { transform: translateX(5px); }
+        .sidebar-item img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        .sidebar-item h6 {
+            font-size: 13px;
+            margin-bottom: 4px;
+            line-height: 1.2;
         }
     </style>
 </head>
 <body style="padding-top: 80px;">
     
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark card-glass">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">alt games portal</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
-                <form class="form-inline ml-auto my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 10px;">
+                <form class="form-inline ml-auto my-2 my-lg-0" onsubmit="event.preventDefault(); window.location.href='/library/?q='+document.getElementById('gameSearch').value;">
+                    <input id="gameSearch" class="form-control mr-sm-2" type="search" placeholder="Search games..." aria-label="Search">
+                    <a href="/library/" class="nav-link">Library</a>
                     <a href="/about" class="nav-link">About</a>
-                    <a href="/contact" class="nav-link">Contact</a>
-                    <a href="/privacy" class="nav-link">Privacy</a>
-                    <a href="/terms" class="nav-link">Terms</a>
                 </form>
             </div>
         </div>
@@ -66,23 +111,58 @@
 
     <div class="container mb-5">
         <div class="row">
-            <div class="col-12 animate-in">
-                <h2 id="title" class="section-title mb-4">Loading Game...</h2>
-                <div id="gameView" class="mb-5">
-                    <!-- Iframe injected by script.js -->
+            <!-- Main Game Area -->
+            <div class="col-lg-8">
+                <section class="animate-in">
+                    <h1 id="title" class="h2 mb-4">Loading Game...</h1>
+                    <div id="gameView" class="mb-4">
+                        <!-- Iframe injected by script.js -->
+                        <div class="loader-sprite mx-auto mt-5"></div>
+                    </div>
+                    
+                    <div class="glass-container game-detail-container mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">Game Details</h4>
+                            <div id="categoryBadge"></div>
+                        </div>
+                        <p id="description" class="text-muted">No description available for this title.</p>
+                        <hr class="border-glass">
+                        <div class="row text-center mt-3">
+                            <div class="col-4">
+                                <small class="d-block text-muted">Quality</small>
+                                <strong id="qualityScore">--</strong>
+                            </div>
+                            <div class="col-4">
+                                <small class="d-block text-muted">Platform</small>
+                                <strong>Browser</strong>
+                            </div>
+                            <div class="col-4">
+                                <small class="d-block text-muted">AI Enhanced</small>
+                                <strong id="aiStatus">No</strong>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Similar Games Mobile Row (Hidden on Desktop Sidebar) -->
+                <div class="d-lg-none mt-5">
+                    <h3 class="h4 mb-4">Similar Games</h3>
+                    <div class="row" id="similarMobile"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <h3 class="section-title">Similar Games</h3>
-                <div id="scrollView" class="row">
-                    <script>
-                        requestCurrentCategory();
-                        setScrollListener();
-                    </script>
-                </div>
+            <!-- Sidebar (Desktop) -->
+            <div class="col-lg-4 d-none d-lg-block">
+                <aside class="recommendation-sidebar animate-in" style="animation-delay: 0.2s;">
+                    <h5 class="mb-4 d-flex align-items-center">
+                        <i class="material-icons mr-2 text-primary">videogame_asset</i>
+                        Similar Games
+                    </h5>
+                    <div id="similarSidebar">
+                        <!-- Similar games injected by script.js -->
+                    </div>
+                    <a href="/library/" class="btn btn-outline-light btn-block rounded-pill mt-3">Browse More</a>
+                </aside>
             </div>
         </div>
     </div>
@@ -91,5 +171,6 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

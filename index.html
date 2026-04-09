@@ -4,31 +4,43 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="alt games portal">
+    <meta property="og:title" content="alt games portal: Play 10,000+ Games">
     <meta property="og:image" content="https://gamesp.xyz/images/cover.png">
-    <meta property="og:description" content="Play 10,000+ best games instantly in your browser without downloading.">
+    <meta property="og:description" content="Play the best AI-generated and hand-picked games instantly in your browser. No downloads required.">
     <meta property="og:url" content="https://gamesp.xyz/">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <title>alt games portal: GenAI-Mode</title>
+    <title>alt games portal: 10,000+ Free Browser Games</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
-    <script src="dataRetreve.js"></script>
+    <!-- Firebase (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyCa21G1mEhrJKmoPLRZ8hbJikyI4lGdY5Y",
+            authDomain: "dif-instantgames.firebaseapp.com",
+            databaseURL: "https://dif-instantgames.firebaseio.com/",
+            projectId: "dif-instantgames",
+            storageBucket: "dif-instantgames.appspot.com",
+            appId: "1:555879374010:web:405a0d17f2b1b20e85b683"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="js/firestoreService.js"></script>
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZJ70L7WQQ"></script>
@@ -37,18 +49,6 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-LZJ70L7WQQ');
-    </script>
-    <script>
-        (function() {
-            var ua = navigator.userAgent.toLowerCase();
-            var isAndroid = ua.indexOf("android") > -1;
-            var isRoot = window.location.pathname === "/" || window.location.pathname.endsWith("/index.html");
-            if (isAndroid && isRoot && !window.location.search.includes("no-redirect")) {
-                // If the app is not installed, the browser fallback will keep the user on the current page.
-                // Added a 'no-redirect' query parameter check as an escape hatch.
-                window.location.href = "intent://#Intent;package=dif.instantgames;scheme=https;S.browser_fallback_url=" + encodeURIComponent(window.location.href + (window.location.href.includes("?") ? "&" : "?") + "no-redirect=true") + ";end";
-            }
-        })();
     </script>
 </head>
 <body style="padding-top: 80px;">
@@ -61,7 +61,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
                 <form class="form-inline ml-auto my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search games..." aria-label="Search" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 10px;">
+                    <input id="gameSearch" class="form-control mr-sm-2" type="search" placeholder="Search games..." aria-label="Search">
                     <a href="/about" class="nav-link">About</a>
                     <a href="/contact" class="nav-link">Contact</a>
                     <a href="/privacy" class="nav-link">Privacy</a>
@@ -72,22 +72,81 @@
     </nav>
 
     <div class="container">
-        <!-- Categories Section -->
-        <div class="d-flex align-items-center mb-4 flex-nowrap mw-100">
-            <div class="flex-shrink-0">
-                <button class="arrow-btn" onmousedown="document.getElementById('categoriesTab').scrollBy(-150, 0);">
-                    <i class="material-icons">chevron_left</i>
-                </button>
+        <!-- Hero Section -->
+        <section class="hero-section text-center mb-5 animate-in">
+            <h1>Instant Fun, Zero Commitment</h1>
+            <p class="lead">Play 10,000+ games or ask our AI Agent to hallucinate your dream game in minutes. It's like magic, but with zero math involved.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4">Browse All Games</a>
+                <a href="/bio" class="btn btn-ai ml-2">Try AI Games</a>
             </div>
-            <div class="flex-grow-1 overflow-hidden px-2" style="min-width: 0;">
-                <div class="scrollmenu" id="categoriesTab">
-                    <script>retreveCategories();</script>
+        </section>
+
+        <!-- Featured AI Games Section -->
+        <section class="mb-5 animate-in" style="animation-delay: 0.2s;">
+            <div class="d-flex align-items-center mb-3">
+                <h3 class="mb-0 ai-retro-text">Featured AI Games</h3>
+            </div>
+            <div class="horizontal-scroll" id="aiGamesRow">
+                <div class="loader-small"></div>
+            </div>
+        </section>
+
+        <!-- Discovery Rows (Dynamic) -->
+        <div id="discoveryRows"></div>
+
+        <!-- SEO/AdSense Content Section 1 -->
+        <section class="content-block my-5 animate-in">
+            <div class="glass-container">
+                <h2>Unlimited Gaming, No Downloads</h2>
+                <p>Welcome to <strong>alt games portal</strong>, the ultimate destination for instant-play browser games. Our platform hosts a massive collection of over 10,000 games across every genre imaginable. Whether you're into high-octane racing, mind-bending puzzles, or action-packed shooters, we have something for every gamer.</p>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="feature-item">
+                            <i class="material-icons">bolt</i>
+                            <h5>Instant Play</h5>
+                            <p>No downloads, no installations. Just click and play in your browser.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-item">
+                            <i class="material-icons">psychology</i>
+                            <h5>AI Generated</h5>
+                            <p>Explore unique games created by cutting-edge AI agents in real-time.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-item">
+                            <i class="material-icons">devices</i>
+                            <h5>Cross-Platform</h5>
+                            <p>Play on your desktop, tablet, or phone seamlessly.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="flex-shrink-0">
-                <button class="arrow-btn" onmousedown="document.getElementById('categoriesTab').scrollBy(150, 0);">
-                    <i class="material-icons">chevron_right</i>
-                </button>
+        </section>
+
+        <!-- Categories Section -->
+        <div id="mainLibrary" class="mt-5">
+            <div class="section-divider mb-4">
+                <span>Game Library</span>
+            </div>
+            <div class="d-flex align-items-center mb-4 flex-nowrap mw-100">
+                <div class="flex-shrink-0">
+                    <button class="arrow-btn" onclick="document.getElementById('categoriesTab').scrollBy(-150, 0);">
+                        <i class="material-icons">chevron_left</i>
+                    </button>
+                </div>
+                <div class="flex-grow-1 overflow-hidden px-2" style="min-width: 0;">
+                    <div class="scrollmenu" id="categoriesTab">
+                        <div class="category-chip active" onclick="loadMainLibrary('all', this)">All Games</div>
+                    </div>
+                </div>
+                <div class="flex-shrink-0">
+                    <button class="arrow-btn" onclick="document.getElementById('categoriesTab').scrollBy(150, 0);">
+                        <i class="material-icons">chevron_right</i>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -97,18 +156,202 @@
         </div>
 
         <!-- Games Grid -->
-        <div id="scrollView" class="row">
-            <script>
-                request("all", false);
-                setScrollListener();
-            </script>
+        <div id="scrollView" class="row"></div>
+        
+        <!-- Load More Button -->
+        <div class="text-center my-5" id="loadMoreContainer">
+            <a href="/library/" class="btn btn-primary btn-lg rounded-pill px-5">Browse Full Library</a>
         </div>
+
+        <!-- SEO/AdSense Content Section 2 -->
+        <section class="content-block my-5 py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="images/ai_game_screenshot.png" class="img-fluid rounded-24 shadow-lg border border-glass" alt="AI Game Screenshot">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="ai-retro-text mb-4" style="font-size: 1.5rem;">How AI is Changing Gaming</h2>
+                    <p class="text-muted">The future of game development is here. At alt games portal, we are pioneering the integration of AI-generated content. Our AI agents can hallucinate entire worlds, mechanics, and stories in seconds, providing a unique experience that evolves every time you play.</p>
+                    <ul class="list-unstyled mt-4">
+                        <li class="mb-2"><i class="material-icons mr-2" style="vertical-align: middle; color: var(--accent);">auto_awesome</i> Procedural World Generation</li>
+                        <li class="mb-2"><i class="material-icons mr-2" style="vertical-align: middle; color: var(--accent);">auto_awesome</i> Dynamic AI Narratives</li>
+                        <li class="mb-2"><i class="material-icons mr-2" style="vertical-align: middle; color: var(--accent);">auto_awesome</i> Adaptive Difficulty Scaling</li>
+                    </ul>
+                    <a href="/about" class="btn btn-link p-0 mt-3 font-weight-bold" style="color: var(--accent);">Learn more about our technology →</a>
+                </div>
+            </div>
+        </section>
     </div>
+
+    <footer class="mt-5 py-5 text-center border-top border-glass">
+        <div class="container">
+            <p class="mb-2">© 2026 alt games portal. All rights reserved.</p>
+            <div class="d-flex justify-content-center gap-3 footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+            </div>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script> 
     <script src="js/bootstrap-4.0.0.js"></script>
+    
+    <script>
+        let currentCategory = 'all';
+        let lastVisible = null;
+        let isFetching = false;
+
+        async function init() {
+            // --- Hybrid Caching Logic ---
+            const CACHE_KEY_AI = 'home_ai_games_cache';
+            const CACHE_KEY_DISCOVER = 'home_discovery_cache';
+            
+            async function getCachedData(key, fetchFunc, masterTimestamp) {
+                const cached = localStorage.getItem(key);
+                if (cached) {
+                    try {
+                        const data = JSON.parse(cached);
+                        if (data.rtdbTimestamp >= masterTimestamp && data.items && data.items.length > 0) {
+                            console.log(`Loading ${key} from cache...`);
+                            return data.items;
+                        }
+                    } catch (e) { console.warn("Cache parse failed", e); }
+                }
+                
+                console.log(`Fetching ${key} from live Firestore...`);
+                const items = await fetchFunc();
+                const payload = {
+                    rtdbTimestamp: masterTimestamp,
+                    localTimestamp: Date.now(),
+                    items: items
+                };
+                localStorage.setItem(key, JSON.stringify(payload));
+                return items;
+            }
+
+            try {
+                // Always check RTDB for master timestamp
+                const masterSnapshot = await firebase.database().ref('/Game Collection/bio_update_timestamp').once('value');
+                const masterTimestamp = masterSnapshot.val() || 0;
+
+                // Load Categories (Always live or simple cache)
+                const categories = await firestoreService.fetchCategories();
+                const tab = document.getElementById('categoriesTab');
+                categories.forEach(cat => {
+                    const chip = document.createElement('div');
+                    chip.className = 'category-chip';
+                    chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+                    chip.onclick = () => loadMainLibrary(cat, chip);
+                    tab.appendChild(chip);
+                });
+
+                // Load AI Games (Cached)
+                const aiGames = await getCachedData(CACHE_KEY_AI, () => firestoreService.fetchAIGames(10), masterTimestamp);
+                renderHorizontalRow('aiGamesRow', aiGames);
+
+                // Load Discover Cards (Cached)
+                const discoverCards = await getCachedData(CACHE_KEY_DISCOVER, () => firestoreService.fetchDiscoverCards(), masterTimestamp);
+                
+                const discoveryContainer = document.getElementById('discoveryRows');
+                for (const card of discoverCards) {
+                    const section = document.createElement('section');
+                    section.className = 'mb-5 animate-in';
+                    section.innerHTML = `
+                        <div class="mb-3">
+                            <h3 class="mb-0">${card.title}</h3>
+                            <p class="text-muted small">${card.subtitle}</p>
+                        </div>
+                        <div class="horizontal-scroll" id="card-${card.id}">
+                            <div class="loader-small"></div>
+                        </div>
+                    `;
+                    discoveryContainer.appendChild(section);
+                    
+                    // Fetch games for this card (Cached per card)
+                    const cardCacheKey = `cache_card_${card.id}`;
+                    const games = await getCachedData(cardCacheKey, () => firestoreService.fetchGamesByCategories(card.categories, 18), masterTimestamp);
+                    renderHorizontalRow(`card-${card.id}`, games);
+                }
+            } catch (err) {
+                console.error("Initialization failed:", err);
+            }
+
+            // Initial Load of Sections complete
+            loadLibraryPreview('all');
+        }
+
+        async function loadLibraryPreview(category) {
+            document.getElementById('loaderContainer').style.display = 'flex';
+            try {
+                // Just fetch 12 games for the home page preview
+                const result = await firestoreService.fetchGamesPaginated(category, null, 12);
+                renderPreviewGrid(result.games);
+            } catch (e) { console.error("Preview load failed", e); }
+            document.getElementById('loaderContainer').style.display = 'none';
+        }
+
+        function renderPreviewGrid(games) {
+            const container = document.getElementById('scrollView');
+            container.innerHTML = '';
+            games.forEach(game => {
+                const col = document.createElement('div');
+                col.className = 'col-6 col-md-4 col-lg-2 p-2 animate-in';
+                col.innerHTML = `
+                    <div class="game-card" onclick="window.open('/game/?id=${game.id}', '_self')">
+                        <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
+                        <h6>${game.name || game.title}</h6>
+                        <span class="game-badge">${game.category && game.category[0] || 'Game'}</span>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+        }
+
+        function loadMainLibrary(category) {
+            console.log("Redirection triggered to Library for:", category);
+            // console.trace(); // Uncomment this in console if you need to see the stack trace
+            window.location.href = '/library/?cat=' + encodeURIComponent(category);
+        }
+        // Search Listener - Redirect to Library
+        const searchInput = document.getElementById('gameSearch');
+        searchInput.onkeydown = function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = searchInput.value;
+                if (query.length >= 2) {
+                    window.location.href = '/library/?q=' + encodeURIComponent(query);
+                }
+            }
+        };
+
+        function renderHorizontalRow(id, games) {
+            const row = document.getElementById(id);
+            row.innerHTML = '';
+            if (games.length === 0) {
+                row.innerHTML = '<p class="text-muted p-3">No games found in this section.</p>';
+                return;
+            }
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = game.isAI ? 'horizontal-card ai-card-gradient' : 'horizontal-card';
+                card.onclick = () => window.open(game.isAI ? `/bio` : `/game/?id=${game.id}`, '_blank');
+                card.innerHTML = `
+                    <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
+                    <div class="h-card-info">
+                        <h6 class="${game.isAI ? 'ai-retro-text' : ''}" style="${game.isAI ? 'font-size: 8px;' : ''}">${game.name || game.title}</h6>
+                    </div>
+                `;
+                row.appendChild(card);
+            });
+        }
+
+        // Start initialization
+        init();
+    </script>
     
     <!-- Cookie Consent -->
     <link href="cookiePopupStyle.css" rel="stylesheet">

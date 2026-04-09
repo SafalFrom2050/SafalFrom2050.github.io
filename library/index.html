@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game Library | alt games portal</title>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+    
+    <!-- Firebase (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyCa21G1mEhrJKmoPLRZ8hbJikyI4lGdY5Y",
+            authDomain: "dif-instantgames.firebaseapp.com",
+            databaseURL: "https://dif-instantgames.firebaseio.com/",
+            projectId: "dif-instantgames",
+            storageBucket: "dif-instantgames.appspot.com",
+            appId: "1:555879374010:web:405a0d17f2b1b20e85b683"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="../js/firestoreService.js"></script>
+</head>
+<body style="padding-top: 80px;">
+    
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">alt games portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <form class="form-inline ml-auto my-2 my-lg-0" onsubmit="event.preventDefault(); triggerSearch();">
+                    <input id="gameSearch" class="form-control mr-sm-2" type="search" placeholder="Search games..." aria-label="Search">
+                    <a href="/about" class="nav-link">About</a>
+                    <a href="/contact" class="nav-link">Contact</a>
+                    <a href="/privacy" class="nav-link">Privacy</a>
+                    <a href="/terms" class="nav-link">Terms</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="glass-container mb-5 animate-in">
+            <h1 class="h2 mb-4">Discover Your Next Favorite Game</h1>
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="d-flex align-items-center mb-3">
+                        <button class="arrow-btn mr-2" onclick="document.getElementById('categoriesTab').scrollBy(-150, 0);">
+                            <i class="material-icons">chevron_left</i>
+                        </button>
+                        <div class="scrollmenu flex-grow-1" id="categoriesTab">
+                            <div class="category-chip active" onclick="loadCategory('all', this)">All Games</div>
+                        </div>
+                        <button class="arrow-btn ml-2" onclick="document.getElementById('categoriesTab').scrollBy(150, 0);">
+                            <i class="material-icons">chevron_right</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div id="resultsInfo" class="text-muted small"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Games Grid -->
+        <div id="scrollView" class="row"></div>
+        
+        <!-- Loader -->
+        <div id="loaderContainer" class="col-12 text-center p-5">
+            <div class="loader-sprite mx-auto"></div>
+        </div>
+        
+        <!-- Load More -->
+        <div class="text-center my-5" id="loadMoreContainer" style="display: none;">
+            <button id="loadMoreBtn" class="btn btn-primary btn-lg rounded-pill px-5">Load More Games</button>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-5 text-center border-top border-glass">
+        <div class="container">
+            <p class="mb-2">© 2026 alt games portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/popper.min.js"></script> 
+    <script src="../js/bootstrap-4.0.0.js"></script>
+    
+    <script>
+        let currentCategory = 'all';
+        let lastVisible = null;
+        let isFetching = false;
+        let isSearchMode = false;
+
+        async function init() {
+            // Check for search query in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            const category = urlParams.get('cat');
+
+            // Load Categories
+            const categories = await firestoreService.fetchCategories();
+            const tab = document.getElementById('categoriesTab');
+            categories.forEach(cat => {
+                const chip = document.createElement('div');
+                chip.className = 'category-chip' + (category === cat ? ' active' : '');
+                chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+                chip.onclick = () => loadCategory(cat, chip);
+                tab.appendChild(chip);
+            });
+
+            if (query) {
+                document.getElementById('gameSearch').value = query;
+                performSearch(query);
+            } else if (category) {
+                loadCategory(category);
+            } else {
+                loadCategory('all');
+            }
+        }
+
+        async function loadCategory(cat, element) {
+            if (element) {
+                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+                element.classList.add('active');
+            }
+            
+            isSearchMode = false;
+            currentCategory = cat;
+            lastVisible = null;
+            document.getElementById('scrollView').innerHTML = '';
+            document.getElementById('resultsInfo').innerHTML = '';
+            
+            await fetchNextBatch();
+        }
+
+        async function performSearch(query) {
+            if (!query || query.length < 3) return;
+            isSearchMode = true;
+            document.getElementById('scrollView').innerHTML = '';
+            document.getElementById('loaderContainer').style.display = 'block';
+            document.getElementById('loadMoreContainer').style.display = 'none';
+            document.getElementById('resultsInfo').innerHTML = '';
+
+            const games = await firestoreService.searchGames(query, 24);
+            renderGames(games, false);
+            document.getElementById('loaderContainer').style.display = 'none';
+            document.getElementById('resultsInfo').innerHTML = 'Found ' + games.length + ' results for "' + query + '"';
+        }
+
+        function triggerSearch() {
+            const query = document.getElementById('gameSearch').value;
+            if (query.length >= 3) {
+                // Update URL without reload
+                const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?q=' + encodeURIComponent(query);
+                window.history.pushState({path:newurl},'',newurl);
+                performSearch(query);
+            } else if (query.length === 0) {
+                const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                window.history.pushState({path:newurl},'',newurl);
+                loadCategory('all');
+            }
+        }
+
+        async function fetchNextBatch() {
+            if (isFetching || isSearchMode) return;
+            isFetching = true;
+            document.getElementById('loaderContainer').style.display = 'block';
+            
+            const result = await firestoreService.fetchGamesPaginated(currentCategory, lastVisible, 24);
+            renderGames(result.games, true);
+            lastVisible = result.lastVisible;
+            
+            isFetching = false;
+            document.getElementById('loaderContainer').style.display = 'none';
+            document.getElementById('loadMoreContainer').style.display = lastVisible ? 'block' : 'none';
+            document.getElementById('resultsInfo').innerHTML = 'Category: ' + currentCategory.toUpperCase();
+        }
+
+        function renderGames(games, append) {
+            const container = document.getElementById('scrollView');
+            if (!append) container.innerHTML = '';
+            
+            if (games.length === 0 && !append) {
+                container.innerHTML = '<div class="col-12 text-center p-5"><p class="text-muted">No games found.</p></div>';
+                return;
+            }
+
+            games.forEach(game => {
+                const card = `
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-2 animate-in">
+                        <div class="game-card" onclick="window.open('/game/?id=${game.id}', '_self')">
+                            <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
+                            <h6>${game.name || game.title}</h6>
+                            <span class="game-badge">${game.category && game.category[0] || 'Game'}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        document.getElementById('loadMoreBtn').onclick = fetchNextBatch;
+        init();
+    </script>
+</body>
+</html>
