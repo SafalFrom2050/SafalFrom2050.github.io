@@ -30,14 +30,21 @@ body {
 }
 
 /* Navbar Styling */
-.navbar {
+.navbar.fixed-top {
     background: rgba(0, 0, 0, 0.8) !important;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-glass);
-    padding: 12px 0;
+    height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important; /* Remove any padding that might interfere with height */
     transition: var(--transition);
 }
+
+
+
+
 
 .navbar-brand {
     font-weight: 800;
@@ -147,9 +154,14 @@ div.scrollmenu {
     overflow: auto;
     white-space: nowrap;
     padding: 15px 0;
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) transparent;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+    scroll-behavior: smooth;
 }
+
+div.scrollmenu::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
+}
+
 
 ::-webkit-scrollbar {
     width: 8px;
@@ -261,6 +273,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 20px;
     padding: 10px 0 25px 0;
     scrollbar-width: none; /* Hide scrollbar Firefox */
+    scroll-behavior: smooth;
 }
 .horizontal-scroll::-webkit-scrollbar {
     display: none; /* Hide scrollbar Chrome/Safari */
@@ -433,9 +446,58 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1 !important;
     height: 44px; /* Slightly shorter for a tighter retro look */
 }
-.btn-ai:hover {
-    background: var(--accent) !important;
-    color: #000 !important;
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
-    transform: translateY(-3px) scale(1.05);
+
+/* Skeleton Loaders */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 25%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.03) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton-card-wrapper {
+    background: var(--card-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.skeleton-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    margin-bottom: 12px;
+}
+
+.skeleton-title {
+    height: 14px;
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.skeleton-badge {
+    height: 10px;
+    width: 40px;
+    margin-top: auto;
+}
+
+.skeleton-h-card {
+    flex: 0 0 200px;
+    height: 180px;
+    background: var(--card-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 20px;
+    padding: 12px;
 }

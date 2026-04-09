@@ -19,7 +19,7 @@
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css" rel="stylesheet">
+    <link href="../style.css?v=1.3" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -39,6 +39,9 @@
     <script src="../js/firestoreService.js"></script>
 </head>
 <body style="padding-top: 80px;">
+
+
+
     
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
         <div class="container">
@@ -64,13 +67,13 @@
             <div class="row align-items-center">
                 <div class="col-12">
                     <div class="d-flex align-items-center mb-3">
-                        <button class="arrow-btn mr-2" onclick="document.getElementById('categoriesTab').scrollBy(-150, 0);">
+                        <button class="arrow-btn mr-2" onclick="document.getElementById('categoriesTab').scrollBy({ left: -150, behavior: 'smooth' });">
                             <i class="material-icons">chevron_left</i>
                         </button>
                         <div class="scrollmenu flex-grow-1" id="categoriesTab">
-                            <div class="category-chip active" onclick="loadCategory('all', this)">All Games</div>
+
                         </div>
-                        <button class="arrow-btn ml-2" onclick="document.getElementById('categoriesTab').scrollBy(150, 0);">
+                        <button class="arrow-btn ml-2" onclick="document.getElementById('categoriesTab').scrollBy({ left: 150, behavior: 'smooth' });">
                             <i class="material-icons">chevron_right</i>
                         </button>
                     </div>
@@ -108,9 +111,9 @@
     
     <script>
         let currentCategory = 'all';
-        let lastVisible = null;
         let isFetching = false;
         let isSearchMode = false;
+        let shuffledQueue = []; // Session-level queue for randomized games
 
         async function init() {
             // Check for search query in URL
@@ -121,18 +124,22 @@
             // Load Categories
             const categories = await firestoreService.fetchCategories();
             const tab = document.getElementById('categoriesTab');
+            
             categories.forEach(cat => {
                 const chip = document.createElement('div');
-                chip.className = 'category-chip' + (category === cat ? ' active' : '');
+                // Determine if this chip should be active (matching URL param or default to 'all')
+                const isActive = (category && category === cat) || (!category && cat === 'all');
+                chip.className = 'category-chip' + (isActive ? ' active' : '');
                 chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
                 chip.onclick = () => loadCategory(cat, chip);
                 tab.appendChild(chip);
             });
 
+
             if (query) {
                 document.getElementById('gameSearch').value = query;
                 performSearch(query);
-            } else if (category) {
+            } else if (category && category !== 'all') {
                 loadCategory(category);
             } else {
                 loadCategory('all');
@@ -140,15 +147,22 @@
         }
 
         async function loadCategory(cat, element) {
-            if (element) {
-                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-                element.classList.add('active');
-            }
+            document.querySelectorAll('.category-chip').forEach(c => {
+                c.classList.remove('active');
+                if (element && c === element) {
+                    c.classList.add('active');
+                } else if (!element) {
+                    // Fallback for initial load: match by text
+                    if (c.textContent.toLowerCase() === cat.toLowerCase()) {
+                        c.classList.add('active');
+                    }
+                }
+            });
             
             isSearchMode = false;
             currentCategory = cat;
-            lastVisible = null;
-            document.getElementById('scrollView').innerHTML = '';
+            shuffledQueue = []; // Reset the randomized pool
+            document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(24, "col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2");
             document.getElementById('resultsInfo').innerHTML = '';
             
             await fetchNextBatch();
@@ -157,14 +171,13 @@
         async function performSearch(query) {
             if (!query || query.length < 3) return;
             isSearchMode = true;
-            document.getElementById('scrollView').innerHTML = '';
-            document.getElementById('loaderContainer').style.display = 'block';
+            document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(12, "col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2");
+            document.getElementById('loaderContainer').style.display = 'none';
             document.getElementById('loadMoreContainer').style.display = 'none';
             document.getElementById('resultsInfo').innerHTML = '';
 
             const games = await firestoreService.searchGames(query, 24);
             renderGames(games, false);
-            document.getElementById('loaderContainer').style.display = 'none';
             document.getElementById('resultsInfo').innerHTML = 'Found ' + games.length + ' results for "' + query + '"';
         }
 
@@ -185,16 +198,27 @@
         async function fetchNextBatch() {
             if (isFetching || isSearchMode) return;
             isFetching = true;
-            document.getElementById('loaderContainer').style.display = 'block';
             
-            const result = await firestoreService.fetchGamesPaginated(currentCategory, lastVisible, 24);
-            renderGames(result.games, true);
-            lastVisible = result.lastVisible;
+            // If queue is empty, fetch more into it from the periodic cache
+            if (shuffledQueue.length === 0) {
+                const batchSize = 120;
+                const batch = await firestoreService.fetchGamesWithCache(currentCategory, batchSize);
+                // Randomize this batch for the current session
+                shuffledQueue = firestoreService.shuffleArray(batch);
+                
+                // Clear skeletons if present
+                if (document.getElementById('scrollView').querySelector('.skeleton')) {
+                    document.getElementById('scrollView').innerHTML = '';
+                }
+            }
+
+            // Take next 24 from the randomized queue
+            const batchToRender = shuffledQueue.splice(0, 24);
+            renderGames(batchToRender, true);
             
             isFetching = false;
-            document.getElementById('loaderContainer').style.display = 'none';
-            document.getElementById('loadMoreContainer').style.display = lastVisible ? 'block' : 'none';
-            document.getElementById('resultsInfo').innerHTML = 'Category: ' + currentCategory.toUpperCase();
+            // Hide load more if we still have games in the randomized pool
+            document.getElementById('loadMoreContainer').style.display = (shuffledQueue.length > 0) ? 'block' : 'none';
         }
 
         function renderGames(games, append) {

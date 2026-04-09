@@ -77,9 +77,10 @@ const firestoreService = {
                 }
             }
 
-            const uniqueIds = [...new Set(allGameIds)].slice(0, 30);
+            const uniqueIds = [...new Set(allGameIds)];
             if (uniqueIds.length === 0) return [];
 
+            // Return up to limitTotal games from the pool
             return await this.fetchGamesByIds(uniqueIds.slice(0, limitTotal));
         } catch (error) {
             console.error("Error fetching games by categories:", error);
@@ -119,7 +120,9 @@ const firestoreService = {
         try {
             let query;
             if (category === 'all') {
-                query = this.db.collection('games').orderBy('quality_score', 'desc');
+                // Use documentId for stable pagination without requiring composite indexes
+                query = this.db.collection('games')
+                    .orderBy(firebase.firestore.FieldPath.documentId());
             } else {
                 const catDoc = await this.db.collection('categories').doc(category.toLowerCase()).get();
                 if (!catDoc.exists) return { games: [], lastVisible: null };
@@ -156,6 +159,147 @@ const firestoreService = {
             console.error("Error fetching paginated games:", error);
             return { games: [], lastVisible: null };
         }
+    },
+
+    // 4.1 NEW: Fetch Games with Randomization and 24h Cache
+    fetchGamesWithCache: async function(category = 'all', batchSize = 120) {
+        const CACHE_KEY = `game_cache_${category}`;
+        const PAGINATION_KEY = `game_pagination_${category}`;
+        const EXPIRATION = 24 * 60 * 60 * 1000; // 24 hours
+        
+        // 1. Check Cache
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+            try {
+                const data = JSON.parse(cached);
+                const now = Date.now();
+                if (now - data.timestamp < EXPIRATION && data.items && data.items.length > 0) {
+                    console.log(`[Cache] Using cached selection for ${category}`);
+                    return data.items;
+                }
+            } catch (e) { console.warn("Cache parsing failed", e); }
+        }
+
+        // 2. Cache expired or missing: Fetch new batch
+        console.log(`[Cache] Fetching fresh batch for ${category}...`);
+        
+        let lastVisibleSerial = null;
+        try {
+            lastVisibleSerial = JSON.parse(localStorage.getItem(PAGINATION_KEY));
+        } catch (e) {}
+
+        let resultGames = [];
+        let nextVisibleState = null;
+
+        if (category === 'all') {
+            let query = this.db.collection('games')
+                .orderBy(firebase.firestore.FieldPath.documentId());
+
+            if (lastVisibleSerial && lastVisibleSerial.id) {
+                try {
+                    // Fetch the document to use as a pivot snapshot (stable, no extra index needed)
+                    const pivotDoc = await this.db.collection('games').doc(lastVisibleSerial.id).get();
+                    if (pivotDoc.exists) {
+                        query = query.startAfter(pivotDoc);
+                    }
+                } catch (e) { console.warn("[Cache] Pivot fetch failed", e); }
+            }
+
+            let snapshot = await query.limit(batchSize).get();
+            
+            // Handle Wrap-around if we hit the end
+            if (snapshot.empty && lastVisibleSerial) {
+                console.log("[Cache] End reached. Wrapping around to start.");
+                snapshot = await this.db.collection('games')
+                    .orderBy(firebase.firestore.FieldPath.documentId())
+                    .limit(batchSize).get();
+            }
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                resultGames.push({ id: doc.id, ...data });
+            });
+
+            if (snapshot.docs.length > 0) {
+                const lastDoc = snapshot.docs[snapshot.docs.length - 1];
+                nextVisibleState = { 
+                    id: lastDoc.id 
+                };
+            }
+        } else {
+            // Category specific (indexed pagination)
+            const catDoc = await this.db.collection('categories').doc(category.toLowerCase()).get();
+            if (!catDoc.exists) return [];
+            
+            const gameIds = catDoc.data().games || [];
+            const startIndex = lastVisibleSerial || 0;
+            let batchIds = gameIds.slice(startIndex, startIndex + batchSize);
+            
+            // Wrap around
+            if (batchIds.length === 0 && startIndex > 0) {
+                batchIds = gameIds.slice(0, batchSize);
+                nextVisibleState = batchIds.length;
+            } else {
+                nextVisibleState = (startIndex + batchIds.length) % gameIds.length;
+            }
+            
+            if (batchIds.length > 0) {
+                resultGames = await this.fetchGamesByIds(batchIds);
+            }
+        }
+
+        // 3. Update Storage
+        if (resultGames.length > 0) {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({
+                items: resultGames,
+                timestamp: Date.now()
+            }));
+            localStorage.setItem(PAGINATION_KEY, JSON.stringify(nextVisibleState));
+        }
+
+        return resultGames;
+    },
+
+    // Shuffle Utility (Fisher-Yates)
+    shuffleArray: function(array) {
+        const newArr = [...array];
+        for (let i = newArr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+        }
+        return newArr;
+    },
+
+    // 9. Skeleton Generators
+    getSkeletonGrid: function(count, colClass = "col-6 col-md-4 col-lg-2") {
+        let html = '';
+        const skeleton = `
+            <div class="${colClass} p-2">
+                <div class="skeleton-card-wrapper">
+                    <div class="skeleton skeleton-img"></div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-badge"></div>
+                </div>
+            </div>
+        `;
+        for (let i = 0; i < count; i++) {
+            html += skeleton;
+        }
+        return html;
+    },
+
+    getSkeletonRow: function(count) {
+        let html = '';
+        const skeleton = `
+            <div class="skeleton-h-card mr-3">
+                <div class="skeleton skeleton-img" style="aspect-ratio: 16/10; margin-bottom: 12px;"></div>
+                <div class="skeleton skeleton-title" style="width: 60%; height: 10px;"></div>
+            </div>
+        `;
+        for (let i = 0; i < count; i++) {
+            html += skeleton;
+        }
+        return html;
     },
 
     // 5. Fetch Categories List

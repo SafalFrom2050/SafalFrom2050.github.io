@@ -55,16 +55,24 @@ function renderGameDetails(game) {
         document.getElementById("categoryBadge").innerHTML = `<span class="badge badge-primary rounded-pill px-3 py-2">${cat.toUpperCase()}</span>`;
     }
 
-    if (game.quality_score) {
-        document.getElementById("qualityScore").innerHTML = game.quality_score;
+    // 3. Stats Rendering
+    const stats = game.stats || {};
+    
+    // Ratings
+    if (stats.averageRating !== undefined) {
+        document.getElementById("ratingValue").innerHTML = Number(stats.averageRating).toFixed(1) + " ★";
     }
 
+    // Favorites
+    if (stats.favoriteCount !== undefined) {
+        document.getElementById("favCount").innerHTML = stats.favoriteCount;
+    }
+
+    // AI Retro Text (Apply only if isAI is true, without adding/showing the AI Status field)
     if (game.isAI) {
-        const aiStatus = document.getElementById("aiStatus");
-        aiStatus.innerHTML = "Yes";
-        aiStatus.classList.add("text-primary");
         document.getElementById("title").classList.add("ai-retro-text");
     }
+
 }
 
 function renderSimilarGames(games) {
