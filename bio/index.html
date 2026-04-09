@@ -637,13 +637,13 @@
             mCategory.innerHTML = `<i class="material-icons" style="font-size: 14px;">category</i> ${game.category || 'AI Game'}`;
             
             const plays = game.playCount || 0;
-            const rating = game.rating ? ` • ${game.rating}☁E : '';
+            const rating = game.rating ? ` | ${game.rating} stars` : '';
             
             // Only show play count if it's over 100
             if (plays > 100) {
                 mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">play_arrow</i> ${plays} plays${rating}`;
             } else if (game.rating) {
-                mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">star</i> ${game.rating}☁E;
+                mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">star</i> ${game.rating} stars`;
             } else {
                 mStats.innerHTML = ``; // Hide stats if no significant data
             }
