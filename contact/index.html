@@ -208,34 +208,12 @@
             <div class="col-lg-6 col-md-10">
                 <div class="glass-card animate-up">
                     <h1>Get in Touch</h1>
-                    <p class="text-muted mb-4">Have a suggestion or need help? Send us a message and we'll reply within 24 hours.</p>
+                    <p class="text-muted mb-4">Have a suggestion, found a bug, or just want to say hello? We'd love to hear from you.</p>
                     
-                    <form id="contactForm" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="yourname@example.com" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" class="form-control" placeholder="What's this about?">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn-submit">Send Message</button>
-                    </form>
-                    
-                    <div class="contact-info text-center">
-                        <p>Prefer direct mail? Reach us @ <a href="mailto:safal.sharma.ss@gmail.com">safal.sharma.ss@gmail.com</a></p>
+                    <div class="mt-5 p-4 text-center" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: 20px;">
+                        <h4 class="mb-3" style="color: white; font-weight: 700;">Email Us Directly</h4>
+                        <a href="mailto:safal.sharma.ss@gmail.com" class="btn-submit d-inline-block" style="text-decoration: none; width: auto; min-width: 250px;">safal.sharma.ss@gmail.com</a>
+                        <p class="mt-4 text-muted" style="font-size: 0.9rem;">We typically respond to all inquiries within 24 hours.</p>
                     </div>
                 </div>
             </div>
@@ -246,24 +224,5 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
-    
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('.btn-submit');
-            const originalText = btn.innerText;
-            
-            btn.innerText = 'Sending...';
-            btn.disabled = true;
-            
-            // Mock success response
-            setTimeout(() => {
-                alert('Thank you! Your message has been sent successfully.');
-                e.target.reset();
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }, 1000);
-        });
-    </script>
 </body>
 </html>
