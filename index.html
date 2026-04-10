@@ -80,7 +80,7 @@
             <h1><span class="text-red">Play Games without Installing, or</span> <br> <span class="text-blue">build your own in minutes using AI</span></h1>
             <p class="lead">Play 10,000+ games or ask our AI Agent to hallucinate your dream game in minutes. It's like magic, but with zero math involved.</p>
             <div class="d-flex justify-content-center gap-3">
-                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4">Browse All Games</a>
+                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4">Explore Library</a>
                 <a href="/bio" class="btn btn-ai ml-2">Try AI Games</a>
             </div>
         </section>
@@ -100,27 +100,33 @@
         <!-- SEO/AdSense Content Section 1 -->
         <section class="content-block my-5 animate-in">
             <div class="glass-container">
-                <h2>Unlimited Gaming, No Downloads</h2>
+                <h2 style="color: var(--primary);">Unlimited Gaming, No Downloads</h2>
                 <p>Welcome to <strong>alt games portal</strong>, the ultimate destination for instant-play browser games. Our platform hosts a massive collection of over 10,000 games across every genre imaginable. Whether you're into high-octane racing, mind-bending puzzles, or action-packed shooters, we have something for every gamer.</p>
                 <div class="row mt-4">
                     <div class="col-md-4">
-                        <div class="feature-item">
-                            <i class="material-icons">bolt</i>
-                            <h5>Instant Play</h5>
+                        <div class="feature-item d-flex flex-column h-100">
+                            <div style="height: 40px; display: flex; align-items: center;">
+                                <i class="material-icons" style="color: var(--primary);">bolt</i>
+                            </div>
+                            <h5 class="mt-2" style="color: var(--primary); min-height: 2.5rem; display: flex; align-items: center;">Instant Play</h5>
                             <p>No downloads, no installations. Just click and play in your browser.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="feature-item">
-                            <i class="material-icons">psychology</i>
-                            <h5>AI Generated</h5>
+                        <div class="feature-item d-flex flex-column h-100" style="border-radius: 20px; background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(255, 255, 255, 0.05);">
+                            <div style="height: 40px; display: flex; align-items: center;">
+                                <i class="material-icons" style="color: var(--accent);">psychology</i>
+                            </div>
+                            <h5 class="ai-retro-text mt-2" style="font-size: 0.75rem; min-height: 2.5rem; display: flex; align-items: center;">AI Generated</h5>
                             <p>Explore unique games created by cutting-edge AI agents in real-time.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="feature-item">
-                            <i class="material-icons">devices</i>
-                            <h5>Cross-Platform</h5>
+                        <div class="feature-item d-flex flex-column h-100">
+                            <div style="height: 40px; display: flex; align-items: center;">
+                                <i class="material-icons" style="color: var(--primary);">devices</i>
+                            </div>
+                            <h5 class="mt-2" style="color: var(--primary); min-height: 2.5rem; display: flex; align-items: center;">Cross-Platform</h5>
                             <p>Play on your desktop, tablet, or phone seamlessly.</p>
                         </div>
                     </div>
@@ -203,106 +209,101 @@
     <script src="js/bootstrap-4.0.0.js"></script>
     
     <script>
+        // --- STATIC BASELINE DATA (For Instant Loading & SEO) ---
+        const STATIC_HOME_DATA = {
+            categories: ["Action", "Adventure", "Arcade", "Racing", "Sports", "Puzzle", "Strategy", "RPG", "Music", "Multiplayer", "Casual", "Fighting", "Educational", "Simulation"],
+            aiGames: [
+                { id: "i5FIRk63ywcPZiLCFJpA", title: "JLPT N3 Kanji Pop", category: "Word", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775339152545_preview.jpg?alt=media", isAI: true },
+                { id: "S0uylwyxyowBgVFcnbZh", title: "Neon Beats: Fever Edition", category: "Music", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775335590309_preview.jpg?alt=media", isAI: true },
+                { id: "YrXmxk5u7Bpr3IPWH4Cc", title: "Urban Blasted: Crate Chaos", category: "Arcade", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775296947448_preview.jpg?alt=media", isAI: true }
+            ],
+            discoverCards: [
+                { id: "5agpmpKGHbhXBTjmJNHC", title: "Step Into a Brand New Adventure", subtitle: "Adventure", categories: ["adventure"] },
+                { id: "RZILg7EJK6Qk8zKtg2rd", title: "Quick Thrills and Instant Retro Action", subtitle: "Arcade", categories: ["arcade"] },
+                { id: "O9PhC5a2dyqZiEdD1a5m", title: "Jump Straight Into the Danger Zone", subtitle: "Action", categories: ["action"] },
+                { id: "1WwEq07oiaio3GMZgL0w", title: "Put the Pedal to the Metal", subtitle: "Racing", categories: ["racing"] }
+            ],
+            gamesPool: [
+                { id: "0omiOFRS5txVxmYQdoe7", name: "Fish Rain", category: ["sports"], imageUrl: "https://img.gamepix.com/games/fish-rain/icon/fish-rain.png?w=100" },
+                { id: "3n1FioNyl7uLLZrRiNwS", name: "Night City Racing", category: ["racing"], imageUrl: "https://img.gamepix.com/games/night-city-racing/icon/night-city-racing.png?w=100" },
+                { id: "rRtLbY1upuIQuWb0umwc", name: "Penalty Kick Wiz", category: ["sports"], imageUrl: "https://img.gamepix.com/games/penalty-kick-wiz/icon/penalty-kick-wiz.png?w=100" },
+                { id: "u67DtczuEHQGrVnE7fay", name: "Basketball Stars", category: ["sports"], imageUrl: "https://img.gamepix.com/games/basketball-stars/icon/basketball-stars.png?w=100" },
+                { id: "0hKJwSRq91GBWCbOnAVP", name: "Noob Playground", category: ["adventure"], imageUrl: "https://img.gamepix.com/games/noob-playground/icon/noob-playground.png?w=100" },
+                { id: "game-puzzle-1", name: "Classic 2048", category: ["puzzle"], imageUrl: "https://img.gamepix.com/games/2048/icon/2048.png?w=100" },
+                { id: "game-action-1", name: "Viking Brawl", category: ["action"], imageUrl: "https://img.gamepix.com/games/viking-brawl/icon/viking-brawl.png?w=100" },
+                { id: "game-racing-1", name: "Moto X3M", category: ["racing"], imageUrl: "https://img.gamepix.com/games/moto-x3m/icon/moto-x3m.png?w=100" },
+                { id: "game-arcade-1", name: "Geometry Dash", category: ["arcade"], imageUrl: "https://img.gamepix.com/games/geometry-jump/icon/geometry-jump.png?w=100" },
+                { id: "game-sports-2", name: "8 Ball Pool", category: ["sports"], imageUrl: "https://img.gamepix.com/games/8-ball-pool/icon/8-ball-pool.png?w=100" },
+                { id: "game-rpg-1", name: "Hero Adventure", category: ["rpg"], imageUrl: "https://img.gamepix.com/games/hero-adventure/icon/hero-adventure.png?w=100" },
+                { id: "game-puzzle-2", name: "Word Search", category: ["puzzle"], imageUrl: "https://img.gamepix.com/games/word-search/icon/word-search.png?w=100" }
+            ]
+        };
+
         let currentCategory = 'all';
-        let lastVisible = null;
         let isFetching = false;
 
         async function init() {
-            // --- Hybrid Caching Logic ---
-            const CACHE_KEY_AI = 'home_ai_games_cache';
-            const CACHE_KEY_DISCOVER = 'home_discovery_cache';
+            // 1. Instant Category Setup
+            const tab = document.getElementById('categoriesTab');
+            const allCats = ["All", ...STATIC_HOME_DATA.categories];
+            allCats.forEach(cat => {
+                const chip = document.createElement('div');
+                chip.className = 'category-chip' + (cat === 'All' ? ' active' : '');
+                chip.textContent = cat;
+                chip.onclick = () => window.location.href = '/library/?cat=' + encodeURIComponent(cat.toLowerCase());
+                tab.appendChild(chip);
+            });
+
+            // 2. Instant AI Games Render
+            renderHorizontalRow('aiGamesRow', STATIC_HOME_DATA.aiGames);
+
+            // 3. Instant Discovery Rows Render
+            const discoveryContainer = document.getElementById('discoveryRows');
+            discoveryContainer.innerHTML = ''; // Clear any loading skeletons
             
-            async function getCachedData(key, fetchFunc, masterTimestamp) {
-                const cached = localStorage.getItem(key);
-                if (cached) {
-                    try {
-                        const data = JSON.parse(cached);
-                        if (data.rtdbTimestamp >= masterTimestamp && data.items && data.items.length > 0) {
-                            console.log(`Loading ${key} from cache...`);
-                            return data.items;
-                        }
-                    } catch (e) { console.warn("Cache parse failed", e); }
-                }
+            STATIC_HOME_DATA.discoverCards.forEach(card => {
+                const section = document.createElement('section');
+                section.className = 'mb-5 animate-in';
                 
-                console.log(`Fetching ${key} from live Firestore...`);
-                const items = await fetchFunc();
-                const payload = {
-                    rtdbTimestamp: masterTimestamp,
-                    localTimestamp: Date.now(),
-                    items: items
-                };
-                localStorage.setItem(key, JSON.stringify(payload));
-                return items;
-            }
+                // Get relevant games from pool and shuffle
+                const cardGames = STATIC_HOME_DATA.gamesPool.filter(g => 
+                    g.category.some(c => card.categories.includes(c.toLowerCase()))
+                );
+                const randomized = firestoreService.shuffleArray(cardGames.length > 0 ? cardGames : STATIC_HOME_DATA.gamesPool);
 
-            try {
-                // Always check RTDB for master timestamp
-                const masterSnapshot = await firebase.database().ref('/Game Collection/bio_update_timestamp').once('value');
-                const masterTimestamp = masterSnapshot.val() || 0;
+                section.innerHTML = `
+                    <div class="mb-3">
+                        <h3 class="mb-0" style="color: white; font-weight: 800;">${card.title}</h3>
+                        <p class="text-muted small">${card.subtitle}</p>
+                    </div>
+                    <div class="horizontal-scroll" id="card-${card.id}"></div>
+                `;
+                discoveryContainer.appendChild(section);
+                renderHorizontalRow(`card-${card.id}`, randomized.slice(0, 8));
+            });
 
-                // Load Categories (Always live or simple cache)
-                const categories = await firestoreService.fetchCategories();
-                const tab = document.getElementById('categoriesTab');
-                categories.forEach(cat => {
-                    const chip = document.createElement('div');
-                    chip.className = 'category-chip';
-                    if (cat === 'all') chip.classList.add('active');
-                    chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-                    chip.onclick = () => loadMainLibrary(cat, chip);
-                    tab.appendChild(chip);
-                });
-
-
-                // Load AI Games (Cached)
-                document.getElementById('aiGamesRow').innerHTML = firestoreService.getSkeletonRow(6);
-                const aiGames = await getCachedData(CACHE_KEY_AI, () => firestoreService.fetchAIGames(10), masterTimestamp);
-                renderHorizontalRow('aiGamesRow', aiGames);
-
-                // Load Discover Cards (Cached)
-                const discoverCards = await getCachedData(CACHE_KEY_DISCOVER, () => firestoreService.fetchDiscoverCards(), masterTimestamp);
-                
-                const discoveryContainer = document.getElementById('discoveryRows');
-                for (const card of discoverCards) {
-                    const section = document.createElement('section');
-                    section.className = 'mb-5 animate-in';
-                    section.innerHTML = `
-                        <div class="mb-3">
-                            <h3 class="mb-0">${card.title}</h3>
-                            <p class="text-muted small">${card.subtitle}</p>
-                        </div>
-                        <div class="horizontal-scroll" id="card-${card.id}">
-                            ${firestoreService.getSkeletonRow(6)}
-                        </div>
-                    `;
-                    discoveryContainer.appendChild(section);
-                    
-                    // Fetch games for this card (Cached per card - increased pool for variety)
-                    const cardCacheKey = `cache_card_${card.id}`;
-                    const games = await getCachedData(cardCacheKey, () => firestoreService.fetchGamesByCategories(card.categories, 40), masterTimestamp);
-                    
-                    // Randomize order on each refresh
-                    const randomizedGames = firestoreService.shuffleArray(games);
-                    renderHorizontalRow(`card-${card.id}`, randomizedGames.slice(0, 20));
-                }
-            } catch (err) {
-                console.error("Initialization failed:", err);
-            }
-
-            // Initial Load of Sections complete
+            // 4. Load Library Preview Grid (Randomized statically first, then optionally fetch)
             loadLibraryPreview('all');
+
+            // --- Background Sync (Silent Update) ---
+            try {
+                // We still check for updates to keep the cache fresh for next visits
+                firebase.database().ref('/Game Collection/bio_update_timestamp').once('value').then(snap => {
+                    const masterTimestamp = snap.val() || 0;
+                    // Trigger silent refresh of discovery data in background
+                    firestoreService.fetchDiscoverCards(); 
+                });
+            } catch (e) {}
         }
 
-        async function loadLibraryPreview(category) {
+        async function loadLibraryPreview() {
             const container = document.getElementById('scrollView');
-            container.innerHTML = firestoreService.getSkeletonGrid(12);
+            // Show random selection from pool immediately
+            const pool = firestoreService.shuffleArray(STATIC_HOME_DATA.gamesPool);
+            renderPreviewGrid(pool.slice(0, 12));
             
-            try {
-                // Use the new cached/randomized fetcher
-                const games = await firestoreService.fetchGamesWithCache(category, 120);
-                const randomized = firestoreService.shuffleArray(games);
-                // Just show the first 12 for the home page preview
-                renderPreviewGrid(randomized.slice(0, 12));
-            } catch (e) { console.error("Preview load failed", e); }
+            // Optionally fetch more from live in background if the user stays?
+            // For "static as possible", we stop here.
         }
 
         function renderPreviewGrid(games) {
