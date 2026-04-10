@@ -44,7 +44,11 @@ function renderGameDetails(game) {
     document.getElementById("title").innerHTML = game.name || game.title;
     
     const iframeContent = `<iframe src="${game.url}" scrolling="no" allowfullscreen></iframe>`;
-    document.getElementById("gameView").innerHTML = iframeContent;
+    document.getElementById("iframeContainer").innerHTML = iframeContent;
+    
+    // Show the fullscreen button once the game is loaded
+    const fsBtn = document.getElementById("fullscreenBtn");
+    if (fsBtn) fsBtn.classList.add('visible');
 
     if (game.description) {
         document.getElementById("description").innerHTML = game.description;
@@ -112,6 +116,44 @@ function renderSimilarGames(games) {
         `;
         mobileGrid.innerHTML += mobileHtml;
     });
+}
+
+// Fullscreen API implementation
+function toggleFullscreen() {
+    const elem = document.getElementById("gameView");
+    if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
+    }
+}
+
+// Update fullscreen button icon based on state
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+function handleFullscreenChange() {
+    const fsBtn = document.getElementById("fullscreenBtn");
+    const icon = fsBtn.querySelector('i');
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+        icon.innerText = 'fullscreen_exit';
+    } else {
+        icon.innerText = 'fullscreen';
+    }
 }
 
 // Global scope initialization

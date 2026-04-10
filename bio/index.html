@@ -9,7 +9,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
@@ -26,7 +26,7 @@
             --card-bg: rgba(255, 255, 255, 0.05);
             --card-border: rgba(255, 255, 255, 0.1);
             --primary-bg: #0f172a;
-            --accent: #3b82f6;
+            --accent: #ff4757;
             --font-main: 'Outfit', sans-serif;
             --font-retro: 'Press Start 2P', system-ui;
         }
@@ -42,7 +42,7 @@
             align-items: center;
             padding: 40px 20px;
             overflow-x: hidden;
-            background: radial-gradient(circle at top left, #1e293b 0%, #0f172a 100%);
+            background: radial-gradient(circle at top left, #3a0d13 0%, #0f172a 100%);
         }
 
         /* Animated background shapes */
@@ -56,7 +56,7 @@
         .shape-1 {
             width: 300px;
             height: 300px;
-            background: #3b82f6;
+            background: #ff4757;
             top: -100px;
             left: -100px;
             animation: move 20s infinite alternate;
@@ -64,7 +64,7 @@
         .shape-2 {
             width: 400px;
             height: 400px;
-            background: #8b5cf6;
+            background: #db2777;
             bottom: -150px;
             right: -150px;
             animation: move 25s infinite alternate-reverse;
@@ -121,11 +121,18 @@
 
         h1 {
             font-weight: 800;
-            font-size: 14px;
+            font-size: 16px;
             margin-bottom: 8px;
             letter-spacing: 0;
             line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            justify-content: center;
         }
+
+        .brand-alt { color: var(--accent); font-family: var(--font-retro); font-size: 12px; }
+        .brand-games { color: #ff4757; font-family: 'Montserrat', sans-serif; letter-spacing: -1px; font-size: 17px; }
 
         .bio-text {
             opacity: 0.8;
@@ -501,7 +508,7 @@
             <div class="sprite-icon"></div>
         </div>
         <div class="profile-info">
-            <h1>alt games portal</h1>
+            <h1><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></h1>
             <p class="bio-text">Watch AI Hallucinate</p>
         </div>
         <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button">

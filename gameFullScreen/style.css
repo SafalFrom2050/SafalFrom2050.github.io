@@ -43,8 +43,8 @@ body {
 #full-screen-btn:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: scale(1.05);
-    border-color: #d32f2f;
-    box-shadow: 0 10px 20px rgba(211, 47, 47, 0.3);
+    border-color: #ff4757;
+    box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
 }
 
 #full-screen-btn > img {
@@ -79,7 +79,7 @@ body {
     background-size: 2250px 150px;
     background-repeat: no-repeat;
     animation: play-sprite 1.2s steps(15) infinite;
-    filter: drop-shadow(0 0 15px rgba(211, 47, 47, 0.4));
+    filter: drop-shadow(0 0 15px rgba(255, 71, 87, 0.4));
 }
 
 @keyframes play-sprite {

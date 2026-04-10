@@ -9,25 +9,25 @@
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
     <link href="../style.css?v=1.3" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #d32f2f;
-            --primary-hover: #b71c1c;
-            --bg-dark: #000;
-            --card-glass: rgba(255, 255, 255, 0.05);
-            --border-glass: rgba(255, 255, 255, 0.1);
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
+            --primary: #ff4757;
+            --primary-hover: #ff3344;
+            --bg-dark: #0f172a;
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #22d3ee;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
@@ -53,13 +53,12 @@
         }
 
         h1 {
+            font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
             margin-bottom: 30px;
-            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
+            text-transform: uppercase;
         }
 
         .contact-form .form-group {
@@ -89,7 +88,7 @@
         .contact-form .form-control:focus {
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.3);
             outline: none;
         }
 
@@ -115,31 +114,14 @@
         .btn-submit:hover {
             background: var(--primary-hover);
             transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.4);
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.4);
         }
 
         .btn-submit:active {
             transform: scale(0.98);
         }
 
-        .navbar.fixed-top {
-            background: rgba(0, 0, 0, 0.8) !important;
-            backdrop-filter: blur(10px);
-            height: 80px !important;
-            display: flex !important;
-            align-items: center !important;
-            padding: 0 !important;
-        }
 
-
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 24px;
-            background: linear-gradient(135deg, white, var(--primary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
 
         .nav-link {
             color: rgba(255, 255, 255, 0.8) !important;
@@ -184,7 +166,7 @@
     <!-- Navbar (Restored but styled) -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark card-glass">
         <div class="container">
-            <a class="navbar-brand" href="/">alt games portal</a>
+            <a class="navbar-brand" href="/"><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -211,7 +193,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-10">
                 <div class="glass-card animate-up">
-                    <h1>Get in Touch</h1>
+                    <h1 class="page-title">Get in Touch</h1>
                     <p class="text-muted mb-4">Have a suggestion, found a bug, or just want to say hello? We'd love to hear from you.</p>
                     
                     <div class="mt-5 p-4 text-center" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: 20px;">

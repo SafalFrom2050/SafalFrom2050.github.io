@@ -14,7 +14,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
@@ -48,14 +48,62 @@
             background: #000;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             border: 1px solid var(--border-glass);
+            transition: all 0.3s ease;
         }
-        #gameView iframe {
+        #gameView iframe, #iframeContainer {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        /* Fullscreen handling */
+        #gameView:fullscreen {
+            padding-bottom: 0;
+            height: 100vh;
+            width: 100vw;
+            border-radius: 0;
+            border: none;
+        }
+        #gameView:fullscreen iframe {
+            height: 100vh;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 71, 87, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0; /* Hidden until game loads */
+            pointer-events: none;
+        }
+        .fullscreen-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .fullscreen-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+            box-shadow: 0 12px 40px rgba(255, 71, 87, 0.5);
+        }
+        .fullscreen-btn i {
+            font-size: 24px;
         }
         .game-detail-container {
             margin-top: 40px;
@@ -98,7 +146,7 @@
     
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">alt games portal</a>
+            <a class="navbar-brand" href="/"><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -119,8 +167,12 @@
                 <section class="animate-in">
                     <h1 id="title" class="h2 mb-4">Loading Game...</h1>
                     <div id="gameView" class="mb-4">
-                        <!-- Iframe injected by script.js -->
-                        <div class="loader-sprite mx-auto mt-5"></div>
+                        <div id="iframeContainer">
+                            <div class="loader-sprite mx-auto mt-5"></div>
+                        </div>
+                        <button id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">
+                            <i class="material-icons">fullscreen</i>
+                        </button>
                     </div>
                     
                     <div class="glass-container game-detail-container mb-4">
