@@ -23,7 +23,7 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=1.3" rel="stylesheet">
+    <link href="style.css?v=1.5" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -191,15 +191,28 @@
         </section>
     </div>
 
-    <footer class="mt-5 py-5 text-center border-top border-glass">
+    <footer class="mt-5 py-5 text-center">
         <div class="container">
-            <p class="mb-2">© 2026 alt games portal. All rights reserved.</p>
-            <div class="d-flex justify-content-center gap-3 footer-links">
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-                <a href="/privacy">Privacy</a>
-                <a href="/terms">Terms</a>
+            <a class="footer-brand" href="/">
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+            </a>
+            
+            <div class="d-block mb-4">
+                <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="playstore-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="height: 48px;">
+                </a>
             </div>
+
+            <p class="mb-4 opacity-7">Premium gaming experience, accessible anywhere.</p>
+            
+            <div class="d-flex justify-content-center flex-wrap footer-links">
+                <a href="/about" class="mx-3">About</a>
+                <a href="/contact" class="mx-3">Contact</a>
+                <a href="/privacy" class="mx-3">Privacy</a>
+                <a href="/terms" class="mx-3">Terms</a>
+            </div>
+            
+            <p class="mt-5 mb-0 small opacity-5">© 2026 alt games portal. All rights reserved.</p>
         </div>
     </footer>
 
@@ -209,37 +222,88 @@
     <script src="js/bootstrap-4.0.0.js"></script>
     
     <script>
-        // --- STATIC BASELINE DATA (For Instant Loading & SEO) ---
+        // --- STATIC BASELINE DATA (Real Firestore Snapshots) ---
         const STATIC_HOME_DATA = {
-            categories: ["Action", "Adventure", "Arcade", "Racing", "Sports", "Puzzle", "Strategy", "RPG", "Music", "Multiplayer", "Casual", "Fighting", "Educational", "Simulation"],
+            categories: ["ACTION", "ADVENTURE", "ARCADE", "RACING", "SPORTS", "SOCCER", "PUZZLE", "BRAIN", "CASUAL", "KIDS", "GDEVELOP"],
             aiGames: [
                 { id: "i5FIRk63ywcPZiLCFJpA", title: "JLPT N3 Kanji Pop", category: "Word", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775339152545_preview.jpg?alt=media", isAI: true },
                 { id: "S0uylwyxyowBgVFcnbZh", title: "Neon Beats: Fever Edition", category: "Music", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775335590309_preview.jpg?alt=media", isAI: true },
                 { id: "YrXmxk5u7Bpr3IPWH4Cc", title: "Urban Blasted: Crate Chaos", category: "Arcade", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775296947448_preview.jpg?alt=media", isAI: true }
             ],
             discoverCards: [
-                { id: "5agpmpKGHbhXBTjmJNHC", title: "Step Into a Brand New Adventure", subtitle: "Adventure", categories: ["adventure"] },
-                { id: "RZILg7EJK6Qk8zKtg2rd", title: "Quick Thrills and Instant Retro Action", subtitle: "Arcade", categories: ["arcade"] },
-                { id: "O9PhC5a2dyqZiEdD1a5m", title: "Jump Straight Into the Danger Zone", subtitle: "Action", categories: ["action"] },
-                { id: "1WwEq07oiaio3GMZgL0w", title: "Put the Pedal to the Metal", subtitle: "Racing", categories: ["racing"] }
+                { id: "row-action", title: "Jump Straight Into the Danger Zone", subtitle: "Action Packed", categories: ["ACTION", "GDEVELOP"] },
+                { id: "row-sports", title: "Bring Home the Trophy", subtitle: "Sports & Soccer", categories: ["SPORTS", "SOCCER"] },
+                { id: "row-puzzle", title: "Master the Mind Games", subtitle: "Puzzle & Brain", categories: ["PUZZLE", "BRAIN"] },
+                { id: "row-kids", title: "Fun for the Whole Family", subtitle: "Kids & Casual", categories: ["KIDS", "CASUAL"] }
             ],
             gamesPool: [
-                { id: "0omiOFRS5txVxmYQdoe7", name: "Fish Rain", category: ["sports"], imageUrl: "https://img.gamepix.com/games/fish-rain/icon/fish-rain.png?w=100" },
-                { id: "3n1FioNyl7uLLZrRiNwS", name: "Night City Racing", category: ["racing"], imageUrl: "https://img.gamepix.com/games/night-city-racing/icon/night-city-racing.png?w=100" },
-                { id: "rRtLbY1upuIQuWb0umwc", name: "Penalty Kick Wiz", category: ["sports"], imageUrl: "https://img.gamepix.com/games/penalty-kick-wiz/icon/penalty-kick-wiz.png?w=100" },
-                { id: "u67DtczuEHQGrVnE7fay", name: "Basketball Stars", category: ["sports"], imageUrl: "https://img.gamepix.com/games/basketball-stars/icon/basketball-stars.png?w=100" },
-                { id: "0hKJwSRq91GBWCbOnAVP", name: "Noob Playground", category: ["adventure"], imageUrl: "https://img.gamepix.com/games/noob-playground/icon/noob-playground.png?w=100" },
-                { id: "game-puzzle-1", name: "Classic 2048", category: ["puzzle"], imageUrl: "https://img.gamepix.com/games/2048/icon/2048.png?w=100" },
-                { id: "game-action-1", name: "Viking Brawl", category: ["action"], imageUrl: "https://img.gamepix.com/games/viking-brawl/icon/viking-brawl.png?w=100" },
-                { id: "game-racing-1", name: "Moto X3M", category: ["racing"], imageUrl: "https://img.gamepix.com/games/moto-x3m/icon/moto-x3m.png?w=100" },
-                { id: "game-arcade-1", name: "Geometry Dash", category: ["arcade"], imageUrl: "https://img.gamepix.com/games/geometry-jump/icon/geometry-jump.png?w=100" },
-                { id: "game-sports-2", name: "8 Ball Pool", category: ["sports"], imageUrl: "https://img.gamepix.com/games/8-ball-pool/icon/8-ball-pool.png?w=100" },
-                { id: "game-rpg-1", name: "Hero Adventure", category: ["rpg"], imageUrl: "https://img.gamepix.com/games/hero-adventure/icon/hero-adventure.png?w=100" },
-                { id: "game-puzzle-2", name: "Word Search", category: ["puzzle"], imageUrl: "https://img.gamepix.com/games/word-search/icon/word-search.png?w=100" }
+                {"id":"battle-simulator-police-prison","title":"Battle Simulator - Police Prison","imageUrl":"https://img.gamepix.com/games/police-prison-battle-simulator/icon/police-prison-battle-simulator.png?w=105","category":["ACTION"]},
+                {"id":"world-z-defense-zombie-defense","title":"World Z Defense - Zombie Defense","imageUrl":"https://img.gamepix.com/games/world-z-defense-zombie-defense/icon/world-z-defense-zombie-defense.png?w=105","category":["ACTION"]},
+                {"id":"geo-metric-run","title":"Geo-Metric Run","imageUrl":"https://img.gamepix.com/games/geometric-game/icon/geometric-game.png?w=105","category":["ACTION"]},
+                {"id":"two-impostor-squid-challenge","title":"Two Impostor Squid Challenge","imageUrl":"https://img.gamepix.com/games/two-impostor-squid-challenge/icon/two-impostor-squid-challenge.png?w=105","category":["ACTION"]},
+                {"id":"tung-tung-sahur-in-geometry-dash","title":"Tung Tung Sahur in Geometry Dash","imageUrl":"https://img.gamepix.com/games/tung-tung-sahur-in-geometry-dash/icon/tung-tung-sahur-in-geometry-dash.png?w=105","category":["ACTION"]},
+                {"id":"bubbles-clicker","title":"Bubbles Clicker","imageUrl":"https://img.gamepix.com/games/bubbles-clicker/icon/bubbles-clicker.png?w=105","category":["ACTION"]},
+                {"id":"doomsday-shooter","title":"Doomsday Shooter","imageUrl":"https://img.gamepix.com/games/doomsday-shooter/icon/doomsday-shooter.png?w=105","category":["ACTION"]},
+                {"id":"skibidi-toilet-squid-game-red-light","title":"Skibidi Toilet Squid Game Red Light","imageUrl":"https://img.gamepix.com/games/skibidi-toilet-squid-game-red-light/icon/skibidi-toilet-squid-game-red-light.png?w=105","category":["ACTION"]},
+                {"id":"steve-and-alex-dragon-egg","title":"Steve and Alex Dragon Egg","imageUrl":"https://img.gamepix.com/games/steve-and-alex-dragon-egg/icon/steve-and-alex-dragon-egg.png?w=105","category":["ACTION"]},
+                {"id":"wall-breaker","title":"Wall Breaker","imageUrl":"https://img.gamepix.com/games/wall-breaker/icon/wall-breaker.png?w=105","category":["ACTION"]},
+                {"id":"tom-runner","title":"Tom Runner","imageUrl":"https://img.gamepix.com/games/tomrunner/icon/tomrunner.png?w=105","category":["ACTION"]},
+                {"id":"the-dwarf-planet","title":"The Dwarf Planet","imageUrl":"https://img.gamepix.com/games/the-dwarf-planet/icon/the-dwarf-planet.png?w=105","category":["ACTION"]},
+                {"id":"noob-s-chicken-farm-tycoon","title":"Noob's Chicken Farm Tycoon","imageUrl":"https://img.gamepix.com/games/noob-s-chicken-farm-tycoon/icon/noob-s-chicken-farm-tycoon.png?w=105","category":["ACTION"]},
+                {"id":"urban-sniper-multiplayer-2","title":"Urban Sniper Multiplayer 2","imageUrl":"https://img.gamepix.com/games/urban-sniper-multiplayer-2/icon/urban-sniper-multiplayer-2.png?w=105","category":["ACTION"]},
+                {"id":"waterpark-slide-race","title":"Waterpark Slide Race","imageUrl":"https://img.gamepix.com/games/waterpark-slide-race/icon/waterpark-slide-race.png?w=105","category":["ACTION"]},
+                {"id":"moto-fury","title":"Moto Fury","imageUrl":"https://img.gamepix.com/games/moto-fury/icon/moto-fury.png?w=105","category":["ACTION"]},
+                {"id":"super-cloner-3d","title":"Super Cloner 3D","imageUrl":"https://img.gamepix.com/games/super-cloner-3d/icon/super-cloner-3d.png?w=105","category":["ACTION"]},
+                {"id":"red-stickman-vs-monster-school-2","title":"Red Stickman vs Monster School 2","imageUrl":"https://img.gamepix.com/games/red-stickman-vs-monster-school-2/icon/red-stickman-vs-monster-school-2.png?w=105","category":["ACTION"]},
+                {"id":"catch-cats","title":"Catch Cats","imageUrl":"https://img.gamepix.com/games/catch-cats/icon/catch-cats.png?w=105","category":["ACTION"]},
+                {"id":"huggy-wuggy-run","title":"Huggy Wuggy Run","imageUrl":"https://img.gamepix.com/games/huggy-wuggy-run/icon/huggy-wuggy-run.png?w=105","category":["ACTION"]},
+                {"id":"zoo-animals-coloring-book-for-kids","title":"Zoo Animals Coloring Book for Kids","imageUrl":"https://img.gamepix.com/games/zoo-animals-coloring-book-for-kids/icon/zoo-animals-coloring-book-for-kids.png?w=105","category":["KIDS"]},
+                {"id":"tictoc-summer-fashion","title":"Tictoc Summer Fashion","imageUrl":"https://img.gamepix.com/games/tictoc-summer-fashion/icon/tictoc-summer-fashion.png?w=105","category":["KIDS"]},
+                {"id":"monster-truck-coloring-pages-for-kids","title":"Monster Truck Coloring Pages For Kids","imageUrl":"https://img.gamepix.com/games/monster-truck-coloring-pages-for-kids/icon/monster-truck-coloring-pages-for-kids.png?w=105","category":["KIDS"]},
+                {"id":"girl-dress-maker-2","title":"Girl Dress Maker 2","imageUrl":"https://img.gamepix.com/games/girl-dress-maker-2/icon/girl-dress-maker-2.png?w=105","category":["KIDS"]},
+                {"id":"nail-salon-sim","title":"Nail Salon Sim","imageUrl":"https://img.gamepix.com/games/nail-salon-sim/icon/nail-salon-sim.png?w=105","category":["KIDS"]},
+                {"id":"labubu-coloring-book-for-kids","title":"Labubu Coloring Book for Kids","imageUrl":"https://img.gamepix.com/games/labubu-coloring-book-for-kids/icon/labubu-coloring-book-for-kids.png?w=105","category":["KIDS"]},
+                {"id":"stervella-in-the-fashion-world","title":"Stervella in the Fashion World","imageUrl":"https://img.gamepix.com/games/stervella-in-the-fashion-world/icon/stervella-in-the-fashion-world.png?w=105","category":["KIDS"]},
+                {"id":"rainbow-insta-girls","title":"Rainbow Insta Girls","imageUrl":"https://img.gamepix.com/games/rainbow-insta-girls/icon/rainbow-insta-girls.png?w=105","category":["KIDS"]},
+                {"id":"tap-the-buttons","title":"Tap the Buttons","imageUrl":"https://img.gamepix.com/games/tap-the-buttons/icon/tap-the-buttons.png?w=105","category":["KIDS"]},
+                {"id":"colorindo-a-cria-ao-do-mundo","title":"Colorindo a Criaçao do Mundo","imageUrl":"https://img.gamepix.com/games/colorindo-a-criacao-do-mundo/icon/colorindo-a-criacao-do-mundo.png?w=105","category":["KIDS"]},
+                {"id":"anime-boys-coloring-pages","title":"Anime Boys Coloring Pages","imageUrl":"https://img.gamepix.com/games/anime-boys-coloring-pages/icon/anime-boys-coloring-pages.png?w=105","category":["KIDS"]},
+                {"id":"superhero-violet-fashion-shoot","title":"Superhero Violet Fashion Shoot","imageUrl":"https://img.gamepix.com/games/superhero-violet-fashion-shoot/icon/superhero-violet-fashion-shoot.png?w=105","category":["KIDS"]},
+                {"id":"find-seven-differences","title":"Find Seven Differences","imageUrl":"https://img.gamepix.com/games/find-seven-differences/icon/find-seven-differences.png?w=105","category":["KIDS"]},
+                {"id":"timberman","title":"TimberMan","imageUrl":"https://img.gamepix.com/games/timberman/icon/timberman.png?w=105","category":["KIDS"]},
+                {"id":"0M8OVyqQXk5CA3JecA56","title":"Pilot Heroes","imageUrl":"https://img.gamepix.com/games/pilot-heroes/icon/pilot-heroes.png?w=105","category":["SPORTS"]},
+                {"id":"0PYdUeNF6fa7oGOjHPVf","title":"Super Ball Juggling","imageUrl":"https://img.gamepix.com/games/super-ball-juggling/icon/super-ball-juggling.png?w=105","category":["SPORTS"]},
+                {"id":"0SjcShJI2w8Cwl1mYqz0","title":"Penalty Rivals","imageUrl":"https://img.gamepix.com/games/penalty-rivals/icon/penalty-rivals.png?w=105","category":["SPORTS"]},
+                {"id":"0omiOFRS5txVxmYQdoe7","title":"Fish Rain","imageUrl":"https://img.gamepix.com/games/fish-rain/icon/fish-rain.png?w=105","category":["SPORTS"]},
+                {"id":"0xCaEGDPwGlr1qOeAJDp","title":"Bike Descent","imageUrl":"https://img.gamepix.com/games/bike-descent/icon/bike-descent.png?w=105","category":["SPORTS"]},
+                {"id":"1ClZxHskuOHuOtBAu1aB","title":"Knight Football","imageUrl":"https://img.gamepix.com/games/knight-football/icon/knight-football.png?w=105","category":["SPORTS"]},
+                {"id":"1D2U43t7WDVTzfW9j36a","title":"Let's go fishing","imageUrl":"https://img.gamepix.com/games/lets-go-fishing/icon/lets-go-fishing.png?w=105","category":["SPORTS"]},
+                {"id":"2XoLCHKoPINjn5N6smSU","title":"Choco Ball-Draw Line & Happy Girl","imageUrl":"https://img.gamepix.com/games/choco-ball-draw-line-and-happy-girl/icon/choco-ball-draw-line-and-happy-girl.png?w=105","category":["SPORTS"]},
+                {"id":"2aIHc6ebUotSEMgcVxeG","title":"Fiveheads Soccer","imageUrl":"https://img.gamepix.com/games/fiveheads-soccer/icon/fiveheads-soccer.png?w=105","category":["SPORTS"]},
+                {"id":"2bubs6pMq6oeLVZqGWmF","title":"Football Champ 3D","imageUrl":"https://img.gamepix.com/games/football-champ-3d/icon/football-champ-3d.png?w=105","category":["SPORTS"]},
+                {"id":"2c6hruF5guCbpphHtDBT","title":"Desert Racing","imageUrl":"https://img.gamepix.com/games/desert-racing/icon/desert-racing.png?w=105","category":["SPORTS"]},
+                {"id":"2vFV2oLGZIx8KP8E0pkd","title":"Mafia Billiard Tricks","imageUrl":"https://img.gamepix.com/games/mafia-billiard-tricks/icon/mafia-billiard-tricks.png?w=105","category":["SPORTS"]},
+                {"id":"39kpAmVYa2xdbxDqkQKN","title":"Russian Niva - HexagoN","imageUrl":"https://img.gamepix.com/games/russian-niva-hexagon/icon/russian-niva-hexagon.png?w=105","category":["SPORTS"]},
+                {"id":"3FclLskk4Q9hFCkFeeRr","title":"Bowling Hero Multiplayer","imageUrl":"https://img.gamepix.com/games/bowling-hero-multiplayer/icon/bowling-hero-multiplayer.png?w=105","category":["SPORTS"]},
+                {"id":"3NjxQQPTOLxjvJ3h1jDP","title":"Stickman Neon Motorcycle Racing","imageUrl":"https://img.gamepix.com/games/stickman-neon-motorcycle-racing/icon/stickman-neon-motorcycle-racing.png?w=105","category":["SPORTS"]},
+                {"id":"07ceBSO2yJWb4TiXLWxg","title":"Aerial Silk Artist Memory Match","imageUrl":"https://img.gamepix.com/games/aerial-silk-artist-memory-match/icon/aerial-silk-artist-memory-match.png?w=105","category":["BRAIN"]},
+                {"id":"0Cv8jqz5Tkwu7WhIRaUI","title":"Neural Predictor","imageUrl":"https://img.gamepix.com/games/neural-predictor/icon/neural-predictor.png?w=105","category":["BRAIN"]},
+                {"id":"0ODSKBdqXvZmBeRcng5I","title":"Liquid Sort","imageUrl":"https://img.gamepix.com/games/liquid-sort/icon/liquid-sort.png?w=105","category":["BRAIN"]},
+                {"id":"0QdrXYydVhTOm8vUpNfi","title":"Human Cannonball Memory Match","imageUrl":"https://img.gamepix.com/games/human-cannonball-memory-match/icon/human-cannonball-memory-match.png?w=105","category":["BRAIN"]},
+                {"id":"0UTDZfjmswilPScJO5YW","title":"Dots Mania","imageUrl":"https://img.gamepix.com/games/dots-mania/icon/dots-mania.png?w=105","category":["BRAIN"]},
+                {"id":"0mDPdb9QBYM3IuPsOihL","title":"Cubic Memory","imageUrl":"https://img.gamepix.com/games/cubic-memory/icon/cubic-memory.png?w=105","category":["BRAIN"]},
+                {"id":"1N34M0Pg8inGQhILwjte","title":"Smart Cup","imageUrl":"https://img.gamepix.com/games/smart-cup/icon/smart-cup.png?w=105","category":["BRAIN"]},
+                {"id":"1ep99xbhPeEzsfGB8PSv","title":"Guess the Number","imageUrl":"https://img.gamepix.com/games/guess-the-number/icon/guess-the-number.png?w=105","category":["BRAIN"]},
+                {"id":"1xXUoBHGpxjQC9hYPU66","title":"Wizards Memory Match","imageUrl":"https://img.gamepix.com/games/wizards-memory-match/icon/wizards-memory-match.png?w=105","category":["BRAIN"]},
+                {"id":"2pUXsFJCShFfG4VRwG4D","title":"3Sudoku","imageUrl":"https://img.gamepix.com/games/3sudoku/icon/3sudoku.png?w=105","category":["BRAIN"]},
+                {"id":"3LGFNpXefdRWd23w8HIF","title":"Slips","imageUrl":"https://img.gamepix.com/games/slips/icon/slips.png?w=105","category":["BRAIN"]},
+                {"id":"3aQZnklXZbuCH2sAfGZQ","title":"Cemeteries Slide Puzzle","imageUrl":"https://img.gamepix.com/games/cemeteries-slide-puzzle/icon/cemeteries-slide-puzzle.png?w=105","category":["BRAIN"]},
+                {"id":"4ANJCeEYzbycY4aGQ2C3","title":"Flowers Jigsaw Puzzle","imageUrl":"https://img.gamepix.com/games/square-jigsaw-puzzle-2-assemble-flowers/icon/square-jigsaw-puzzle-2-assemble-flowers.png?w=105","category":["BRAIN"]},
+                {"id":"4CuGIbd7TU8S4DVV51Sw","title":"Pocket Gintoki Scramble","imageUrl":"https://img.gamepix.com/games/pocket-gintoki-image-scramble/icon/pocket-gintoki-image-scramble.png?w=105","category":["BRAIN"]},
+                {"id":"4rv2FFbjXLVk24D6bpvF","title":"Minesweeper","imageUrl":"https://img.gamepix.com/games/minisweeper/icon/minisweeper.png?w=105","category":["BRAIN"]}
             ]
         };
 
-        let currentCategory = 'all';
         let isFetching = false;
 
         async function init() {
@@ -249,7 +313,7 @@
             allCats.forEach(cat => {
                 const chip = document.createElement('div');
                 chip.className = 'category-chip' + (cat === 'All' ? ' active' : '');
-                chip.textContent = cat;
+                chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase();
                 chip.onclick = () => window.location.href = '/library/?cat=' + encodeURIComponent(cat.toLowerCase());
                 tab.appendChild(chip);
             });
@@ -259,15 +323,15 @@
 
             // 3. Instant Discovery Rows Render
             const discoveryContainer = document.getElementById('discoveryRows');
-            discoveryContainer.innerHTML = ''; // Clear any loading skeletons
+            discoveryContainer.innerHTML = '';
             
             STATIC_HOME_DATA.discoverCards.forEach(card => {
                 const section = document.createElement('section');
                 section.className = 'mb-5 animate-in';
                 
-                // Get relevant games from pool and shuffle
+                // Get relevant games from pool and shuffle (Case-insensitive check)
                 const cardGames = STATIC_HOME_DATA.gamesPool.filter(g => 
-                    g.category.some(c => card.categories.includes(c.toLowerCase()))
+                    g.category.some(c => card.categories.includes(c.toUpperCase()))
                 );
                 const randomized = firestoreService.shuffleArray(cardGames.length > 0 ? cardGames : STATIC_HOME_DATA.gamesPool);
 
@@ -279,31 +343,22 @@
                     <div class="horizontal-scroll" id="card-${card.id}"></div>
                 `;
                 discoveryContainer.appendChild(section);
-                renderHorizontalRow(`card-${card.id}`, randomized.slice(0, 8));
+                renderHorizontalRow(`card-${card.id}`, randomized.slice(0, 12));
             });
 
-            // 4. Load Library Preview Grid (Randomized statically first, then optionally fetch)
-            loadLibraryPreview('all');
+            // 4. Load Library Preview Grid
+            loadLibraryPreview();
 
-            // --- Background Sync (Silent Update) ---
+            // Background update check
             try {
-                // We still check for updates to keep the cache fresh for next visits
-                firebase.database().ref('/Game Collection/bio_update_timestamp').once('value').then(snap => {
-                    const masterTimestamp = snap.val() || 0;
-                    // Trigger silent refresh of discovery data in background
-                    firestoreService.fetchDiscoverCards(); 
-                });
+                firebase.database().ref('/Game Collection/bio_update_timestamp').once('value');
             } catch (e) {}
         }
 
         async function loadLibraryPreview() {
             const container = document.getElementById('scrollView');
-            // Show random selection from pool immediately
             const pool = firestoreService.shuffleArray(STATIC_HOME_DATA.gamesPool);
-            renderPreviewGrid(pool.slice(0, 12));
-            
-            // Optionally fetch more from live in background if the user stays?
-            // For "static as possible", we stop here.
+            renderPreviewGrid(pool.slice(0, 18));
         }
 
         function renderPreviewGrid(games) {
@@ -315,7 +370,7 @@
                 col.innerHTML = `
                     <div class="game-card" onclick="window.open('/game/?id=${game.id}', '_self')">
                         <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
-                        <h6>${game.name || game.title}</h6>
+                        <h6>${game.title || game.name}</h6>
                         <span class="game-badge">${game.category && game.category[0] || 'Game'}</span>
                     </div>
                 `;

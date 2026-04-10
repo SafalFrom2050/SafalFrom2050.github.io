@@ -19,7 +19,7 @@
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css?v=1.3" rel="stylesheet">
+    <link href="../style.css?v=1.5" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -222,7 +222,47 @@
         </div>
     </div>
 
+    <footer class="mt-5 py-5 text-center">
+        <div class="container">
+            <a class="footer-brand" href="/">
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+            </a>
+            
+            <div class="d-block mb-4">
+                <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="playstore-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="height: 48px;">
+                </a>
+            </div>
+
+            <p class="mb-4 opacity-7">Premium gaming experience, accessible anywhere.</p>
+            
+            <div class="d-flex justify-content-center flex-wrap footer-links">
+                <a href="/about" class="mx-3">About</a>
+                <a href="/contact" class="mx-3">Contact</a>
+                <a href="/privacy" class="mx-3">Privacy</a>
+                <a href="/terms" class="mx-3">Terms</a>
+            </div>
+            
+            <p class="mt-5 mb-0 small opacity-5">© 2026 alt games portal. All rights reserved.</p>
+        </div>
+    </footer>
+
     <!-- Scripts -->
+    <!-- Android App Recommendation Popup -->
+    <div id="appPromoModal" class="app-promo-modal">
+        <div class="promo-content">
+            <div class="promo-icon">
+                <i class="material-icons">install_mobile</i>
+            </div>
+            <h3 class="promo-title">Experience More in the App</h3>
+            <p class="promo-text">Get faster loading, full-screen immersion, and exclusive AI features by downloading our official Android app.</p>
+            <div class="promo-actions">
+                <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="promo-btn btn-get-app">Download Free</a>
+                <button onclick="dismissAppPromo()" class="promo-btn btn-not-now">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>

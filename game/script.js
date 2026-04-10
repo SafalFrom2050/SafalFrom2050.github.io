@@ -157,4 +157,31 @@ function handleFullscreenChange() {
 }
 
 // Global scope initialization
-window.addEventListener('load', loadGamePage);
+window.addEventListener('load', () => {
+    loadGamePage();
+    checkAndroidAppPromotion();
+});
+
+/**
+ * App Promotion Logic (Android Specific)
+ */
+function checkAndroidAppPromotion() {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const hasSeenPromo = sessionStorage.getItem('app_promo_dismissed');
+    
+    if (isAndroid && !hasSeenPromo) {
+        // Show after a short delay to ensure game rendering has started
+        setTimeout(() => {
+            const modal = document.getElementById('appPromoModal');
+            if (modal) modal.classList.add('visible');
+        }, 3000);
+    }
+}
+
+function dismissAppPromo() {
+    const modal = document.getElementById('appPromoModal');
+    if (modal) {
+        modal.classList.remove('visible');
+        sessionStorage.setItem('app_promo_dismissed', 'true');
+    }
+}
