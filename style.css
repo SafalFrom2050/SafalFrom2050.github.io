@@ -27,7 +27,11 @@ footer {
 .footer-brand {
     font-size: 1.5rem;
     margin-bottom: 1.2rem;
-    display: inline-block;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
 }
 
 .playstore-btn {
@@ -194,7 +198,7 @@ body {
     height: 80px !important;
     display: flex !important;
     align-items: center !important;
-    padding: 0 !important; /* Remove any padding that might interfere with height */
+    padding: 0 15px !important; /* Side padding for logo on mobile */
     transition: var(--transition);
 }
 
@@ -209,7 +213,7 @@ body {
     font-family: 'Montserrat', sans-serif !important;
     display: flex !important;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
 }
 
 .brand-alt {
@@ -895,4 +899,21 @@ footer {
         font-size: 0.55em;
         letter-spacing: 0;
     }
+}
+
+/* --- Sprite Logo Animation --- */
+.sprite-logo {
+    width: 40px;
+    height: 40px;
+    background-image: url('images/frames.png');
+    background-size: 1500% 100%;
+    background-position: 0 0;
+    animation: sprite-play 1.5s steps(14) 2 forwards;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+@keyframes sprite-play {
+    from { background-position: 0 0; }
+    to { background-position: -1400% 0; }
 }
