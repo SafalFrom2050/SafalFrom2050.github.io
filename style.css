@@ -660,67 +660,114 @@ h1, h2, h3, h4, h5, h6 {
 
 /* --- Footer Upgrade --- */
 footer {
-    background: rgba(15, 23, 42, 0.8) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.95)) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--border-glass) !important;
     color: white !important;
+    padding: 80px 0 40px 0 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0.3;
 }
 
 .footer-brand {
-    font-size: 1.5rem;
-    margin-bottom: 1.2rem;
-    display: inline-block;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none !important;
+    transition: var(--transition);
+}
+
+.footer-brand:hover {
+    transform: scale(1.05);
+}
+
+.footer-brand .sprite-logo {
+    width: 60px;
+    height: 60px;
+}
+
+.footer-brand .brand-alt {
+    font-size: 2.2rem; /* Increased to match Montserrat height visually */
+    line-height: 1;
+}
+
+.footer-brand .brand-games {
+    font-size: 2.2rem;
+    line-height: 1;
 }
 
 .playstore-btn {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    background: #000;
-    color: white !important;
-    padding: 10px 24px;
+    background: transparent;
+    padding: 0;
     border-radius: 12px;
     text-decoration: none !important;
     transition: var(--transition);
-    border: 1px solid rgba(255,255,255,0.1);
-    margin: 20px 0;
+    border: none !important; /* Remove the bad double border */
+    margin: 30px 0;
+}
+
+.playstore-btn img {
+    height: 60px;
+    transition: var(--transition);
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
 }
 
 .playstore-btn:hover {
-    transform: translateY(-3px);
-    background: #111;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    border-color: var(--accent);
+    transform: translateY(-5px) scale(1.05);
 }
 
-.playstore-btn .btn-text {
-    text-align: left;
-    line-height: 1.2;
-}
-
-.playstore-btn .btn-text small {
-    display: block;
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    opacity: 0.7;
-}
-
-.playstore-btn .btn-text span {
-    font-size: 1rem;
-    font-weight: 600;
+.playstore-btn:hover img {
+    filter: drop-shadow(0 8px 25px rgba(34, 211, 238, 0.4));
 }
 
 .footer-links a {
-    color: rgba(255,255,255,0.7) !important;
-    margin: 0 15px;
-    font-size: 0.9rem;
+    color: var(--text-muted) !important;
+    margin: 0 20px;
+    font-size: 1rem;
+    font-weight: 600;
     transition: var(--transition);
+    text-decoration: none !important;
 }
 
 .footer-links a:hover {
-    color: var(--accent) !important;
-    text-decoration: none;
+    color: var(--primary) !important;
+}
+
+/* Responsive Footer Scaling */
+@media (min-width: 1200px) {
+    .footer-brand {
+        font-size: 3.5rem;
+    }
+    .footer-brand .sprite-logo {
+        width: 100px;
+        height: 100px;
+    }
+    .footer-brand .brand-alt {
+        font-size: 3.5rem;
+    }
+    .footer-brand .brand-games {
+        font-size: 3.5rem;
+    }
+    .playstore-btn img {
+        height: 80px;
+    }
 }
 
 /* --- Android App Popup (Glassmorphic) --- */
@@ -911,6 +958,46 @@ footer {
     animation: sprite-play 1.5s steps(14) 2 forwards;
     display: inline-block;
     flex-shrink: 0;
+    transition: opacity 0.3s ease;
+}
+
+.logo-swapped .sprite-logo {
+    opacity: 0;
+    width: 0;
+    margin: 0;
+    pointer-events: none;
+    display: none; /* Fully remove after fade */
+}
+
+/* Initially hide text in navbar only */
+.navbar-brand .brand-alt,
+.navbar-brand .brand-games {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: none;
+}
+
+.logo-swapped .brand-alt,
+.logo-swapped .brand-games {
+    display: inline-block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Typing Cursor Effect */
+.typing-cursor::after {
+    content: '|';
+    margin-left: 2px;
+    color: var(--accent);
+    animation: blink 0.8s infinite;
+    font-family: sans-serif;
+    font-weight: 300;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 @keyframes sprite-play {
