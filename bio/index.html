@@ -528,6 +528,26 @@
             display: none;
         }
 
+        .modal-player.virtual-fullscreen {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-height: none !important;
+            z-index: 99999 !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            aspect-ratio: unset !important;
+        }
+
+        .modal-player.virtual-fullscreen .fullscreen-btn {
+            background: var(--accent);
+            color: #0f172a;
+            bottom: 25px; /* Adjust for mobile bars if needed */
+            right: 25px;
+        }
+
         .btn-vibing {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
@@ -880,17 +900,42 @@
         }
 
         function toggleFullscreen() {
+            const btnIcon = document.querySelector('.fullscreen-btn i');
+            const isNativeSupported = (mPlayer.requestFullscreen || mPlayer.webkitRequestFullscreen || mPlayer.msRequestFullscreen);
+
             gtag('event', 'engagement', { 
                 'event_category': 'AI_Game', 
-                'event_label': 'ToggleFullscreen', 
+                'event_label': isNativeSupported ? 'ToggleFullscreen_Native' : 'ToggleFullscreen_Virtual', 
                 'game_id': currentPlayerGame?.id 
             });
-            if (mPlayer.requestFullscreen) {
-                mPlayer.requestFullscreen();
-            } else if (mPlayer.webkitRequestFullscreen) {
-                mPlayer.webkitRequestFullscreen();
-            } else if (mPlayer.msRequestFullscreen) {
-                mPlayer.msRequestFullscreen();
+
+            if (isNativeSupported) {
+                // Native API Path
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                    if (mPlayer.requestFullscreen) {
+                        mPlayer.requestFullscreen();
+                    } else if (mPlayer.webkitRequestFullscreen) {
+                        mPlayer.webkitRequestFullscreen();
+                    } else if (mPlayer.msRequestFullscreen) {
+                        mPlayer.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                }
+            } else {
+                // Virtual Fallback Path (iOS iPhone)
+                const isVirtual = mPlayer.classList.toggle('virtual-fullscreen');
+                if (isVirtual) {
+                    btnIcon.innerText = 'fullscreen_exit';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    btnIcon.innerText = 'fullscreen';
+                    document.body.style.overflow = '';
+                }
             }
         }
 
