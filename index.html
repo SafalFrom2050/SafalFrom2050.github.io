@@ -64,11 +64,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
                 <div class="navbar-nav ml-auto align-items-lg-center">
-                    <form class="form-inline my-2 my-lg-0 mr-lg-3" onsubmit="event.preventDefault(); window.location.href='/library/search?q='+document.getElementById('navSearch').value;">
-                        <input id="navSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-3 d-none d-lg-block" onsubmit="event.preventDefault(); window.location.href='/library/?q='+document.getElementById('gameSearch').value;">
+                        <input id="gameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
                     </form>
-                    <a href="/library/" class="nav-link"><i class="material-icons">grid_view</i> Library</a>
-                    <a href="/about" class="nav-link"><i class="material-icons">info</i> About</a>
+                    <a href="/library/" class="nav-link">Library</a>
+                    <a href="/about" class="nav-link">About</a>
+                    <a href="/contact" class="nav-link">Contact</a>
+                    <a href="/privacy" class="nav-link">Privacy</a>
+                    <a href="/terms" class="nav-link">Terms</a>
                 </div>
             </div>
         </div>
@@ -387,15 +390,17 @@
         }
         // Search Listener - Redirect to Library
         const searchInput = document.getElementById('gameSearch');
-        searchInput.onkeydown = function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const query = searchInput.value;
-                if (query.length >= 2) {
-                    window.location.href = '/library/?q=' + encodeURIComponent(query);
+        if (searchInput) {
+            searchInput.onkeydown = function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = searchInput.value;
+                    if (query.length >= 2) {
+                        window.location.href = '/library/?q=' + encodeURIComponent(query);
+                    }
                 }
-            }
-        };
+            };
+        }
 
         function renderHorizontalRow(id, games) {
             const row = document.getElementById(id);
