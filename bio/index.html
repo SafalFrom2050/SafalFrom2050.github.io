@@ -20,6 +20,19 @@
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
     
+    <!-- Google Analytics (Performance Optimized) -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZJ70L7WQQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LZJ70L7WQQ', { 'animate_speed': 'premium' });
+    </script>
+    
     <style>
         :root {
             --primary-bg: #0f172a;
@@ -511,7 +524,7 @@
             <h1><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></h1>
             <p class="bio-text">Watch AI Hallucinate</p>
         </div>
-        <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button">
+        <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button" onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'BioHeader' });">
             <i class="material-icons">download</i>
             Get App on Play Store
         </a>
@@ -541,8 +554,8 @@
                     Description goes here...
                 </div>
                 <div class="modal-btn-container">
-                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="modal-btn btn-download">Download to Play</a>
-                    <button class="modal-btn btn-close" onclick="closeModal()">Not Vibing</button>
+                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" id="modalDownloadBtn" class="modal-btn btn-download" onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'ModalDownload' });">Download to Play</a>
+                    <button class="modal-btn btn-close" onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'Modal', 'event_label': 'NotVibing' });">Not Vibing</button>
                 </div>
             </div>
         </div>
@@ -626,7 +639,14 @@
                     <i class="material-icons play-icon">play_arrow</i>
                 `;
 
-                card.onclick = () => openModal(game);
+                card.onclick = () => {
+                    gtag('event', 'select_item', {
+                        item_id: game.id,
+                        item_name: game.title,
+                        item_category: game.category
+                    });
+                    openModal(game);
+                };
                 linksList.appendChild(card);
             });
         }
