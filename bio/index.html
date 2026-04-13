@@ -528,24 +528,41 @@
             display: none;
         }
 
-        .modal-player.virtual-fullscreen {
+        .modal-player:-ms-fullscreen .fullscreen-btn {
+            display: none;
+        }
+
+        /* Virtual Fullscreen Fix: Target the CARD, not just the player */
+        .modal-card.virtual-fullscreen {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
             width: 100vw !important;
             height: 100vh !important;
-            max-height: none !important;
+            max-width: none !important;
             z-index: 99999 !important;
             margin: 0 !important;
             border-radius: 0 !important;
+            transform: none !important; /* CRITICAL: Remove transform to allow fixed sizing to viewport */
+            backdrop-filter: none !important;
+            background: #000 !important;
+        }
+
+        .modal-card.virtual-fullscreen .modal-player {
+            height: 100% !important;
             aspect-ratio: unset !important;
         }
 
-        .modal-player.virtual-fullscreen .fullscreen-btn {
+        .modal-card.virtual-fullscreen .modal-body,
+        .modal-card.virtual-fullscreen .browser-help {
+            display: none !important;
+        }
+
+        .modal-card.virtual-fullscreen .fullscreen-btn {
             background: var(--accent);
             color: #0f172a;
-            bottom: 25px; /* Adjust for mobile bars if needed */
-            right: 25px;
+            bottom: 30px; 
+            right: 30px;
         }
 
         .btn-vibing {
@@ -928,7 +945,7 @@
                 }
             } else {
                 // Virtual Fallback Path (iOS iPhone)
-                const isVirtual = mPlayer.classList.toggle('virtual-fullscreen');
+                const isVirtual = mCard.classList.toggle('virtual-fullscreen');
                 if (isVirtual) {
                     btnIcon.innerText = 'fullscreen_exit';
                     document.body.style.overflow = 'hidden';
