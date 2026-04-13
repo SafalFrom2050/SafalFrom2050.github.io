@@ -4,15 +4,23 @@
 */
 
 :root {
-    --primary: #ff4757; /* Refined Logo Red (Not too orange, not too red) */
-    --primary-hover: #ff3344;
-    --bg-dark: #0f172a;
+    --primary: #ff4757; 
+    --primary-gradient: linear-gradient(135deg, #ff5e00 0%, #d00000 100%);
+    --primary-glow: rgba(208, 0, 0, 0.4);
+    --bg-dark: #050505; /* Neutral Dark (No Blue) */
     --card-glass: rgba(255, 255, 255, 0.03);
     --border-glass: rgba(255, 255, 255, 0.08);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --accent: #22d3ee; /* Cyan for AI */
+    --accent: #22d3ee; /* Cyan for AI - Still blue as requested */
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-gradient {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block;
 }
 
 /* --- Footer Upgrade --- */
@@ -182,7 +190,7 @@ footer {
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--bg-dark);
-    background: radial-gradient(circle at top right, #3a0d13 0%, var(--bg-dark) 70%);
+    background: radial-gradient(circle at top right, rgba(255, 94, 0, 0.12) 0%, rgba(0, 0, 0, 0) 60%), var(--bg-dark);
     color: var(--text-main);
     overflow-x: hidden;
     margin: 0;
@@ -224,7 +232,10 @@ body {
 }
 
 .brand-games {
-    color: var(--primary);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block;
     font-weight: 800;
     letter-spacing: -1px;
     font-size: 20px;
@@ -238,7 +249,9 @@ body {
 }
 
 .nav-link:hover {
-    color: var(--primary) !important;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
 }
 
 /* Glass Containers */
@@ -267,7 +280,7 @@ body {
 .game-card:hover {
     transform: translateY(-8px) scale(1.02);
     border-color: var(--primary);
-    box-shadow: 0 15px 30px rgba(255, 71, 87, 0.2);
+    box-shadow: 0 15px 30px var(--primary-glow);
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -313,10 +326,10 @@ body {
 }
 
 .category-chip:hover, .category-chip.active {
-    background: var(--primary);
-    border-color: var(--primary);
+    background: var(--primary-gradient);
+    border-color: transparent;
     color: white;
-    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+    box-shadow: 0 5px 15px var(--primary-glow);
 }
 
 .category-chip.active {
@@ -355,7 +368,7 @@ div.scrollmenu::-webkit-scrollbar {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary);
+    background: var(--primary-gradient);
     border-radius: 10px;
 }
 
@@ -418,7 +431,7 @@ h1, h2, h3, h4, h5, h6 {
     background-size: 2250px 150px;
     background-repeat: no-repeat;
     animation: play-sprite 1.2s steps(15) infinite;
-    filter: drop-shadow(0 0 15px rgba(255, 71, 87, 0.3));
+    filter: drop-shadow(0 0 15px var(--primary-glow));
 }
 
 @keyframes play-sprite {
@@ -450,7 +463,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-red { 
-    color: var(--primary); 
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block;
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
     letter-spacing: -2px;
@@ -467,9 +483,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .page-title {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block;
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    color: var(--primary);
     text-transform: uppercase;
     letter-spacing: -1px;
     margin-bottom: 30px;
@@ -551,7 +570,6 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     text-align: center;
-    color: var(--primary);
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -565,6 +583,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .section-divider span {
     padding: 0 20px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block;
 }
 
 .feature-item {
@@ -574,7 +596,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .feature-item i {
     font-size: 32px;
-    color: var(--primary);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block;
     margin-bottom: 15px;
 }
 
@@ -586,7 +611,10 @@ h1, h2, h3, h4, h5, h6 {
     transition: color 0.3s ease;
 }
 .footer-links a:hover {
-    color: var(--primary);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block;
 }
 
 .form-control {
@@ -601,7 +629,10 @@ h1, h2, h3, h4, h5, h6 {
     width: 30px;
     height: 30px;
     border: 3px solid var(--border-glass);
-    border-top-color: var(--primary);
+    border-top: 3px solid transparent;
+    background-image: linear-gradient(var(--bg-dark), var(--bg-dark)), var(--primary-gradient);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     margin: 20px auto;
@@ -612,24 +643,25 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Global Theme Overrides */
 .btn-primary { 
-    background-color: var(--primary) !important; 
-    border-color: var(--primary) !important; 
-    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2); 
+    background: var(--primary-gradient) !important; 
+    border: none !important;
+    box-shadow: 0 4px 12px var(--primary-glow); 
     color: white !important; 
     font-weight: 800 !important;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active { 
-    background-color: var(--primary-hover) !important; 
-    border-color: var(--primary-hover) !important; 
     transform: translateY(-2px); 
-    box-shadow: 0 6px 15px rgba(255, 71, 87, 0.3) !important; 
+    box-shadow: 0 6px 15px var(--primary-glow) !important; 
+    filter: brightness(1.1);
     color: white !important; 
 }
 
 .btn-outline-red {
     background-color: transparent !important;
-    border: 2px solid var(--primary) !important;
-    color: var(--primary) !important;
+    border: 2px solid #ff5e00 !important;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
     font-weight: 800 !important;
     font-size: 14px !important;
     letter-spacing: 0.5px;
