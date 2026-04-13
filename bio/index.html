@@ -446,11 +446,98 @@
             color: black;
         }
 
+        .btn-play {
+            background: var(--accent);
+            color: #0f172a;
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+            font-weight: 800;
+        }
+
+        .btn-play:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(34, 211, 238, 0.5);
+        }
+
+        .modal-player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-player.portrait {
+            aspect-ratio: 9/16;
+            max-height: 70vh;
+        }
+
+        .modal-player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .btn-download:hover {
             background: #f1f5f9;
             transform: translateY(-2px);
             text-decoration: none;
             color: black;
+        }
+
+        .modal-card.playing .modal-banner,
+        .modal-card.playing .modal-description,
+        .modal-card.playing .modal-meta {
+            display: none !important;
+        }
+
+        .modal-card.playing .modal-body {
+            padding: 15px 25px;
+        }
+
+        .modal-card.playing h2 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .fullscreen-btn:hover {
+            background: var(--accent);
+            color: #0f172a;
+        }
+
+        /* Hide fullscreen button when already in native fullscreen */
+        .modal-player:fullscreen .fullscreen-btn,
+        .modal-player:-webkit-full-screen .fullscreen-btn,
+        .modal-player:-ms-fullscreen .fullscreen-btn {
+            display: none;
+        }
+
+        .btn-vibing {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 9px;
+        }
+
+        .btn-vibing:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
         }
 
         .btn-close {
@@ -542,7 +629,13 @@
 
     <!-- Modal Dialog -->
     <div id="appModal" class="modal-overlay">
-        <div class="modal-card">
+        <div id="modalCard" class="modal-card">
+            <div id="modalPlayer" class="modal-player" style="display: none; position: relative;">
+                <iframe id="gameIframe" src=""></iframe>
+                <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">
+                    <i class="material-icons">fullscreen</i>
+                </button>
+            </div>
             <img id="modalBanner" class="modal-banner" src="" alt="Game Preview">
             <div class="modal-body">
                 <h2 id="modalTitle">Game Title</h2>
@@ -554,8 +647,11 @@
                     Description goes here...
                 </div>
                 <div class="modal-btn-container">
-                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" id="modalDownloadBtn" class="modal-btn btn-download" onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'ModalDownload' });">Download to Play</a>
-                    <button class="modal-btn btn-close" onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'Modal', 'event_label': 'NotVibing' });">Not Vibing</button>
+                    <button id="modalPlayBtn" class="modal-btn btn-play">
+                        <i class="material-icons" style="font-size: 18px; margin-right: 5px;">play_arrow</i> PLAY NOW
+                    </button>
+                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" id="modalDownloadBtn" class="modal-btn btn-download" style="display: none;" onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'AI_Game_Download_Create' });">Download & Create Yours</a>
+                    <button class="modal-btn btn-vibing" onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'NotVibing', 'game_id': currentPlayerGame?.id });">Not Vibing</button>
                 </div>
             </div>
         </div>
@@ -565,6 +661,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
     
     <script>
@@ -611,7 +708,16 @@
         }
         
         // Initial call
-        window.addEventListener('DOMContentLoaded', initTypewriter);
+        window.addEventListener('DOMContentLoaded', () => {
+            initTypewriter();
+            
+            // Register AI Game Service Worker for virtual runtime
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('../ai-game-sw.js', { scope: '/' })
+                    .then(reg => console.log('[SW] Service Worker Registered', reg))
+                    .catch(err => console.warn('[SW] Registration failed', err));
+            }
+        });
 
         const linksList = document.getElementById('linksList');
         const db = firebase.firestore();
@@ -652,37 +758,139 @@
         }
 
         const modal = document.getElementById('appModal');
+        const mCard = document.getElementById('modalCard');
         const mBanner = document.getElementById('modalBanner');
+        const mPlayer = document.getElementById('modalPlayer');
+        const mIframe = document.getElementById('gameIframe');
         const mTitle = document.getElementById('modalTitle');
         const mCategory = document.getElementById('modalCategory');
         const mStats = document.getElementById('modalStats');
         const mDesc = document.getElementById('modalDescription');
+        const mPlayBtn = document.getElementById('modalPlayBtn');
+        const mDownloadBtn = document.getElementById('modalDownloadBtn');
+
+        let currentPlayerGame = null;
 
         function openModal(game) {
+            currentPlayerGame = game;
+            mCard.classList.remove('playing');
             mBanner.src = game.imageUrl;
+            mBanner.style.display = 'block';
+            mPlayer.style.display = 'none';
+            mIframe.src = "about:blank";
+            
             mTitle.innerText = game.title;
             mCategory.innerHTML = `<i class="material-icons" style="font-size: 14px;">category</i> ${game.category || 'AI Game'}`;
             
             const plays = game.playCount || 0;
             const rating = game.rating ? ` | ${game.rating} stars` : '';
             
-            // Only show play count if it's over 100
             if (plays > 100) {
                 mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">play_arrow</i> ${plays} plays${rating}`;
             } else if (game.rating) {
                 mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">star</i> ${game.rating} stars`;
             } else {
-                mStats.innerHTML = ``; // Hide stats if no significant data
+                mStats.innerHTML = ``;
             }
             
             mDesc.innerText = game.description || "No description available for this AI game.";
+            
+            // Initial button states
+            mDownloadBtn.style.display = 'none';
+            if (game.storageBasePath && game.fileManifest) {
+                mPlayBtn.style.display = 'flex';
+                mPlayBtn.onclick = () => launchGame(game);
+            } else {
+                mPlayBtn.style.display = 'none';
+            }
             
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
+        function toggleFullscreen() {
+            gtag('event', 'engagement', { 
+                'event_category': 'AI_Game', 
+                'event_label': 'ToggleFullscreen', 
+                'game_id': currentPlayerGame?.id 
+            });
+            if (mPlayer.requestFullscreen) {
+                mPlayer.requestFullscreen();
+            } else if (mPlayer.webkitRequestFullscreen) {
+                mPlayer.webkitRequestFullscreen();
+            } else if (mPlayer.msRequestFullscreen) {
+                mPlayer.msRequestFullscreen();
+            }
+        }
+
+        async function launchGame(game) {
+            mPlayBtn.innerHTML = '<div class="dot-pulse" style="left:0;--accent:#0f172a"></div>';
+            mPlayBtn.disabled = true;
+
+            try {
+                const storage = firebase.storage();
+                const manifest = {};
+                
+                // Fetch download URLs for all critical files
+                const fetchPromises = game.fileManifest.map(async (file) => {
+                    try {
+                        const url = await storage.ref(`${game.storageBasePath}/${file.name}`).getDownloadURL();
+                        manifest[file.name] = url;
+                    } catch (e) { console.warn(`Failed to get URL for ${file.name}`, e); }
+                });
+
+                await Promise.all(fetchPromises);
+
+                // Register with Service Worker
+                const reg = await navigator.serviceWorker.ready;
+                if (reg.active) {
+                    reg.active.postMessage({
+                        type: 'REGISTER_GAME',
+                        projectId: game.projectId || game.id,
+                        manifest: manifest
+                    });
+                } else {
+                    console.warn("Service Worker active instance not found.");
+                }
+
+                // Update UI: Switch from Banner to Iframe
+                mCard.classList.add('playing');
+                mBanner.style.display = 'none';
+                mPlayer.style.display = 'block';
+                mPlayer.className = 'modal-player' + (game.isPortrait ? ' portrait' : '');
+                
+                // Update Buttons
+                mPlayBtn.style.display = 'none';
+                mDownloadBtn.style.display = 'flex';
+                
+                // Short delay to ensure SW message is processed
+                setTimeout(() => {
+                    mIframe.src = `/ai-game-runtime/${game.projectId || game.id}/index.html`;
+                    gtag('event', 'level_start', { 
+                        'level_name': game.title,
+                        'content_type': 'ai_game',
+                        'item_id': game.id
+                    });
+                }, 100);
+
+            } catch (err) {
+                console.error("Failed to launch game:", err);
+                alert("Failed to load game assets. Please try again.");
+            } finally {
+                gtag('event', 'engagement', { 
+                    'event_category': 'AI_Game', 
+                    'event_label': 'PlayNow_Click', 
+                    'game_id': game.id,
+                    'game_title': game.title
+                });
+                mPlayBtn.innerHTML = '<i class="material-icons" style="font-size: 18px; margin-right: 5px;">play_arrow</i> PLAY NOW';
+                mPlayBtn.disabled = false;
+            }
+        }
+
         function closeModal() {
             modal.classList.remove('active');
+            mIframe.src = "about:blank";
             document.body.style.overflow = '';
         }
 
@@ -711,6 +919,9 @@
                         playCount: data.stats ? data.stats.playCount : 0,
                         rating: data.stats ? data.stats.averageRating : 0,
                         isPortrait: data.isPortrait || false,
+                        storageBasePath: data.storageBasePath || null,
+                        projectId: data.projectId || null,
+                        fileManifest: data.fileManifest || null,
                         imageUrl: (data.screenshotUrls && data.screenshotUrls.length > 0) ? data.screenshotUrls[0] : '../images/cover.png'
                     });
                 });
@@ -741,8 +952,8 @@
             if (cachedPayload) {
                 try {
                     const cache = JSON.parse(cachedPayload);
-                    // SMART REFRESH: If cache is missing description, it's from the old version. Force refetch.
-                    const needsUpgrade = cache.games && cache.games.length > 0 && !cache.games[0].description;
+                    // SMART REFRESH: If cache is missing description or manifestation data, force refetch.
+                    const needsUpgrade = cache.games && cache.games.length > 0 && (!cache.games[0].description || !cache.games[0].storageBasePath);
                     
                     // If local cache matches master timestamp AND has modern data, use it
                     if (!needsUpgrade && cache.rtdbTimestamp >= masterTimestamp && cache.games && cache.games.length > 0) {
