@@ -183,7 +183,7 @@
             isSearchMode = false;
             currentCategory = cat;
             shuffledQueue = []; // Reset the randomized pool
-            document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(24, "col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2");
+            document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(24, "col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2");
             document.getElementById('resultsInfo').innerHTML = '';
             
             await fetchNextBatch();
@@ -192,7 +192,7 @@
         async function performSearch(query) {
             if (!query || query.length < 3) return;
             isSearchMode = true;
-            document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(12, "col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2");
+            document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(12, "col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2");
             document.getElementById('loaderContainer').style.display = 'none';
             document.getElementById('loadMoreContainer').style.display = 'none';
             document.getElementById('resultsInfo').innerHTML = '';
@@ -253,7 +253,7 @@
 
             games.forEach(game => {
                 const card = `
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-2 animate-in">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-2 animate-in">
                         <div class="game-card" onclick="window.open('/game/?id=${game.id}', '_self')">
                             <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
                             <h6>${game.name || game.title}</h6>
@@ -266,6 +266,47 @@
         }
 
         document.getElementById('loadMoreBtn').onclick = fetchNextBatch;
+        
+        // Drag to Scroll Implementation
+        function setupDragScroll(slider) {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+                slider.style.scrollBehavior = 'auto'; // Disable smooth scroll while dragging
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.style.scrollBehavior = 'smooth';
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.style.scrollBehavior = 'smooth';
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2; // Scroll speed multiplier
+                slider.scrollLeft = scrollLeft - walk;
+            });
+
+            // Prevent click interference if dragged
+            slider.addEventListener('click', (e) => {
+                if (isDown) e.preventDefault();
+            });
+        }
+
+        setupDragScroll(document.getElementById('categoriesTab'));
+        
         init();
 
         // Navbar Logo Animation Swap Logic

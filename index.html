@@ -419,6 +419,45 @@
         // Start initialization
         init();
 
+        // Drag to Scroll Implementation
+        function setupDragScroll(slider) {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+                slider.style.scrollBehavior = 'auto';
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.style.scrollBehavior = 'smooth';
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.style.scrollBehavior = 'smooth';
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+
+            slider.addEventListener('click', (e) => {
+                if (isDown) e.preventDefault();
+            });
+        }
+
+        setupDragScroll(document.getElementById('categoriesTab'));
+
         // Navbar Logo Animation Swap Logic
         const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
         const brandAlt = document.querySelector('.navbar-brand .brand-alt');

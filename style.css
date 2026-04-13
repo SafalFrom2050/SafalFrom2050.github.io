@@ -323,6 +323,11 @@ body {
     transform: scale(1.05);
 }
 
+.category-chip {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 /* Scroll Menu */
 div.scrollmenu {
     background-color: transparent;
