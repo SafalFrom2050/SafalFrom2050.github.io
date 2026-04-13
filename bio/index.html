@@ -540,6 +540,65 @@
             color: white;
         }
 
+        .browser-help {
+            display: none;
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(255, 71, 87, 0.1);
+            border-bottom: 1px solid rgba(255, 71, 87, 0.2);
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .modal-card.restricted .browser-help {
+            display: flex;
+        }
+
+        .modal-card.restricted .modal-banner,
+        .modal-card.restricted .modal-player {
+            display: none !important;
+        }
+
+        .help-title {
+            color: #ff4757;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .help-text {
+            font-size: 9px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            max-width: 280px;
+        }
+
+        .help-icon-guide {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            font-size: 9px;
+        }
+
+        .btn-copy {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
         .btn-close {
             background: rgba(255,255,255,0.1);
             color: white;
@@ -634,6 +693,17 @@
                 <iframe id="gameIframe" src=""></iframe>
                 <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">
                     <i class="material-icons">fullscreen</i>
+                </button>
+            </div>
+            <div id="browserHelp" class="browser-help">
+                <div class="help-title">⚠️ BROWSER RESTRICTED</div>
+                <p class="help-text">Instagram blocks games for security. Open in Safari to play this AI creation!</p>
+                <div class="help-icon-guide">
+                    <i class="material-icons" style="color:var(--accent)">more_horiz</i>
+                    <span>Tap the menu & select <b>Open in Browser</b></span>
+                </div>
+                <button class="btn-copy" onclick="copyLink()">
+                    <i class="material-icons" style="font-size: 12px; vertical-align: middle;">content_copy</i> COPY PAGE LINK
                 </button>
             </div>
             <img id="modalBanner" class="modal-banner" src="" alt="Game Preview">
@@ -761,6 +831,7 @@
         const mCard = document.getElementById('modalCard');
         const mBanner = document.getElementById('modalBanner');
         const mPlayer = document.getElementById('modalPlayer');
+        const mBrowserHelp = document.getElementById('browserHelp');
         const mIframe = document.getElementById('gameIframe');
         const mTitle = document.getElementById('modalTitle');
         const mCategory = document.getElementById('modalCategory');
@@ -773,7 +844,7 @@
 
         function openModal(game) {
             currentPlayerGame = game;
-            mCard.classList.remove('playing');
+            mCard.classList.remove('playing', 'restricted');
             mBanner.src = game.imageUrl;
             mBanner.style.display = 'block';
             mPlayer.style.display = 'none';
@@ -823,7 +894,46 @@
             }
         }
 
+        function isRestrictedBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const isInstagram = (ua.indexOf('Instagram') > -1);
+            const isFacebook = (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
+            const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+            return (isInstagram || isFacebook) && isIOS;
+        }
+
+        function copyLink() {
+            const el = document.createElement('textarea');
+            el.value = window.location.href;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            const btn = document.querySelector('.btn-copy');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="material-icons" style="font-size: 12px; vertical-align: middle;">check</i> LINK COPIED!';
+            setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+            
+            gtag('event', 'engagement', { 
+                'event_category': 'AI_Game', 
+                'event_label': 'CopyLink_Fallback', 
+                'game_id': currentPlayerGame?.id 
+            });
+        }
+
         async function launchGame(game) {
+            // Instagram/Facebook iOS Fallback
+            if (isRestrictedBrowser()) {
+                mCard.classList.add('restricted');
+                gtag('event', 'exception', {
+                    'description': 'RestrictedBrowser_Blocked',
+                    'fatal': false,
+                    'game_id': game.id
+                });
+                return;
+            }
+
             mPlayBtn.innerHTML = '<div class="dot-pulse" style="left:0;--accent:#0f172a"></div>';
             mPlayBtn.disabled = true;
 
