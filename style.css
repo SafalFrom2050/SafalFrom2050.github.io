@@ -246,6 +246,66 @@ body {
     font-weight: 600;
     margin-left: 15px;
     transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link i {
+    font-size: 18px;
+}
+
+.navbar-toggler {
+    border: none !important;
+    padding: 0;
+    outline: none !important;
+}
+
+/* Mobile Navbar Polish */
+@media (max-width: 991px) {
+    .navbar.fixed-top {
+        height: 70px !important;
+    }
+    .navbar-collapse {
+        margin-top: 20px;
+        background: rgba(5, 5, 5, 0.95);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid var(--border-glass);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        animation: fadeInSlide 0.4s ease-out;
+    }
+    .nav-link {
+        margin-left: 0;
+        margin-bottom: 20px;
+        padding: 12px 15px !important;
+        background: rgba(255,255,255,0.03);
+        border-radius: 12px;
+        font-size: 16px;
+    }
+    .nav-link:last-child {
+        margin-bottom: 0;
+    }
+    .nav-link:active, .nav-link:focus {
+        background: var(--primary-gradient);
+        color: white !important;
+    }
+    .navbar .form-inline {
+        margin-bottom: 25px;
+        width: 100%;
+        display: block !important;
+    }
+    .navbar .form-inline #gameSearch {
+        width: 100% !important;
+        margin-bottom: 0 !important;
+        height: 50px;
+        background: rgba(255,255,255,0.05) !important;
+        border: 1px solid var(--border-glass) !important;
+        border-radius: 50px !important;
+        padding: 0 25px !important;
+    }
 }
 
 .nav-link:hover {

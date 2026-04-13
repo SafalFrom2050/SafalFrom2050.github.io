@@ -59,17 +59,17 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/"><div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-label="Toggle navigation">
+                <i class="material-icons text-white" style="font-size: 30px;">menu</i>
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
-                <form class="form-inline ml-auto my-2 my-lg-0">
-                    <input id="gameSearch" class="form-control mr-sm-2" type="search" placeholder="Search games..." aria-label="Search">
-                    <a href="/about" class="nav-link">About</a>
-                    <a href="/contact" class="nav-link">Contact</a>
-                    <a href="/privacy" class="nav-link">Privacy</a>
-                    <a href="/terms" class="nav-link">Terms</a>
-                </form>
+                <div class="navbar-nav ml-auto align-items-lg-center">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-3" onsubmit="event.preventDefault(); window.location.href='/library/search?q='+document.getElementById('navSearch').value;">
+                        <input id="navSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
+                    </form>
+                    <a href="/library/" class="nav-link"><i class="material-icons">grid_view</i> Library</a>
+                    <a href="/about" class="nav-link"><i class="material-icons">info</i> About</a>
+                </div>
             </div>
         </div>
     </nav>
