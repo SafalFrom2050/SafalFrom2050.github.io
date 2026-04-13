@@ -365,21 +365,29 @@ div.scrollmenu::-webkit-scrollbar {
 
 /* Category Arrow Buttons */
 .arrow-btn {
-    background: var(--primary) !important;
-    border: none !important;
-    box-shadow: 0 8px 16px rgba(255, 71, 87, 0.2) !important;
-    width: 40px !important;
-    height: 40px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(5px);
+    width: 36px !important;
+    height: 36px !important;
     border-radius: 50%;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    transition: var(--transition) !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+    cursor: pointer;
+}
+
+.arrow-btn i {
+    font-size: 18px !important;
 }
 
 .arrow-btn:hover {
     transform: scale(1.1);
-    background: var(--primary-hover) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: white !important;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Typography Overrides */
