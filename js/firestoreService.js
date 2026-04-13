@@ -302,18 +302,43 @@ const firestoreService = {
         return html;
     },
 
-    // 5. Fetch Categories List
+    // 5. Fetch Categories List (with 72h caching)
     fetchCategories: async function() {
+        const CACHE_KEY = 'categories_cache';
+        const EXPIRATION = 72 * 60 * 60 * 1000; // 72 hours (3 Days)
+        
         try {
-            const snapshot = await this.db.collection('categories').limit(20).get();
-            const categories = [];
+            // 1. Check LocalStorage Cache
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (cached) {
+                const data = JSON.parse(cached);
+                if (Date.now() - data.timestamp < EXPIRATION && data.items && data.items.length > 0) {
+                    console.log("[Cache] Using cached categories");
+                    return data.items;
+                }
+            }
+
+            // 2. Cache miss or expired: Fetch from Firestore
+            console.log("[Cache] Fetching fresh categories list...");
+            const snapshot = await this.db.collection('categories').limit(500).get();
+            
+            // Start with "all" as a guaranteed first element
+            const categories = ["all"];
             snapshot.forEach(doc => {
                 categories.push(doc.id);
             });
+
+            // 3. Save to Cache
+            localStorage.setItem(CACHE_KEY, JSON.stringify({
+                items: categories,
+                timestamp: Date.now()
+            }));
+
             return categories;
         } catch (error) {
             console.error("Error fetching categories:", error);
-            return [];
+            // Fallback to minimal list in case of failure
+            return ["all"];
         }
     },
 

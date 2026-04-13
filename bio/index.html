@@ -862,6 +862,38 @@
                 };
                 linksList.appendChild(card);
             });
+
+            // Add static "Human Made Games" card at the bottom
+            const humanCard = document.createElement('div');
+            humanCard.className = 'link-card human-made-card';
+            humanCard.style.animationDelay = (games.length * 0.1) + 's';
+            humanCard.style.cursor = 'pointer';
+            humanCard.style.border = '1px solid rgba(255, 140, 0, 0.4)';
+            humanCard.style.overflow = 'visible';
+            humanCard.style.marginTop = '25px';
+
+            humanCard.innerHTML = `
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #ff5e00 0%, #d00000 100%); padding: 2px 12px; border-radius: 10px; font-size: 8px; font-weight: 800; color: white; border: 1px solid rgba(255,255,255,0.3); z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                    OR
+                </div>
+                <div class="link-img" style="background: linear-gradient(135deg, #ff5e00 0%, #d00000 100%); display:flex; align-items:center; justify-content:center;">
+                    <i class="material-icons" style="font-size: 30px; color: white;">sports_esports</i>
+                </div>
+                <div class="link-content">
+                    <p class="link-title">Play Human Made Games</p>
+                    <p class="link-subtitle" style="color: #ff5e00;">10,000+ HAND-PICKED TITLES</p>
+                </div>
+                <i class="material-icons play-icon" style="color: #ff5e00; opacity: 1; transform: translateX(0);">arrow_forward</i>
+            `;
+
+            humanCard.onclick = () => {
+                gtag('event', 'engagement', { 
+                    'event_category': 'Bio_Navigation', 
+                    'event_label': 'Go_To_Library' 
+                });
+                window.location.href = '/library/';
+            };
+            linksList.appendChild(humanCard);
         }
 
         const modal = document.getElementById('appModal');
