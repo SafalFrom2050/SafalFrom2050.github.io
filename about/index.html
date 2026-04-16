@@ -96,7 +96,12 @@
                             </ul>
                         </div>
                         
-                        <p>The portal was founded by Safal and is currently maintained by a passionate group of developers dedicated to building the future of web gaming. </p>
+                        <p>The portal was founded by Safal and is currently maintained by a passionate group of developers dedicated to building the future of instant gaming. </p>
+
+                        <h4 class="mt-5 mb-4 text-white" style="font-weight: 800;">Our Vision: The AI Frontier</h4>
+                        <p>We believe that the next era of gaming won't just be played—it will be imagined. By integrating advanced generative models, we are enabling users to not only play 10,000+ hand-picked classics but also to "hallucinate" entirely new game worlds through our AI agents. This procedural approach to game design ensures that the content remains fresh, personalized, and infinitely replayable.</p>
+                        
+                        <p>Our commitment to the "AI Frontier" means we are constantly refining our infrastructure to support seamless, instant-play experiences that require zero installation. Every game in our library is vetted for quality, performance, and cross-device compatibility, ensuring that whether you're on a high-end desktop or a mobile device, the experience is premium.</p
                         
                         <p class="mt-4">Have questions or feedback? We'd love to hear from you. Reach out via our <a href="/contact" style="color: var(--primary); font-weight: 600;">Contact Page</a> or email us at <a href="mailto:safal.sharma.ss@gmail.com" style="color: var(--primary); font-weight: 600;">safal.sharma.ss@gmail.com</a>.</p>
                     </div>
@@ -108,7 +113,7 @@
     <footer class="mt-5 py-5 text-center">
         <div class="container">
             <a class="footer-brand" href="/">
-                <div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
             </a>
             
             <div class="d-block mb-4">
@@ -134,49 +139,8 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
+    <script src="../js/logo.js"></script>
 
-    <script>
-        // Navbar Logo Animation Swap Logic
-        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
-        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
-        const brandGames = document.querySelector('.navbar-brand .brand-games');
-        const navbarBrand = document.querySelector('.navbar-brand');
-
-        function typeWriter(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
-            element.style.display = 'inline-block';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
-
-        if (navbarSprite) {
-            navbarSprite.addEventListener('animationend', (e) => {
-                if (e.animationName === 'sprite-play') {
-                    navbarBrand.classList.add('logo-swapped');
-                    navbarBrand.classList.add('typing-cursor');
-                    
-                    setTimeout(() => {
-                        navbarSprite.style.display = 'none';
-                        typeWriter(brandAlt, 'alt', 100, () => {
-                            setTimeout(() => {
-                                typeWriter(brandGames, 'games portal', 50, () => {
-                                    navbarBrand.classList.remove('typing-cursor');
-                                });
-                            }, 100);
-                        });
-                    }, 200);
-                }
-            });
-        }
     </script>
 </body>
 </html>

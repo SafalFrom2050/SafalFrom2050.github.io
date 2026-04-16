@@ -50,8 +50,13 @@ function renderGameDetails(game) {
     const fsBtn = document.getElementById("fullscreenBtn");
     if (fsBtn) fsBtn.classList.add('visible');
 
-    if (game.description) {
+    if (game.description && game.description.trim() !== "") {
         document.getElementById("description").innerHTML = game.description;
+    } else {
+        // High-value fallback for AdSense:
+        const cat = game.category ? (Array.isArray(game.category) ? game.category[0] : game.category) : "Instant Game";
+        const fallback = `Experience <strong>${game.name || game.title}</strong>, a thrilling ${cat} game on alt games portal. Our platform allows you to play high-quality titles with no installations required. Whether you are looking for a quick session or deep strategic gameplay, ${game.name || game.title} offers an engaging experience designed for players of all skill levels. Join thousands of other gamers and explore the future of instant gaming.`;
+        document.getElementById("description").innerHTML = fallback;
     }
 
     if (game.category) {
@@ -79,7 +84,8 @@ function renderGameDetails(game) {
 
     // 4. Update SEO and Schema
     const currentUrl = window.location.href.split('?')[0] + "?id=" + game.id;
-    const gameDesc = game.description ? game.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : "Play " + (game.name || game.title) + " instantly in your browser at alt games portal.";
+    const rawDesc = game.description && game.description.length > 10 ? game.description : `Play ${game.name || game.title} instantly without installing. A premium ${game.category ? game.category[0] : 'instant'} game featured on alt games portal. No downloads required.`;
+    const gameDesc = rawDesc.replace(/<[^>]*>?/gm, '').substring(0, 160);
     const gameImage = game.imageUrl || "https://gamesp.xyz/images/cover.png";
     const gameTitleText = (game.name || game.title) + " | alt games portal";
 

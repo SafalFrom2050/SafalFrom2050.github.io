@@ -304,7 +304,7 @@ const firestoreService = {
 
     // 5. Fetch Categories List (with 72h caching)
     fetchCategories: async function() {
-        const CACHE_KEY = 'categories_cache';
+        const CACHE_KEY = 'categories_cache_v2';
         const EXPIRATION = 72 * 60 * 60 * 1000; // 72 hours (3 Days)
         
         try {
@@ -325,7 +325,10 @@ const firestoreService = {
             // Start with "all" as a guaranteed first element
             const categories = ["all"];
             snapshot.forEach(doc => {
-                categories.push(doc.id);
+                const id = doc.id.toLowerCase();
+                if (id !== "all") {
+                    categories.push(doc.id);
+                }
             });
 
             // 3. Save to Cache

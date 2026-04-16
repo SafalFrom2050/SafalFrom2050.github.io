@@ -137,6 +137,29 @@
             </div>
         </section>
 
+        <!-- Editor's Choice Section (High Value Content) -->
+        <section class="content-block my-5 animate-in" style="animation-delay: 0.3s;">
+            <div class="section-divider mb-4">
+                <span>Editor's Choice</span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="glass-container h-100 p-4">
+                        <h4 class="ai-retro-text mb-3" style="font-size: 1.1rem;">Top Pick: Neon Beats</h4>
+                        <p class="small text-muted">Our editors have selected <strong>Neon Beats: Fever Edition</strong> as this month's standout instant title. Developed using advanced AI heuristics, it offers a rhythmic combat experience that pushes the boundaries of cross-platform performance. We highly recommend this for fans of synth-wave aesthetics and precise timing challenges.</p>
+                        <a href="/bio/" class="btn btn-link p-0 small font-weight-bold" style="color: var(--accent);">Play Neon Beats →</a>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="glass-container h-100 p-4">
+                        <h4 class="text-gradient mb-3" style="font-size: 1.1rem; font-weight: 800;">Battle Simulator Review</h4>
+                        <p class="small text-muted">A deep dive into the <strong>Police Prison Battle Simulator</strong> reveals a surprisingly complex physics engine for an instant title. It manages to balance chaotic action with strategic unit placement, making it one of the most addictive strategy games in our current library of 10,000+ titles.</p>
+                        <a href="/game/?id=fHg6eu5uGbEAjwdh6vil" class="btn btn-link p-0 small font-weight-bold" style="color: var(--primary);">Review Game →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Discovery Rows (Dynamic) -->
         <div id="discoveryRows"></div>
 
@@ -240,7 +263,7 @@
     <footer class="mt-5 py-5 text-center">
         <div class="container">
             <a class="footer-brand" href="/">
-                <div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
             </a>
             
             <div class="d-block mb-4">
@@ -266,6 +289,7 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script> 
     <script src="js/bootstrap-4.0.0.js"></script>
+    <script src="js/logo.js"></script>
     
     <script>
         // --- STATIC BASELINE DATA (Real Firestore Snapshots) ---
@@ -507,48 +531,6 @@
         }
 
         setupDragScroll(document.getElementById('categoriesTab'));
-
-        // Navbar Logo Animation Swap Logic
-        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
-        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
-        const brandGames = document.querySelector('.navbar-brand .brand-games');
-        const navbarBrand = document.querySelector('.navbar-brand');
-
-        function typeWriter(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
-            element.style.display = 'inline-block';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
-
-        if (navbarSprite) {
-            navbarSprite.addEventListener('animationend', (e) => {
-                if (e.animationName === 'sprite-play') {
-                    navbarBrand.classList.add('logo-swapped');
-                    navbarBrand.classList.add('typing-cursor');
-                    
-                    setTimeout(() => {
-                        navbarSprite.style.display = 'none';
-                        typeWriter(brandAlt, 'alt', 100, () => {
-                            setTimeout(() => {
-                                typeWriter(brandGames, 'games portal', 50, () => {
-                                    navbarBrand.classList.remove('typing-cursor');
-                                });
-                            }, 100);
-                        });
-                    }, 200);
-                }
-            });
-        }
     </script>
     
     <!-- Cookie Consent -->

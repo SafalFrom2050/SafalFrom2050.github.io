@@ -70,8 +70,11 @@
             cursor: pointer;
             width: 100%;
             transition: all 0.3s ease;
+            font-family: 'Press Start 2P', system-ui;
+            font-size: 10px;
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0;
         }
         .btn-delete-final:hover {
             background-color: var(--primary-hover);
@@ -127,7 +130,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-7 col-md-10">
                 <div class="glass-container animate-in text-center">
-                    <h1 class="page-title text-center">Delete Account</h1>
+                    <h1 class="page-title text-center" style="font-size: 1.5rem;">Delete Account</h1>
                     <p class="text-muted mb-5">Permanent account and data removal request.</p>
 
                     <div id="loginSection">
@@ -205,6 +208,7 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script>
     <script src="../js/bootstrap-4.0.0.js"></script>
+    <script src="../js/logo.js"></script>
 
     <script>
         // Initialize App Check
@@ -266,48 +270,6 @@
             var errDiv = document.getElementById('errorMessage');
             document.getElementById('errorText').innerText = msg;
             errDiv.style.display = 'block';
-        }
-
-        // Navbar Logo Animation Swap Logic
-        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
-        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
-        const brandGames = document.querySelector('.navbar-brand .brand-games');
-        const navbarBrand = document.querySelector('.navbar-brand');
-
-        function typeWriter(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
-            element.style.display = 'inline-block';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
-
-        if (navbarSprite) {
-            navbarSprite.addEventListener('animationend', (e) => {
-                if (e.animationName === 'sprite-play') {
-                    navbarBrand.classList.add('logo-swapped');
-                    navbarBrand.classList.add('typing-cursor');
-                    
-                    setTimeout(() => {
-                        navbarSprite.style.display = 'none';
-                        typeWriter(brandAlt, 'alt', 100, () => {
-                            setTimeout(() => {
-                                typeWriter(brandGames, 'games portal', 50, () => {
-                                    navbarBrand.classList.remove('typing-cursor');
-                                });
-                            }, 100);
-                        });
-                    }, 200);
-                }
-            });
         }
     </script>
 </body>

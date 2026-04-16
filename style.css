@@ -218,16 +218,17 @@ body {
     font-size: 20px;
     background: none;
     -webkit-text-fill-color: initial;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Press Start 2P', system-ui !important;
     display: flex !important;
     align-items: center;
     gap: 10px;
+    line-height: 1;
 }
 
 .brand-alt {
     color: var(--accent);
     font-family: 'Press Start 2P', system-ui;
-    font-size: 14px;
+    font-size: 20px;
     letter-spacing: -1px;
 }
 
@@ -237,8 +238,10 @@ body {
     -webkit-text-fill-color: transparent !important;
     display: inline-block;
     font-weight: 800;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
     font-size: 20px;
+    font-family: 'Outfit', sans-serif;
+    vertical-align: baseline;
 }
 
 .nav-link {
@@ -465,9 +468,16 @@ div.scrollmenu::-webkit-scrollbar {
 
 /* Typography Overrides */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 800;
+    font-family: 'Press Start 2P', system-ui;
+    font-weight: 400; /* Pixel font usually only has one weight */
 }
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; }
+h4 { font-size: 1.0rem; }
+h5 { font-size: 0.9rem; }
+h6 { font-size: 0.8rem; }
 
 .text-muted {
     color: var(--text-muted) !important;
@@ -527,17 +537,16 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     display: inline-block;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    letter-spacing: -2px;
-    font-size: 0.85em;
+    letter-spacing: -1px;
+    font-size: 1em; /* Increased to be main focus */
 }
 
 .text-blue { 
     color: var(--accent); 
     font-family: 'Press Start 2P', system-ui;
-    font-size: 0.65em;
-    letter-spacing: -1px;
+    font-size: 0.6em; /* Reduced to balance with Outfit */
     display: inline-block;
     vertical-align: middle;
 }
@@ -547,11 +556,11 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     display: inline-block;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
+    font-family: 'Press Start 2P', system-ui;
     text-transform: uppercase;
     letter-spacing: -1px;
     margin-bottom: 30px;
+    font-size: 1.5rem;
 }
 
 .hero-section p {
@@ -575,13 +584,33 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .horizontal-card {
-    flex: 0 0 200px;
+    flex: 0 0 180px;
+    width: 180px;
+    min-width: 0;
     background: var(--card-glass);
     border: 1px solid var(--border-glass);
     border-radius: 20px;
-    padding: 12px;
+    padding: 10px;
     transition: var(--transition);
     cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .horizontal-card {
+        flex: 0 0 150px;
+        width: 150px;
+    }
+}
+
+.h-card-info {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-align: center;
+    padding: 2px 10px 15px 10px; /* Enhanced breathing room for titles */
 }
 
 .horizontal-card:hover {
@@ -613,15 +642,26 @@ h1, h2, h3, h4, h5, h6 {
     aspect-ratio: 16/10;
     object-fit: cover;
     border-radius: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .h-card-info h6 {
-    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.2;
+    width: 100%;
+    text-align: center;
+}
+
+.h-card-info h6.ai-retro-text {
+    font-family: 'Press Start 2P', system-ui !important;
+    font-size: 7px;
+    letter-spacing: -0.5px;
 }
 
 /* NEW: Layout Helpers */
@@ -647,6 +687,8 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     display: inline-block;
+    font-family: 'Press Start 2P', system-ui;
+    font-size: 10px;
 }
 
 .feature-item {
@@ -823,12 +865,15 @@ footer::before {
 }
 
 .footer-brand .brand-alt {
-    font-size: 2.2rem; /* Increased to match Montserrat height visually */
+    font-family: 'Press Start 2P', system-ui;
+    font-size: 20px; 
     line-height: 1;
 }
 
 .footer-brand .brand-games {
-    font-size: 2.2rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
     line-height: 1;
 }
 
@@ -881,10 +926,10 @@ footer::before {
         height: 100px;
     }
     .footer-brand .brand-alt {
-        font-size: 3.5rem;
+        font-size: 2.5rem;
     }
     .footer-brand .brand-games {
-        font-size: 3.5rem;
+        font-size: 2.5rem;
     }
     .playstore-btn img {
         height: 80px;
@@ -1069,7 +1114,8 @@ footer::before {
     }
 }
 
-/* --- Sprite Logo Animation --- */
+
+/* --- Sprite Logo Animation (Restored) --- */
 .sprite-logo {
     width: 40px;
     height: 40px;
@@ -1087,15 +1133,13 @@ footer::before {
     width: 0;
     margin: 0;
     pointer-events: none;
-    display: none; /* Fully remove after fade */
+    display: none;
 }
 
-/* Initially hide text in navbar only */
+/* Initially hide text in navbar until orchestration class is added */
 .navbar-brand .brand-alt,
 .navbar-brand .brand-games {
     opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: none;
 }
 
@@ -1103,7 +1147,12 @@ footer::before {
 .logo-swapped .brand-games {
     display: inline-block;
     opacity: 1;
-    transform: translateX(0);
+}
+
+/* Standardized Logo Component */
+.brand-alt, .brand-games {
+    display: inline-block;
+    opacity: 1; /* Visible by default in Footer */
 }
 
 /* Typing Cursor Effect */
