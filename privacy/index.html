@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
@@ -29,25 +30,21 @@
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark card-glass">
         <div class="container">
-            <a class="navbar-brand" href="/"><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
-                <span class="navbar-toggler-icon"></span>
+            <a class="navbar-brand" href="/"><div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-label="Toggle navigation">
+                <i class="material-icons text-white" style="font-size: 30px;">menu</i>
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/privacy">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/terms">Terms</a>
-                    </li>
-                </ul>
+                <div class="navbar-nav ml-auto align-items-lg-center">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-3" onsubmit="event.preventDefault(); window.location.href='/library/?q='+document.getElementById('gameSearch').value;">
+                        <input id="gameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
+                    </form>
+                    <a href="/library/" class="nav-link">Library</a>
+                    <a href="/about" class="nav-link">About</a>
+                    <a href="/contact" class="nav-link">Contact</a>
+                    <a href="/privacy" class="nav-link">Privacy</a>
+                    <a href="/terms" class="nav-link">Terms</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -125,9 +122,78 @@
         </div>
     </div>
 
+    <footer class="mt-5 py-5 text-center">
+        <div class="container">
+            <a class="footer-brand" href="/">
+                <div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+            </a>
+            
+            <div class="d-block mb-4">
+                <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="playstore-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="height: 48px;">
+                </a>
+            </div>
+
+            <p class="mb-4 opacity-7">Premium gaming experience, accessible anywhere.</p>
+            
+            <div class="d-flex justify-content-center flex-wrap footer-links">
+                <a href="/about" class="mx-3">About</a>
+                <a href="/contact" class="mx-3">Contact</a>
+                <a href="/privacy" class="mx-3">Privacy</a>
+                <a href="/terms" class="mx-3">Terms</a>
+            </div>
+            
+            <p class="mt-5 mb-0 small opacity-5">© 2026 alt games portal. All rights reserved.</p>
+        </div>
+    </footer>
+
     <!-- Scripts -->
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
+
+    <script>
+        // Navbar Logo Animation Swap Logic
+        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
+        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
+        const brandGames = document.querySelector('.navbar-brand .brand-games');
+        const navbarBrand = document.querySelector('.navbar-brand');
+
+        function typeWriter(element, text, speed, callback) {
+            let i = 0;
+            element.textContent = '';
+            element.style.display = 'inline-block';
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        if (navbarSprite) {
+            navbarSprite.addEventListener('animationend', (e) => {
+                if (e.animationName === 'sprite-play') {
+                    navbarBrand.classList.add('logo-swapped');
+                    navbarBrand.classList.add('typing-cursor');
+                    
+                    setTimeout(() => {
+                        navbarSprite.style.display = 'none';
+                        typeWriter(brandAlt, 'alt', 100, () => {
+                            setTimeout(() => {
+                                typeWriter(brandGames, 'games portal', 50, () => {
+                                    navbarBrand.classList.remove('typing-cursor');
+                                });
+                            }, 100);
+                        });
+                    }, 200);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
