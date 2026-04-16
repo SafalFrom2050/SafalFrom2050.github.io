@@ -77,6 +77,56 @@ function renderGameDetails(game) {
         document.getElementById("title").classList.add("ai-retro-text");
     }
 
+    // 4. Update SEO and Schema
+    const currentUrl = window.location.href.split('?')[0] + "?id=" + game.id;
+    const gameDesc = game.description ? game.description.replace(/<[^>]*>?/gm, '').substring(0, 160) : "Play " + (game.name || game.title) + " instantly in your browser at alt games portal.";
+    const gameImage = game.imageUrl || "https://gamesp.xyz/images/cover.png";
+    const gameTitleText = (game.name || game.title) + " | alt games portal";
+
+    const seoDesc = document.getElementById("seo-description");
+    if (seoDesc) seoDesc.content = gameDesc;
+    
+    const seoCan = document.getElementById("seo-canonical");
+    if (seoCan) seoCan.href = currentUrl;
+    
+    const ogTitle = document.getElementById("og-title");
+    if (ogTitle) ogTitle.content = gameTitleText;
+    
+    const ogDesc = document.getElementById("og-description");
+    if (ogDesc) ogDesc.content = gameDesc;
+    
+    const ogImg = document.getElementById("og-image");
+    if (ogImg) ogImg.content = gameImage;
+    
+    const ogUrl = document.getElementById("og-url");
+    if (ogUrl) ogUrl.content = currentUrl;
+    
+    // Inject Schema.org VideoGame data
+    const schemaBlock = document.getElementById("schema-block");
+    if (schemaBlock) {
+        const schema = {
+            "@context": "https://schema.org",
+            "@type": "VideoGame",
+            "name": game.name || game.title,
+            "description": gameDesc,
+            "url": currentUrl,
+            "image": gameImage,
+            "genre": game.category ? (Array.isArray(game.category) ? game.category[0] : game.category) : "Browser Game",
+            "playMode": "SinglePlayer",
+            "applicationCategory": "Game",
+            "operatingSystem": "Web Browser"
+        };
+        
+        if (stats && stats.averageRating !== undefined && stats.favoriteCount > 0) {
+            schema.aggregateRating = {
+                "@type": "AggregateRating",
+                "ratingValue": stats.averageRating.toString(),
+                "ratingCount": stats.favoriteCount.toString(),
+                "bestRating": "5"
+            };
+        }
+        schemaBlock.innerHTML = JSON.stringify(schema);
+    }
 }
 
 function renderSimilarGames(games) {

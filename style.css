@@ -733,6 +733,14 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
+@media (max-width: 576px) {
+    .btn-outline-red {
+        min-width: 0 !important;
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
 .btn-outline-red:hover {
     background-color: var(--primary) !important;
     color: white !important;
@@ -761,6 +769,14 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1 !important;
     min-width: 240px;
     height: 52px;
+}
+
+@media (max-width: 576px) {
+    .btn-ai {
+        min-width: 0 !important;
+        width: 100%;
+        max-width: 280px;
+    }
 }
 
 /* --- Footer Upgrade --- */

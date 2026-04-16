@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Play the best AI-generated and hand-picked browser games instantly. Enjoy 10,000+ free online games across all genres with no downloads required.">
+    <link rel="canonical" href="https://gamesp.xyz/">
+    
     <meta property="og:title" content="alt games portal: Play 10,000+ Games">
     <meta property="og:image" content="https://gamesp.xyz/images/cover.png">
     <meta property="og:description" content="Play the best AI-generated and hand-picked games instantly in your browser. No downloads required.">
@@ -14,6 +17,43 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
     <title>alt games portal: 10,000+ Free Browser Games</title>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://gamesp.xyz/#website",
+          "url": "https://gamesp.xyz/",
+          "name": "alt games portal",
+          "description": "Play 10,000+ free browser games instantly.",
+          "publisher": {
+            "@id": "https://gamesp.xyz/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://gamesp.xyz/library/?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://gamesp.xyz/#organization",
+          "name": "alt games portal",
+          "url": "https://gamesp.xyz/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://gamesp.xyz/images/cover.png"
+          }
+        }
+      ]
+    }
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,9 +119,9 @@
         <section class="hero-section text-center mb-5 animate-in">
             <h1><span class="text-red">Play Games without Installing, or</span> <br> <span class="text-blue">build your own in minutes using AI</span></h1>
             <p class="lead">Play 10,000+ games or ask our AI Agent to hallucinate your dream game in minutes. It's like magic, but with zero math involved.</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4">Explore Library</a>
-                <a href="/bio" class="btn btn-ai ml-2">Try AI Games</a>
+            <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center px-4">
+                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4 mb-3 mb-sm-0">Explore Library</a>
+                <a href="/bio" class="btn btn-ai ml-sm-3">Try AI Games</a>
             </div>
         </section>
 
