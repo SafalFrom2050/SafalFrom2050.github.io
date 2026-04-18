@@ -82,9 +82,9 @@ body {
     width: 150px;
     height: 150px;
     background-image: url('../images/frames.png');
-    background-size: 2250px 150px;
+    background-size: 2600% 100%;
     background-repeat: no-repeat;
-    animation: play-sprite 1.2s steps(15) infinite;
+    animation: play-sprite 1.2s steps(25) infinite;
     filter: drop-shadow(0 0 15px rgba(255, 71, 87, 0.4));
 }
 
@@ -94,6 +94,6 @@ body {
     }
 
     to {
-        background-position: -2250px 0;
+        background-position: 100% 0;
     }
 }

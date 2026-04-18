@@ -536,21 +536,13 @@ h6 {
     width: 150px;
     height: 150px;
     background-image: url('images/frames.png');
-    background-size: 2250px 150px;
+    background-size: 2600% 100%;
     background-repeat: no-repeat;
-    animation: play-sprite 1.2s steps(15) infinite;
+    animation: sprite-play 1.2s steps(25) infinite;
     filter: drop-shadow(0 0 15px var(--primary-glow));
 }
 
-@keyframes play-sprite {
-    from {
-        background-position: 0 0;
-    }
 
-    to {
-        background-position: -2250px 0;
-    }
-}
 
 /* Animations */
 @keyframes fadeInSlide {
