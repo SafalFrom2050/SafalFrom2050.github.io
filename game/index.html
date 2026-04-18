@@ -4,7 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>alt games portal</title>
+    
+    <title id="seo-title">alt games portal</title>
+    <meta name="description" id="seo-description" content="Loading game...">
+    <link rel="canonical" id="seo-canonical" href="https://gamesp.xyz/game/">
+    
+    <meta property="og:title" id="og-title" content="alt games portal">
+    <meta property="og:description" id="og-description" content="Loading game...">
+    <meta property="og:image" id="og-image" content="https://gamesp.xyz/images/cover.png">
+    <meta property="og:url" id="og-url" content="https://gamesp.xyz/game/">
+    
+    <!-- JSON-LD Structured Data Placeholder -->
+    <script id="schema-block" type="application/ld+json">
+    {}
+    </script>
     
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
@@ -227,7 +240,7 @@
     <footer class="mt-5 py-5 text-center">
         <div class="container">
             <a class="footer-brand" href="/">
-                <div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
             </a>
             
             <div class="d-block mb-4">
@@ -268,48 +281,13 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
+    <script src="../js/logo.js"></script>
     <script src="script.js"></script>
     <script>
-        // Navbar Logo Animation Swap Logic
-        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
-        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
-        const brandGames = document.querySelector('.navbar-brand .brand-games');
-        const navbarBrand = document.querySelector('.navbar-brand');
-
-        function typeWriter(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
-            element.style.display = 'inline-block';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
-
-        if (navbarSprite) {
-            navbarSprite.addEventListener('animationend', (e) => {
-                if (e.animationName === 'sprite-play') {
-                    navbarBrand.classList.add('logo-swapped');
-                    navbarBrand.classList.add('typing-cursor');
-                    
-                    setTimeout(() => {
-                        navbarSprite.style.display = 'none';
-                        typeWriter(brandAlt, 'alt', 100, () => {
-                            setTimeout(() => {
-                                typeWriter(brandGames, 'games portal', 50, () => {
-                                    navbarBrand.classList.remove('typing-cursor');
-                                });
-                            }, 100);
-                        });
-                    }, 200);
-                }
-            });
+        // App Promo Logic (simplified)
+        function dismissAppPromo() {
+            document.getElementById('appPromoModal').classList.remove('visible');
+            localStorage.setItem('appPromoDismissed', Date.now());
         }
     </script>
 </body>

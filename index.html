@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Play the best AI-generated and hand-picked browser games instantly. Enjoy 10,000+ free online games across all genres with no downloads required.">
+    <link rel="canonical" href="https://gamesp.xyz/">
+    
     <meta property="og:title" content="alt games portal: Play 10,000+ Games">
     <meta property="og:image" content="https://gamesp.xyz/images/cover.png">
     <meta property="og:description" content="Play the best AI-generated and hand-picked games instantly in your browser. No downloads required.">
@@ -14,6 +17,43 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
     <title>alt games portal: 10,000+ Free Browser Games</title>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://gamesp.xyz/#website",
+          "url": "https://gamesp.xyz/",
+          "name": "alt games portal",
+          "description": "Play 10,000+ free browser games instantly.",
+          "publisher": {
+            "@id": "https://gamesp.xyz/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://gamesp.xyz/library/?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://gamesp.xyz/#organization",
+          "name": "alt games portal",
+          "url": "https://gamesp.xyz/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://gamesp.xyz/images/cover.png"
+          }
+        }
+      ]
+    }
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,9 +122,9 @@
         <section class="hero-section text-center mb-5 animate-in">
             <h1><span class="text-red">Play Games without Installing, or</span> <br> <span class="text-blue">build your own in minutes using AI</span></h1>
             <p class="lead">Play 10,000+ games or ask our AI Agent to hallucinate your dream game in minutes. It's like magic, but with zero math involved.</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4">Explore Library</a>
-                <a href="/bio" class="btn btn-ai ml-2">Try AI Games</a>
+            <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center px-4">
+                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4 mb-3 mb-sm-0">Explore Library</a>
+                <a href="/bio" class="btn btn-ai ml-sm-3">Try AI Games</a>
             </div>
         </section>
 
@@ -94,6 +134,29 @@
                 <h3 class="mb-0 ai-retro-text">Featured AI Games</h3>
             </div>
             <div class="horizontal-scroll" id="aiGamesRow">
+            </div>
+        </section>
+
+        <!-- Editor's Choice Section (High Value Content) -->
+        <section class="content-block my-5 animate-in" style="animation-delay: 0.3s;">
+            <div class="section-divider mb-4">
+                <span>Editor's Choice</span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="glass-container h-100 p-4">
+                        <h4 class="ai-retro-text mb-3" style="font-size: 1.1rem;">Top Pick: Neon Beats</h4>
+                        <p class="small text-muted">Our editors have selected <strong>Neon Beats: Fever Edition</strong> as this month's standout instant title. Developed using advanced AI heuristics, it offers a rhythmic combat experience that pushes the boundaries of cross-platform performance. We highly recommend this for fans of synth-wave aesthetics and precise timing challenges.</p>
+                        <a href="/bio/" class="btn btn-link p-0 small font-weight-bold" style="color: var(--accent);">Play Neon Beats →</a>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="glass-container h-100 p-4">
+                        <h4 class="text-gradient mb-3" style="font-size: 1.1rem; font-weight: 800;">Battle Simulator Review</h4>
+                        <p class="small text-muted">A deep dive into the <strong>Police Prison Battle Simulator</strong> reveals a surprisingly complex physics engine for an instant title. It manages to balance chaotic action with strategic unit placement, making it one of the most addictive strategy games in our current library of 10,000+ titles.</p>
+                        <a href="/game/?id=fHg6eu5uGbEAjwdh6vil" class="btn btn-link p-0 small font-weight-bold" style="color: var(--primary);">Review Game →</a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -200,7 +263,7 @@
     <footer class="mt-5 py-5 text-center">
         <div class="container">
             <a class="footer-brand" href="/">
-                <div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
             </a>
             
             <div class="d-block mb-4">
@@ -226,6 +289,7 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script> 
     <script src="js/bootstrap-4.0.0.js"></script>
+    <script src="js/logo.js"></script>
     
     <script>
         // --- STATIC BASELINE DATA (Real Firestore Snapshots) ---
@@ -467,48 +531,6 @@
         }
 
         setupDragScroll(document.getElementById('categoriesTab'));
-
-        // Navbar Logo Animation Swap Logic
-        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
-        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
-        const brandGames = document.querySelector('.navbar-brand .brand-games');
-        const navbarBrand = document.querySelector('.navbar-brand');
-
-        function typeWriter(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
-            element.style.display = 'inline-block';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
-
-        if (navbarSprite) {
-            navbarSprite.addEventListener('animationend', (e) => {
-                if (e.animationName === 'sprite-play') {
-                    navbarBrand.classList.add('logo-swapped');
-                    navbarBrand.classList.add('typing-cursor');
-                    
-                    setTimeout(() => {
-                        navbarSprite.style.display = 'none';
-                        typeWriter(brandAlt, 'alt', 100, () => {
-                            setTimeout(() => {
-                                typeWriter(brandGames, 'games portal', 50, () => {
-                                    navbarBrand.classList.remove('typing-cursor');
-                                });
-                            }, 100);
-                        });
-                    }, 200);
-                }
-            });
-        }
     </script>
     
     <!-- Cookie Consent -->

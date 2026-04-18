@@ -4,12 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game Library | alt games portal</title>
+    <meta name="description" content="Explore our library of 10,000+ free browser games. Action, Puzzle, Sports, and AI-generated games available instantly with no download.">
+    <link rel="canonical" href="https://gamesp.xyz/library">
+    
+    <meta property="og:title" content="Game Library | alt games portal">
+    <meta property="og:description" content="Browse and search over 10,000 free high-quality browser games. Play instantly anywhere.">
+    <meta property="og:image" content="https://gamesp.xyz/images/cover.png">
+    <meta property="og:url" content="https://gamesp.xyz/library">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
+    <title>Game Library | alt games portal</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,7 +111,7 @@
     <footer class="mt-5 py-5 text-center">
         <div class="container">
             <a class="footer-brand" href="/">
-                <div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
             </a>
             
             <div class="d-block mb-4">
@@ -132,6 +139,7 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
+    <script src="../js/logo.js"></script>
     
     <script>
         let currentCategory = 'all';
@@ -312,47 +320,7 @@
         
         init();
 
-        // Navbar Logo Animation Swap Logic
-        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
-        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
-        const brandGames = document.querySelector('.navbar-brand .brand-games');
-        const navbarBrand = document.querySelector('.navbar-brand');
-
-        function typeWriter(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
-            element.style.display = 'inline-block';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
-
-        if (navbarSprite) {
-            navbarSprite.addEventListener('animationend', (e) => {
-                if (e.animationName === 'sprite-play') {
-                    navbarBrand.classList.add('logo-swapped');
-                    navbarBrand.classList.add('typing-cursor');
-                    
-                    setTimeout(() => {
-                        navbarSprite.style.display = 'none';
-                        typeWriter(brandAlt, 'alt', 100, () => {
-                            setTimeout(() => {
-                                typeWriter(brandGames, 'games portal', 50, () => {
-                                    navbarBrand.classList.remove('typing-cursor');
-                                });
-                            }, 100);
-                        });
-                    }, 200);
-                }
-            });
-        }
+        setupDragScroll(document.getElementById('categoriesTab'));
     </script>
 </body>
 </html>

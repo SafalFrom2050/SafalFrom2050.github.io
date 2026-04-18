@@ -50,8 +50,13 @@ function renderGameDetails(game) {
     const fsBtn = document.getElementById("fullscreenBtn");
     if (fsBtn) fsBtn.classList.add('visible');
 
-    if (game.description) {
+    if (game.description && game.description.trim() !== "") {
         document.getElementById("description").innerHTML = game.description;
+    } else {
+        // High-value fallback for AdSense:
+        const cat = game.category ? (Array.isArray(game.category) ? game.category[0] : game.category) : "Instant Game";
+        const fallback = `Experience <strong>${game.name || game.title}</strong>, a thrilling ${cat} game on alt games portal. Our platform allows you to play high-quality titles with no installations required. Whether you are looking for a quick session or deep strategic gameplay, ${game.name || game.title} offers an engaging experience designed for players of all skill levels. Join thousands of other gamers and explore the future of instant gaming.`;
+        document.getElementById("description").innerHTML = fallback;
     }
 
     if (game.category) {
@@ -77,6 +82,57 @@ function renderGameDetails(game) {
         document.getElementById("title").classList.add("ai-retro-text");
     }
 
+    // 4. Update SEO and Schema
+    const currentUrl = window.location.href.split('?')[0] + "?id=" + game.id;
+    const rawDesc = game.description && game.description.length > 10 ? game.description : `Play ${game.name || game.title} instantly without installing. A premium ${game.category ? game.category[0] : 'instant'} game featured on alt games portal. No downloads required.`;
+    const gameDesc = rawDesc.replace(/<[^>]*>?/gm, '').substring(0, 160);
+    const gameImage = game.imageUrl || "https://gamesp.xyz/images/cover.png";
+    const gameTitleText = (game.name || game.title) + " | alt games portal";
+
+    const seoDesc = document.getElementById("seo-description");
+    if (seoDesc) seoDesc.content = gameDesc;
+    
+    const seoCan = document.getElementById("seo-canonical");
+    if (seoCan) seoCan.href = currentUrl;
+    
+    const ogTitle = document.getElementById("og-title");
+    if (ogTitle) ogTitle.content = gameTitleText;
+    
+    const ogDesc = document.getElementById("og-description");
+    if (ogDesc) ogDesc.content = gameDesc;
+    
+    const ogImg = document.getElementById("og-image");
+    if (ogImg) ogImg.content = gameImage;
+    
+    const ogUrl = document.getElementById("og-url");
+    if (ogUrl) ogUrl.content = currentUrl;
+    
+    // Inject Schema.org VideoGame data
+    const schemaBlock = document.getElementById("schema-block");
+    if (schemaBlock) {
+        const schema = {
+            "@context": "https://schema.org",
+            "@type": "VideoGame",
+            "name": game.name || game.title,
+            "description": gameDesc,
+            "url": currentUrl,
+            "image": gameImage,
+            "genre": game.category ? (Array.isArray(game.category) ? game.category[0] : game.category) : "Browser Game",
+            "playMode": "SinglePlayer",
+            "applicationCategory": "Game",
+            "operatingSystem": "Web Browser"
+        };
+        
+        if (stats && stats.averageRating !== undefined && stats.favoriteCount > 0) {
+            schema.aggregateRating = {
+                "@type": "AggregateRating",
+                "ratingValue": stats.averageRating.toString(),
+                "ratingCount": stats.favoriteCount.toString(),
+                "bestRating": "5"
+            };
+        }
+        schemaBlock.innerHTML = JSON.stringify(schema);
+    }
 }
 
 function renderSimilarGames(games) {

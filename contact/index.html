@@ -4,7 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="../favicons/favicon.png">
+    <meta name="description" content="Contact alt games portal for support, feedback, or business inquiries. We host 10,000+ instant browser games.">
+    <link rel="canonical" href="https://gamesp.xyz/contact">
+    
+    <meta property="og:title" content="Contact Us | alt games portal">
+    <meta property="og:description" content="Get in touch with the alt games portal team for support, feedback, or game submissions.">
+    <meta property="og:image" content="https://gamesp.xyz/images/cover.png">
+    <meta property="og:url" content="https://gamesp.xyz/contact">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
     <title>Contact Us | alt games portal</title>
     
     <!-- Google Fonts -->
@@ -35,6 +46,10 @@
             padding-top: 80px;
         }
 
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Press Start 2P', system-ui;
+        }
+
         /* Glassmorphism Styling */
         .glass-card {
             background: var(--card-glass);
@@ -54,9 +69,9 @@
         }
 
         h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            letter-spacing: -2px;
+            font-family: 'Press Start 2P', system-ui;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
             margin-bottom: 30px;
             color: var(--primary);
             text-transform: uppercase;
@@ -206,7 +221,7 @@
     <footer class="mt-5 py-5 text-center">
         <div class="container">
             <a class="footer-brand" href="/">
-                <div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
             </a>
             
             <div class="d-block mb-4">
@@ -232,49 +247,8 @@
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
+    <script src="../js/logo.js"></script>
 
-    <script>
-        // Navbar Logo Animation Swap Logic
-        const navbarSprite = document.querySelector('.navbar-brand .sprite-logo');
-        const brandAlt = document.querySelector('.navbar-brand .brand-alt');
-        const brandGames = document.querySelector('.navbar-brand .brand-games');
-        const navbarBrand = document.querySelector('.navbar-brand');
-
-        function typeWriter(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
-            element.style.display = 'inline-block';
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
-
-        if (navbarSprite) {
-            navbarSprite.addEventListener('animationend', (e) => {
-                if (e.animationName === 'sprite-play') {
-                    navbarBrand.classList.add('logo-swapped');
-                    navbarBrand.classList.add('typing-cursor');
-                    
-                    setTimeout(() => {
-                        navbarSprite.style.display = 'none';
-                        typeWriter(brandAlt, 'alt', 100, () => {
-                            setTimeout(() => {
-                                typeWriter(brandGames, 'games portal', 50, () => {
-                                    navbarBrand.classList.remove('typing-cursor');
-                                });
-                            }, 100);
-                        });
-                    }, 200);
-                }
-            });
-        }
     </script>
 </body>
 </html>

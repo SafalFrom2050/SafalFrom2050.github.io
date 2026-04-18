@@ -56,10 +56,11 @@ body {
 #full-screen-btn>#msg {
     color: white;
     margin: 0 15px 0 0;
-    font-size: 14px;
-    font-weight: 600;
+    font-family: 'Press Start 2P', system-ui;
+    font-size: 10px;
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0;
 }
 
 /* Animations */
