@@ -1222,7 +1222,7 @@ footer::before {
     background-size: 2600% 100%;
     background-position: 0 0;
     background-repeat: no-repeat;
-    animation: sprite-play 2.5s steps(25) 2 forwards;
+    animation: sprite-play 3s steps(25) 2 forwards;
     display: inline-block;
     flex-shrink: 0;
     transition: opacity 0.3s ease;
