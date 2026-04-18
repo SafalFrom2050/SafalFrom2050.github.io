@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>alt games portal: GenAI-Mode</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    
+
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    
+
     <!-- Google Analytics (Performance Optimized) -->
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -28,11 +31,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZJ70L7WQQ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-LZJ70L7WQQ', { 'animate_speed': 'premium' });
     </script>
-    
+
     <style>
         :root {
             --primary-bg: #050505;
@@ -66,6 +69,7 @@
             opacity: 0.4;
             border-radius: 50%;
         }
+
         .shape-1 {
             width: 300px;
             height: 300px;
@@ -74,6 +78,7 @@
             left: -100px;
             animation: move 20s infinite alternate;
         }
+
         .shape-2 {
             width: 400px;
             height: 400px;
@@ -84,8 +89,13 @@
         }
 
         @keyframes move {
-            from { transform: translate(0, 0); }
-            to { transform: translate(50px, 100px); }
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(50px, 100px);
+            }
         }
 
         .profile-section {
@@ -107,8 +117,8 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
             animation: ease-reveal 0.5s ease-in forwards;
         }
@@ -117,19 +127,33 @@
             width: 100px;
             height: 100px;
             background-image: url('../images/frames.png');
-            background-size: 1500% 100%;
+            background-size: 2600% 100%;
             background-position: 0 0;
-            animation: sprite-play 1.5s steps(14) 2 forwards;
+            background-repeat: no-repeat;
+            animation: sprite-play 2.5s steps(25) 2 forwards;
         }
 
         @keyframes sprite-play {
-            from { background-position: 0 0; }
-            to { background-position: -1400% 0; }
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 100% 0;
+            }
+
         }
 
         @keyframes ease-reveal {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         h1 {
@@ -145,15 +169,21 @@
             overflow: visible;
         }
 
-        .brand-alt { color: var(--accent); font-family: var(--font-retro); font-size: 14px; letter-spacing: -1px; }
-        .brand-games { 
+        .brand-alt {
+            color: var(--accent);
+            font-family: var(--font-retro);
+            font-size: 14px;
+            letter-spacing: -1px;
+        }
+
+        .brand-games {
             background: var(--primary-gradient);
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             display: inline-block;
-            font-family: 'Montserrat', sans-serif; 
-            letter-spacing: -1px; 
-            font-size: 22px; 
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -1px;
+            font-size: 22px;
             font-weight: 800;
         }
 
@@ -204,8 +234,15 @@
         }
 
         @keyframes blink-caret {
-            from, to { opacity: 1; }
-            50% { opacity: 0; }
+
+            from,
+            to {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
 
         .links-container {
@@ -241,15 +278,15 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
             transition: 0.5s;
         }
 
         .link-card:hover {
             transform: translateY(-3px) scale(1.02);
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.2);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .link-card:hover::after {
@@ -262,7 +299,7 @@
             border-radius: 12px;
             object-fit: cover;
             margin-right: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .link-content {
@@ -280,7 +317,7 @@
 
         .link-subtitle {
             font-size: 7px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             padding: 4px 10px;
             border-radius: 10px;
             display: inline-block;
@@ -313,13 +350,13 @@
             gap: 10px;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             font-size: 9px;
         }
 
         .app-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             background: #f8fafc;
             color: black;
             text-decoration: none;
@@ -332,7 +369,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             display: none;
             align-items: center;
@@ -370,7 +407,7 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .modal-body {
@@ -424,8 +461,9 @@
         .modal-description::-webkit-scrollbar {
             width: 4px;
         }
+
         .modal-description::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 2px;
         }
 
@@ -473,7 +511,7 @@
             width: 100%;
             aspect-ratio: 16/9;
             background: #000;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .modal-player.portrait {
@@ -513,8 +551,8 @@
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             padding: 8px;
             border-radius: 10px;
@@ -553,7 +591,8 @@
             z-index: 99999 !important;
             margin: 0 !important;
             border-radius: 0 !important;
-            transform: none !important; /* CRITICAL: Remove transform to allow fixed sizing to viewport */
+            transform: none !important;
+            /* CRITICAL: Remove transform to allow fixed sizing to viewport */
             backdrop-filter: none !important;
             background: #000 !important;
         }
@@ -571,19 +610,19 @@
         .modal-card.virtual-fullscreen .fullscreen-btn {
             background: var(--accent);
             color: #0f172a;
-            bottom: 30px; 
+            bottom: 30px;
             right: 30px;
         }
 
         .btn-vibing {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 9px;
         }
 
         .btn-vibing:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
         }
 
@@ -616,7 +655,7 @@
         .help-text {
             font-size: 9px;
             line-height: 1.6;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
             max-width: 280px;
         }
 
@@ -626,14 +665,14 @@
             gap: 10px;
             margin: 10px 0;
             padding: 10px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             font-size: 9px;
         }
 
         .btn-copy {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
             padding: 8px 15px;
             border-radius: 10px;
@@ -643,27 +682,41 @@
         }
 
         .btn-copy:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .btn-close {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn-close:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         #loader {
@@ -685,19 +738,31 @@
         }
 
         @keyframes dot-pulse {
-            0% { box-shadow: 9999px 0 0 -5px var(--accent); }
-            30% { box-shadow: 9999px 0 0 2px var(--accent); }
-            60%, 100% { box-shadow: 9999px 0 0 -5px var(--accent); }
+            0% {
+                box-shadow: 9999px 0 0 -5px var(--accent);
+            }
+
+            30% {
+                box-shadow: 9999px 0 0 2px var(--accent);
+            }
+
+            60%,
+            100% {
+                box-shadow: 9999px 0 0 -5px var(--accent);
+            }
         }
+
         @media (max-width: 480px) {
             .section-header {
                 font-size: 8px !important;
                 margin: 20px 0 10px 0 !important;
             }
+
             .typing-container {
                 max-width: 100% !important;
                 text-align: center !important;
             }
+
             .cursor {
                 width: 8px;
                 height: 8px;
@@ -705,6 +770,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
@@ -717,7 +783,8 @@
             <h1><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></h1>
             <p class="bio-text">Watch AI Hallucinate</p>
         </div>
-        <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button" onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'BioHeader' });">
+        <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button"
+            onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'BioHeader' });">
             <i class="material-icons">download</i>
             Get App on Play Store
         </a>
@@ -750,15 +817,18 @@
                     <span>Tap the menu & select <b>Open in Browser</b></span>
                 </div>
                 <button class="btn-copy" onclick="copyLink()">
-                    <i class="material-icons" style="font-size: 12px; vertical-align: middle;">content_copy</i> COPY PAGE LINK
+                    <i class="material-icons" style="font-size: 12px; vertical-align: middle;">content_copy</i> COPY
+                    PAGE LINK
                 </button>
             </div>
             <img id="modalBanner" class="modal-banner" src="" alt="Game Preview">
             <div class="modal-body">
                 <h2 id="modalTitle">Game Title</h2>
                 <div class="modal-meta">
-                    <span id="modalCategory"><i class="material-icons" style="font-size: 14px;">category</i> Arcade</span>
-                    <span id="modalStats"><i class="material-icons" style="font-size: 14px;">play_arrow</i> 1.2k plays</span>
+                    <span id="modalCategory"><i class="material-icons" style="font-size: 14px;">category</i>
+                        Arcade</span>
+                    <span id="modalStats"><i class="material-icons" style="font-size: 14px;">play_arrow</i> 1.2k
+                        plays</span>
                 </div>
                 <div id="modalDescription" class="modal-description">
                     Description goes here...
@@ -767,8 +837,13 @@
                     <button id="modalPlayBtn" class="modal-btn btn-play">
                         <i class="material-icons" style="font-size: 18px; margin-right: 5px;">play_arrow</i> PLAY NOW
                     </button>
-                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" id="modalDownloadBtn" class="modal-btn btn-download" style="display: none;" onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'AI_Game_Download_Create' });">Download & Create Yours</a>
-                    <button class="modal-btn btn-vibing" onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'NotVibing', 'game_id': currentPlayerGame?.id });">Not Vibing</button>
+                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" id="modalDownloadBtn"
+                        class="modal-btn btn-download" style="display: none;"
+                        onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'AI_Game_Download_Create' });">Download
+                        & Create Yours</a>
+                    <button class="modal-btn btn-vibing"
+                        onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'NotVibing', 'game_id': currentPlayerGame?.id });">Not
+                        Vibing</button>
                 </div>
             </div>
         </div>
@@ -780,7 +855,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
-    
+
     <script>
         // Set configuration
         var config = {
@@ -800,15 +875,15 @@
                 new firebase.appCheck.ReCaptchaEnterpriseProvider('6LerGoMsAAAAAHNLdx75KLqssqSTGG4RJRIB0BUs'),
                 true
             );
-        } catch(e) { console.warn("AppCheck failed to init", e); }
-        
+        } catch (e) { console.warn("AppCheck failed to init", e); }
+
         // --- Multiline Typewriter Effect ---
         function initTypewriter() {
             const container = document.getElementById('typewriter');
             const fullText = container.innerText;
             container.innerText = "";
             container.style.opacity = "1";
-            
+
             let i = 0;
             function type() {
                 if (i < fullText.length) {
@@ -819,15 +894,15 @@
                     container.innerHTML = fullText + '<span class="cursor"></span>';
                 }
             }
-            
+
             // Start after a short delay
             setTimeout(type, 800);
         }
-        
+
         // Initial call
         window.addEventListener('DOMContentLoaded', () => {
             initTypewriter();
-            
+
             // Register AI Game Service Worker for virtual runtime
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('../ai-game-sw.js', { scope: '/' })
@@ -844,7 +919,7 @@
         function renderGames(games) {
             const loader = document.getElementById('loader');
             if (loader) loader.remove();
-            
+
             linksList.innerHTML = "";
 
             games.forEach((game, index) => {
@@ -897,9 +972,9 @@
             `;
 
             humanCard.onclick = () => {
-                gtag('event', 'engagement', { 
-                    'event_category': 'Bio_Navigation', 
-                    'event_label': 'Go_To_Library' 
+                gtag('event', 'engagement', {
+                    'event_category': 'Bio_Navigation',
+                    'event_label': 'Go_To_Library'
                 });
                 window.location.href = '/library/';
             };
@@ -928,13 +1003,13 @@
             mBanner.style.display = 'block';
             mPlayer.style.display = 'none';
             mIframe.src = "about:blank";
-            
+
             mTitle.innerText = game.title;
             mCategory.innerHTML = `<i class="material-icons" style="font-size: 14px;">category</i> ${game.category || 'AI Game'}`;
-            
+
             const plays = game.playCount || 0;
             const rating = game.rating ? ` | ${game.rating} stars` : '';
-            
+
             if (plays > 100) {
                 mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">play_arrow</i> ${plays} plays${rating}`;
             } else if (game.rating) {
@@ -942,9 +1017,9 @@
             } else {
                 mStats.innerHTML = ``;
             }
-            
+
             mDesc.innerText = game.description || "No description available for this AI game.";
-            
+
             // Initial button states
             mDownloadBtn.style.display = 'none';
             if (game.storageBasePath && game.fileManifest) {
@@ -953,7 +1028,7 @@
             } else {
                 mPlayBtn.style.display = 'none';
             }
-            
+
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -962,10 +1037,10 @@
             const btnIcon = document.querySelector('.fullscreen-btn i');
             const isNativeSupported = (mPlayer.requestFullscreen || mPlayer.webkitRequestFullscreen || mPlayer.msRequestFullscreen);
 
-            gtag('event', 'engagement', { 
-                'event_category': 'AI_Game', 
-                'event_label': isNativeSupported ? 'ToggleFullscreen_Native' : 'ToggleFullscreen_Virtual', 
-                'game_id': currentPlayerGame?.id 
+            gtag('event', 'engagement', {
+                'event_category': 'AI_Game',
+                'event_label': isNativeSupported ? 'ToggleFullscreen_Native' : 'ToggleFullscreen_Virtual',
+                'game_id': currentPlayerGame?.id
             });
 
             if (isNativeSupported) {
@@ -1013,16 +1088,16 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            
+
             const btn = document.querySelector('.btn-copy');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="material-icons" style="font-size: 12px; vertical-align: middle;">check</i> LINK COPIED!';
             setTimeout(() => { btn.innerHTML = originalText; }, 2000);
-            
-            gtag('event', 'engagement', { 
-                'event_category': 'AI_Game', 
-                'event_label': 'CopyLink_Fallback', 
-                'game_id': currentPlayerGame?.id 
+
+            gtag('event', 'engagement', {
+                'event_category': 'AI_Game',
+                'event_label': 'CopyLink_Fallback',
+                'game_id': currentPlayerGame?.id
             });
         }
 
@@ -1044,7 +1119,7 @@
             try {
                 const storage = firebase.storage();
                 const manifest = {};
-                
+
                 // Fetch download URLs for all critical files
                 const fetchPromises = game.fileManifest.map(async (file) => {
                     try {
@@ -1072,15 +1147,15 @@
                 mBanner.style.display = 'none';
                 mPlayer.style.display = 'block';
                 mPlayer.className = 'modal-player' + (game.isPortrait ? ' portrait' : '');
-                
+
                 // Update Buttons
                 mPlayBtn.style.display = 'none';
                 mDownloadBtn.style.display = 'flex';
-                
+
                 // Short delay to ensure SW message is processed
                 setTimeout(() => {
                     mIframe.src = `/ai-game-runtime/${game.projectId || game.id}/index.html`;
-                    gtag('event', 'level_start', { 
+                    gtag('event', 'level_start', {
                         'level_name': game.title,
                         'content_type': 'ai_game',
                         'item_id': game.id
@@ -1091,9 +1166,9 @@
                 console.error("Failed to launch game:", err);
                 alert("Failed to load game assets. Please try again.");
             } finally {
-                gtag('event', 'engagement', { 
-                    'event_category': 'AI_Game', 
-                    'event_label': 'PlayNow_Click', 
+                gtag('event', 'engagement', {
+                    'event_category': 'AI_Game',
+                    'event_label': 'PlayNow_Click',
                     'game_id': game.id,
                     'game_title': game.title
                 });
@@ -1109,66 +1184,66 @@
         }
 
         // Close on backdrop click
-        modal.onclick = function(e) {
+        modal.onclick = function (e) {
             if (e.target === modal) closeModal();
         };
 
         function fetchAndCache(newRtdbTimestamp) {
             db.collection('ai_games')
-              .where('isPublished', '==', true)
-              .where('publishStatus', '==', 'complete')
-              .where('bio_shared', '==', true)
-              .orderBy('createdAt', 'desc')
-              .limit(10)
-              .get()
-              .then(function(querySnapshot) {
-                const games = [];
-                querySnapshot.forEach(function(doc) {
-                    const data = doc.data();
-                    games.push({
-                        id: doc.id,
-                        title: data.title,
-                        category: data.category,
-                        description: data.description,
-                        playCount: data.stats ? data.stats.playCount : 0,
-                        rating: data.stats ? data.stats.averageRating : 0,
-                        isPortrait: data.isPortrait || false,
-                        storageBasePath: data.storageBasePath || null,
-                        projectId: data.projectId || null,
-                        fileManifest: data.fileManifest || null,
-                        imageUrl: (data.screenshotUrls && data.screenshotUrls.length > 0) ? data.screenshotUrls[0] : '../images/cover.png'
+                .where('isPublished', '==', true)
+                .where('publishStatus', '==', 'complete')
+                .where('bio_shared', '==', true)
+                .orderBy('createdAt', 'desc')
+                .limit(10)
+                .get()
+                .then(function (querySnapshot) {
+                    const games = [];
+                    querySnapshot.forEach(function (doc) {
+                        const data = doc.data();
+                        games.push({
+                            id: doc.id,
+                            title: data.title,
+                            category: data.category,
+                            description: data.description,
+                            playCount: data.stats ? data.stats.playCount : 0,
+                            rating: data.stats ? data.stats.averageRating : 0,
+                            isPortrait: data.isPortrait || false,
+                            storageBasePath: data.storageBasePath || null,
+                            projectId: data.projectId || null,
+                            fileManifest: data.fileManifest || null,
+                            imageUrl: (data.screenshotUrls && data.screenshotUrls.length > 0) ? data.screenshotUrls[0] : '../images/cover.png'
+                        });
                     });
-                });
 
-                // Update Cache with fresh games and the timestamp from RTDB
-                const cacheData = {
-                    rtdbTimestamp: newRtdbTimestamp,
-                    localTimestamp: Date.now(),
-                    games: games
-                };
-                localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
-                
-                renderGames(games);
-            }).catch(function(error) {
-                console.error("Error getting documents: ", error);
-                const loader = document.getElementById('loader');
-                if (loader) loader.innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Failed to load games.</p>';
-            });
+                    // Update Cache with fresh games and the timestamp from RTDB
+                    const cacheData = {
+                        rtdbTimestamp: newRtdbTimestamp,
+                        localTimestamp: Date.now(),
+                        games: games
+                    };
+                    localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+
+                    renderGames(games);
+                }).catch(function (error) {
+                    console.error("Error getting documents: ", error);
+                    const loader = document.getElementById('loader');
+                    if (loader) loader.innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Failed to load games.</p>';
+                });
         }
 
         // --- Hybrid Logic ---
         const cachedPayload = localStorage.getItem(CACHE_KEY);
-        
+
         // Always check RTDB for the master timestamp
         rtdb.ref('/Game Collection/bio_update_timestamp').once('value').then(snapshot => {
             const masterTimestamp = snapshot.val() || 0;
-            
+
             if (cachedPayload) {
                 try {
                     const cache = JSON.parse(cachedPayload);
                     // SMART REFRESH: If cache is missing description or manifestation data, force refetch.
                     const needsUpgrade = cache.games && cache.games.length > 0 && (!cache.games[0].description || !cache.games[0].storageBasePath);
-                    
+
                     // If local cache matches master timestamp AND has modern data, use it
                     if (!needsUpgrade && cache.rtdbTimestamp >= masterTimestamp && cache.games && cache.games.length > 0) {
                         console.log("Loading bio games from valid cache (Master TS: " + masterTimestamp + ")");
@@ -1189,8 +1264,8 @@
             if (cachedPayload) {
                 try {
                     renderGames(JSON.parse(cachedPayload).games);
-                } catch(e) { 
-                    fetchAndCache(Date.now()); 
+                } catch (e) {
+                    fetchAndCache(Date.now());
                 }
             } else {
                 fetchAndCache(Date.now()); // Use current time as mock TS
@@ -1198,4 +1273,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -47,13 +47,13 @@ body {
     box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
 }
 
-#full-screen-btn > img {
+#full-screen-btn>img {
     width: 24px;
     height: 24px;
     filter: invert(1);
 }
 
-#full-screen-btn > #msg {
+#full-screen-btn>#msg {
     color: white;
     margin: 0 15px 0 0;
     font-size: 14px;
@@ -64,8 +64,13 @@ body {
 
 /* Animations */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.1); }
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
 }
 
 .pulse {
@@ -83,7 +88,11 @@ body {
 }
 
 @keyframes play-sprite {
-    from { background-position: 0 0; }
-    to { background-position: -2250px 0; }
-}
+    from {
+        background-position: 0 0;
+    }
 
+    to {
+        background-position: -2250px 0;
+    }
+}
