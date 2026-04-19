@@ -538,7 +538,7 @@ h6 {
     background-image: url('images/frames.png');
     background-size: 2600% 100%;
     background-repeat: no-repeat;
-    animation: sprite-play 1.2s steps(25) infinite;
+    animation: sprite-play 3s steps(25) infinite;
     filter: drop-shadow(0 0 15px var(--primary-glow));
 }
 

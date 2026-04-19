@@ -79,7 +79,7 @@ body {
     background-image: url('../images/frames.png');
     background-size: 2600% 100%;
     background-repeat: no-repeat;
-    animation: play-sprite 1.2s steps(25) infinite;
+    animation: play-sprite 3s steps(25) infinite;
     filter: drop-shadow(0 0 15px rgba(255, 71, 87, 0.4));
 }
 
