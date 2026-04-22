@@ -87,10 +87,46 @@ function gameView(url, name){
 
 
 
+let wakeLock = null;
+
+async function requestWakeLock() {
+    if ('wakeLock' in navigator) {
+        try {
+            wakeLock = await navigator.wakeLock.request('screen');
+            console.log('Wake Lock is active');
+            
+            wakeLock.addEventListener('release', () => {
+                console.log('Wake Lock was released');
+            });
+        } catch (err) {
+            console.error(`${err.name}, ${err.message}`);
+        }
+    }
+}
+
+function handleVisibilityChange() {
+    if (wakeLock !== null && document.visibilityState === 'visible') {
+        requestWakeLock();
+    }
+}
+
+document.addEventListener('visibilitychange', handleVisibilityChange);
+
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        if (wakeLock !== null) {
+            wakeLock.release();
+            wakeLock = null;
+        }
+    }
+});
+
 function goFullScreen(){
     const elem = document.getElementById("gameFrame");
     elem.requestFullscreen();
     
+    // Request wake lock when entering full screen
+    requestWakeLock();
     
     var isPortrait = getUrlParam("isPortrait","true");
     if(isPortrait == "0" || isPortrait == "false" || isPortrait == 0 || isPortrait == "null"){
