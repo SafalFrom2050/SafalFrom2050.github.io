@@ -12,7 +12,8 @@ const staticPages = [
     '/privacy',
     '/terms',
     '/library/',
-    '/bio'
+    '/bio',
+    '/blog/'
 ];
 
 async function fetchAllGames() {
@@ -67,6 +68,14 @@ async function generateSitemap() {
         const uniqueIds = [...new Set(gameIds)];
         for (const id of uniqueIds) {
             xml += `  <url>\n    <loc>${DOMAIN}/game/?id=${id}</loc>\n    <lastmod>${currentDate}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n`;
+        }
+
+        // Add blog posts
+        if (fs.existsSync('blog/list.json')) {
+            const blogs = JSON.parse(fs.readFileSync('blog/list.json', 'utf-8'));
+            for (const blog of blogs) {
+                xml += `  <url>\n    <loc>${DOMAIN}${blog.url}</loc>\n    <lastmod>${currentDate}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+            }
         }
 
         xml += `</urlset>`;

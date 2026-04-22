@@ -13,7 +13,7 @@ const firestoreService = {
     },
 
     // 1. Fetch AI Games (Logic from /bio)
-    fetchAIGames: async function(limit = 10) {
+    fetchAIGames: async function (limit = 10) {
         try {
             const querySnapshot = await this.db.collection('ai_games')
                 .where('isPublished', '==', true)
@@ -22,7 +22,7 @@ const firestoreService = {
                 .orderBy('createdAt', 'desc')
                 .limit(limit)
                 .get();
-            
+
             const games = [];
             querySnapshot.forEach(doc => {
                 const data = doc.data();
@@ -43,13 +43,13 @@ const firestoreService = {
     },
 
     // 2. Fetch Discover Cards
-    fetchDiscoverCards: async function() {
+    fetchDiscoverCards: async function () {
         try {
             const querySnapshot = await this.db.collection('discover-cards')
                 .orderBy('createdAt', 'desc')
                 .limit(5)
                 .get();
-            
+
             const cards = [];
             querySnapshot.forEach(doc => {
                 cards.push({
@@ -65,10 +65,10 @@ const firestoreService = {
     },
 
     // 3. Fetch Games by Multiple Categories (Optimized)
-    fetchGamesByCategories: async function(categories, limitTotal = 15) {
+    fetchGamesByCategories: async function (categories, limitTotal = 15) {
         try {
             let allGameIds = [];
-            
+
             for (const categoryId of categories) {
                 const doc = await this.db.collection('categories').doc(categoryId.toLowerCase()).get();
                 if (doc.exists) {
@@ -89,7 +89,7 @@ const firestoreService = {
     },
 
     // 3.1 Fetch Games by IDs (Batch)
-    fetchGamesByIds: async function(ids) {
+    fetchGamesByIds: async function (ids) {
         if (!ids || ids.length === 0) return [];
         try {
             const chunks = [];
@@ -102,12 +102,12 @@ const firestoreService = {
                 const snapshot = await this.db.collection('games')
                     .where(firebase.firestore.FieldPath.documentId(), 'in', chunk)
                     .get();
-                
+
                 snapshot.forEach(doc => {
                     allGames.push({ id: doc.id, ...doc.data() });
                 });
             }
-            
+
             return allGames;
         } catch (error) {
             console.error("Error batch fetching games:", error);
@@ -116,7 +116,7 @@ const firestoreService = {
     },
 
     // 4. Fetch Paginated Games (Main Grid)
-    fetchGamesPaginated: async function(category = 'all', lastVisible = null, limit = 24) {
+    fetchGamesPaginated: async function (category = 'all', lastVisible = null, limit = 24) {
         try {
             let query;
             if (category === 'all') {
@@ -126,15 +126,15 @@ const firestoreService = {
             } else {
                 const catDoc = await this.db.collection('categories').doc(category.toLowerCase()).get();
                 if (!catDoc.exists) return { games: [], lastVisible: null };
-                
+
                 const gameIds = catDoc.data().games || [];
                 const startIndex = lastVisible ? lastVisible : 0;
                 const batchIds = gameIds.slice(startIndex, startIndex + limit);
-                
+
                 if (batchIds.length === 0) return { games: [], lastVisible: null };
-                
+
                 const games = await this.fetchGamesByIds(batchIds);
-                
+
                 return {
                     games,
                     lastVisible: startIndex + limit < gameIds.length ? startIndex + limit : null
@@ -144,7 +144,7 @@ const firestoreService = {
             if (lastVisible) {
                 query = query.startAfter(lastVisible);
             }
-            
+
             const snapshot = await query.limit(limit).get();
             const games = [];
             snapshot.forEach(doc => {
@@ -162,11 +162,11 @@ const firestoreService = {
     },
 
     // 4.1 NEW: Fetch Games with Randomization and 24h Cache
-    fetchGamesWithCache: async function(category = 'all', batchSize = 120) {
+    fetchGamesWithCache: async function (category = 'all', batchSize = 120) {
         const CACHE_KEY = `game_cache_${category}`;
         const PAGINATION_KEY = `game_pagination_${category}`;
         const EXPIRATION = 24 * 60 * 60 * 1000; // 24 hours
-        
+
         // 1. Check Cache
         const cached = localStorage.getItem(CACHE_KEY);
         if (cached) {
@@ -182,11 +182,11 @@ const firestoreService = {
 
         // 2. Cache expired or missing: Fetch new batch
         console.log(`[Cache] Fetching fresh batch for ${category}...`);
-        
+
         let lastVisibleSerial = null;
         try {
             lastVisibleSerial = JSON.parse(localStorage.getItem(PAGINATION_KEY));
-        } catch (e) {}
+        } catch (e) { }
 
         let resultGames = [];
         let nextVisibleState = null;
@@ -206,7 +206,7 @@ const firestoreService = {
             }
 
             let snapshot = await query.limit(batchSize).get();
-            
+
             // Handle Wrap-around if we hit the end
             if (snapshot.empty && lastVisibleSerial) {
                 console.log("[Cache] End reached. Wrapping around to start.");
@@ -222,19 +222,19 @@ const firestoreService = {
 
             if (snapshot.docs.length > 0) {
                 const lastDoc = snapshot.docs[snapshot.docs.length - 1];
-                nextVisibleState = { 
-                    id: lastDoc.id 
+                nextVisibleState = {
+                    id: lastDoc.id
                 };
             }
         } else {
             // Category specific (indexed pagination)
             const catDoc = await this.db.collection('categories').doc(category.toLowerCase()).get();
             if (!catDoc.exists) return [];
-            
+
             const gameIds = catDoc.data().games || [];
             const startIndex = lastVisibleSerial || 0;
             let batchIds = gameIds.slice(startIndex, startIndex + batchSize);
-            
+
             // Wrap around
             if (batchIds.length === 0 && startIndex > 0) {
                 batchIds = gameIds.slice(0, batchSize);
@@ -242,7 +242,7 @@ const firestoreService = {
             } else {
                 nextVisibleState = (startIndex + batchIds.length) % gameIds.length;
             }
-            
+
             if (batchIds.length > 0) {
                 resultGames = await this.fetchGamesByIds(batchIds);
             }
@@ -261,7 +261,7 @@ const firestoreService = {
     },
 
     // Shuffle Utility (Fisher-Yates)
-    shuffleArray: function(array) {
+    shuffleArray: function (array) {
         const newArr = [...array];
         for (let i = newArr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -271,7 +271,7 @@ const firestoreService = {
     },
 
     // 9. Skeleton Generators
-    getSkeletonGrid: function(count, colClass = "col-6 col-md-4 col-lg-2") {
+    getSkeletonGrid: function (count, colClass = "col-6 col-md-4 col-lg-2") {
         let html = '';
         const skeleton = `
             <div class="${colClass} p-2">
@@ -288,7 +288,7 @@ const firestoreService = {
         return html;
     },
 
-    getSkeletonRow: function(count) {
+    getSkeletonRow: function (count) {
         let html = '';
         const skeleton = `
             <div class="skeleton-h-card mr-3">
@@ -303,10 +303,10 @@ const firestoreService = {
     },
 
     // 5. Fetch Categories List (with 72h caching)
-    fetchCategories: async function() {
+    fetchCategories: async function () {
         const CACHE_KEY = 'categories_cache_v2';
         const EXPIRATION = 72 * 60 * 60 * 1000; // 72 hours (3 Days)
-        
+
         try {
             // 1. Check LocalStorage Cache
             const cached = localStorage.getItem(CACHE_KEY);
@@ -321,7 +321,7 @@ const firestoreService = {
             // 2. Cache miss or expired: Fetch from Firestore
             console.log("[Cache] Fetching fresh categories list...");
             const snapshot = await this.db.collection('categories').limit(500).get();
-            
+
             // Start with "all" as a guaranteed first element
             const categories = ["all"];
             snapshot.forEach(doc => {
@@ -346,16 +346,16 @@ const firestoreService = {
     },
 
     // 6. Search Games
-    searchGames: async function(query, limit = 12) {
+    searchGames: async function (query, limit = 12) {
         try {
             const searchTerm = query.toLowerCase().trim();
             if (!searchTerm) return [];
-            
+
             const snapshot = await this.db.collection('games')
                 .where('searchKeys', 'array-contains', searchTerm)
                 .limit(limit)
                 .get();
-            
+
             const games = [];
             snapshot.forEach(doc => {
                 games.push({ id: doc.id, ...doc.data() });
@@ -368,7 +368,7 @@ const firestoreService = {
     },
 
     // 7. NEW: Fetch Single Game by ID
-    fetchGameById: async function(id) {
+    fetchGameById: async function (id) {
         try {
             const doc = await this.db.collection('games').doc(id).get();
             if (doc.exists) {
@@ -382,25 +382,25 @@ const firestoreService = {
     },
 
     // 8. NEW: Fetch Similar Games
-    fetchSimilarGames: async function(currentGameId, keys = [], limit = 6) {
+    fetchSimilarGames: async function (currentGameId, keys = [], limit = 6) {
         try {
             if (!keys || keys.length === 0) return [];
-            
+
             // Take up to 10 keys for 'array-contains-any'
             const searchKeys = keys.slice(0, 10);
-            
+
             const querySnapshot = await this.db.collection('games')
                 .where('searchKeys', 'array-contains-any', searchKeys)
                 .limit(limit + 1) // Fetch one extra to filter out current game
                 .get();
-            
+
             const games = [];
             querySnapshot.forEach(doc => {
                 if (doc.id !== currentGameId) {
                     games.push({ id: doc.id, ...doc.data() });
                 }
             });
-            
+
             return games.slice(0, limit);
         } catch (error) {
             console.error("Error fetching similar games:", error);
