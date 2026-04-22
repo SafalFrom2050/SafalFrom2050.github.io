@@ -16,6 +16,7 @@ function parseMarkdown(md) {
         .replace(/\*(.*)\*/gim, '<em>$1</em>')
         .replace(/!\[(.*?)\]\((.*?)\)/gim, '<img alt="$1" src="$2">')
         .replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2">$1</a>')
+        .replace(/^\* (.*$)/gim, '<li style="list-style: none; margin-left: 20px;">• $1</li>')
         .replace(/\n/gim, '<br>');
 }
 
