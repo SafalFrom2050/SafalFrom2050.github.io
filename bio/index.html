@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1190,7 +1190,7 @@
 
             } catch (err) {
                 console.error("Failed to launch game:", err);
-                alert("Failed to load game assets. Please try again.");
+                alert("We couldn't load the game assets. Please try again in a moment.");
             } finally {
                 gtag('event', 'engagement', {
                     'event_category': 'AI_Game',
@@ -1253,7 +1253,7 @@
                 }).catch(function (error) {
                     console.error("Error getting documents: ", error);
                     const loader = document.getElementById('loader');
-                    if (loader) loader.innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Failed to load games.</p>';
+                    if (loader) loader.innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Oops! We\'re having trouble loading the games right now. Please check back later.</p>';
                 });
         }
 

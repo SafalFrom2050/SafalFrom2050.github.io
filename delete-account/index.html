@@ -242,7 +242,7 @@
         function signInWithGoogle() {
             var provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider).catch(function (error) {
-                showError("Sign-in failed: " + error.message);
+                showError("We couldn't sign you in. Please check your connection and try again.");
             });
         }
 
@@ -261,7 +261,7 @@
                     showError("Please sign out and sign in again to verify your identity for this operation.");
                     firebase.auth().signOut();
                 } else {
-                    showError("Error: " + error.message);
+                    showError("Something went wrong. Please try again later.");
                 }
             }
         }
