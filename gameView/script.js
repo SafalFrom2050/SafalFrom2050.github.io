@@ -64,6 +64,19 @@ function loadGame(key){
         if (doc.exists) {
             gameView(doc.data().url, doc.data().name);
         } else {
+            document.getElementById("gameView").innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: white; text-align: center; padding: 20px;">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.4));">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <h2 style="font-family: 'Press Start 2P', cursive; font-size: 16px; margin-bottom: 15px; color: white;">Game Unavailable</h2>
+                    <p style="color: #94a3b8; max-width: 400px; font-family: 'Outfit', sans-serif; font-size: 14px;">Oops! We couldn't find the game you're looking for. It might have been moved or removed.</p>
+                    <a href="/" style="margin-top: 30px; color: #22d3ee; text-decoration: none; font-weight: 600; font-family: 'Outfit', sans-serif;">← Back to Portal</a>
+                </div>
+            `;
+            hideLoader();
             console.error("No such game!");
         }
     });
@@ -87,10 +100,46 @@ function gameView(url, name){
 
 
 
+let wakeLock = null;
+
+async function requestWakeLock() {
+    if ('wakeLock' in navigator) {
+        try {
+            wakeLock = await navigator.wakeLock.request('screen');
+            console.log('Wake Lock is active');
+            
+            wakeLock.addEventListener('release', () => {
+                console.log('Wake Lock was released');
+            });
+        } catch (err) {
+            console.error(`${err.name}, ${err.message}`);
+        }
+    }
+}
+
+function handleVisibilityChange() {
+    if (wakeLock !== null && document.visibilityState === 'visible') {
+        requestWakeLock();
+    }
+}
+
+document.addEventListener('visibilitychange', handleVisibilityChange);
+
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        if (wakeLock !== null) {
+            wakeLock.release();
+            wakeLock = null;
+        }
+    }
+});
+
 function goFullScreen(){
     const elem = document.getElementById("gameFrame");
     elem.requestFullscreen();
     
+    // Request wake lock when entering full screen
+    requestWakeLock();
     
     var isPortrait = getUrlParam("isPortrait","true");
     if(isPortrait == "0" || isPortrait == "false" || isPortrait == 0 || isPortrait == "null"){

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{description}}">
+    
+    <meta property="og:title" content="{{title}} | alt games portal">
+    <meta property="og:image" content="{{imageUrl}}">
+    <meta property="og:description" content="{{snippet}}">
+    
+    <link rel="apple-touch-icon" href="/images/favicon-rounded.png">
+    <link rel="icon" type="image/png" href="/images/favicon-rounded.png">
+    <title>{{title}} | alt games portal</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap-4.0.0.css" rel="stylesheet">
+    <link href="/style.css?v=1.8" rel="stylesheet">
+    
+    <style>
+        .blog-hero {
+            padding: 100px 0 60px;
+            background: radial-gradient(circle at center, rgba(255, 94, 0, 0.15) 0%, transparent 70%);
+        }
+        .markdown-body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-main);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .markdown-body h2, .markdown-body h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        .markdown-body img {
+            max-width: 100%;
+            border-radius: 24px;
+            margin: 2rem 0;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .review-card {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-left: 4px solid var(--primary);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+        .featured-game-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 30px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        @media (max-width: 768px) {
+            .featured-game-box {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        .game-thumb {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+    </style>
+</head>
+<body style="padding-top: 80px;">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+                <i class="material-icons text-white" style="font-size: 30px;">menu</i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <div class="navbar-nav ml-auto">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/blog/" class="nav-link active">Blog</a>
+                    <a href="/library/" class="nav-link">Library</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="blog-hero">
+        <div class="container">
+            <div class="text-center animate-in">
+                <span class="game-badge" style="background: var(--primary-gradient); color: white; border: none;">{{category}}</span>
+                <h1 class="mt-3 mb-4" style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(2rem, 5vw, 3.5rem);">{{title}}</h1>
+                <p class="text-muted small">Published on {{date}} • By Editor</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <!-- Editor's Review Callout -->
+                <div class="review-card animate-in" style="animation-delay: 0.1s;">
+                    <h4 class="ai-retro-text mb-3" style="font-size: 0.9rem;">Editor's Verdict</h4>
+                    <p class="mb-0">{{review}}</p>
+                </div>
+
+                <!-- Main Content -->
+                <article class="markdown-body animate-in" style="animation-delay: 0.2s;">
+                    {{content}}
+                </article>
+
+                <!-- Featured Game Widget -->
+                {{#if featuredGameId}}
+                <div class="featured-game-box animate-in" style="animation-delay: 0.3s;">
+                    <img src="{{imageUrl}}" class="game-thumb" alt="Game Thumbnail">
+                    <div class="flex-grow-1">
+                        <h4 class="mb-2" style="font-family: 'Outfit', sans-serif; font-weight: 700;">Ready to Play?</h4>
+                        <p class="text-muted small mb-3">Experience the game mentioned in this review instantly in your browser.</p>
+                        <a href="/game/?id={{featuredGameId}}" class="btn btn-primary rounded-pill px-4">Play Now →</a>
+                    </div>
+                </div>
+                {{/if}}
+
+                <hr class="my-5" style="border-color: var(--border-glass);">
+                
+                <div class="text-center">
+                    <a href="/blog/" class="btn btn-outline-light rounded-pill px-4">← Back to Blog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-5 text-center">
+        <div class="container">
+            <a class="footer-brand" href="/">
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+            </a>
+            <p class="mt-4 mb-0 small opacity-5">© 2026 alt games portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-4.0.0.js"></script>
+    <script src="/js/logo.js"></script>
+</body>
+</html>

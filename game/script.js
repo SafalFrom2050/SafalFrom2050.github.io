@@ -20,14 +20,14 @@ function getUrlParam(parameter, defaultvalue) {
 async function loadGamePage() {
     const gameId = getUrlParam("id", null);
     if (!gameId) {
-        document.getElementById("title").innerHTML = "Game not found";
+        document.getElementById("title").innerHTML = "Game Not Found";
         return;
     }
 
     // 1. Fetch Game Details
     const game = await firestoreService.fetchGameById(gameId);
     if (!game) {
-        document.getElementById("title").innerHTML = "Game not found in Firestore";
+        document.getElementById("title").innerHTML = "Oops! This game is currently unavailable.";
         return;
     }
 

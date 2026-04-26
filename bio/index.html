@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AI Hallucinations | alt games portal</title>
+    <title>AI Game Generation | alt games portal</title>
     <meta name="description"
-        content="Watch AI agents hallucinate and create unique interactive games in seconds. Explore the frontier of Generative AI gaming at alt games portal.">
+        content="Watch AI agents generate and create unique interactive games in seconds. Explore the frontier of Generative AI gaming at alt games portal.">
     <link rel="canonical" href="https://gamesp.xyz/bio">
 
     <!-- Google Fonts -->
@@ -18,9 +18,8 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/images/favicon-rounded.png">
+    <link rel="icon" type="image/png" href="/images/favicon-rounded.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
 
     <!-- Bootstrap -->
@@ -806,7 +805,7 @@
             </div>
             <div class="profile-info">
                 <h1><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></h1>
-                <p class="bio-text">Watch AI Hallucinate</p>
+                <p class="bio-text">Build any game in minutes</p>
             </div>
         </a>
         <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button"
@@ -817,7 +816,7 @@
     </div>
 
     <div class="section-header">
-        " <div class="typing-container" id="typewriter">AI AGENTS CREATE GAMES LIKE THESE IN SECONDS</div> "
+        " <div class="typing-container" id="typewriter">AI AGENTS CREATE GAMES LIKE THESE IN MINUTES</div> "
     </div>
 
     <div class="links-container" id="linksList">
@@ -836,7 +835,7 @@
                 </button>
             </div>
             <div id="browserHelp" class="browser-help">
-                <div class="help-title">⚠️ BROWSER RESTRICTED</div>
+                <div class="help-title">笞・・BROWSER RESTRICTED</div>
                 <p class="help-text">Instagram blocks games for security. Open in Safari to play this AI creation!</p>
                 <div class="help-icon-guide">
                     <i class="material-icons" style="color:var(--accent)">more_horiz</i>
@@ -1191,7 +1190,7 @@
 
             } catch (err) {
                 console.error("Failed to launch game:", err);
-                alert("Failed to load game assets. Please try again.");
+                alert("We couldn't load the game assets. Please try again in a moment.");
             } finally {
                 gtag('event', 'engagement', {
                     'event_category': 'AI_Game',
@@ -1254,7 +1253,7 @@
                 }).catch(function (error) {
                     console.error("Error getting documents: ", error);
                     const loader = document.getElementById('loader');
-                    if (loader) loader.innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Failed to load games.</p>';
+                    if (loader) loader.innerHTML = '<p style="color:rgba(255,255,255,0.5);font-size:12px;">Oops! We\'re having trouble loading the games right now. Please check back later.</p>';
                 });
         }
 

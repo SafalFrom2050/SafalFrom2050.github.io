@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Read the latest news, reviews, and insights about AI-generated games and the future of browser gaming.">
+    
+    <link rel="apple-touch-icon" href="/images/favicon-rounded.png">
+    <link rel="icon" type="image/png" href="/images/favicon-rounded.png">
+    <title>Blog | alt games portal</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap-4.0.0.css" rel="stylesheet">
+    <link href="/style.css?v=1.8" rel="stylesheet">
+    
+    <style>
+        .blog-header {
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+        .blog-card {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .blog-card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        .blog-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: white;
+        }
+        .blog-card-snippet {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .blog-meta {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body style="padding-top: 80px;">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+                <i class="material-icons text-white" style="font-size: 30px;">menu</i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <div class="navbar-nav ml-auto">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/blog/" class="nav-link active">Blog</a>
+                    <a href="/library/" class="nav-link">Library</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="blog-header animate-in">
+            <h1 class="page-title">The Game Pulse</h1>
+            <p class="lead text-muted">Insights, Reviews, and the Future of AI Gaming</p>
+        </header>
+
+        <div id="blogGrid" class="row">
+            <!-- Loading State -->
+            <div class="col-12 text-center py-5">
+                <div class="loader-small"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-5 text-center">
+        <div class="container">
+            <a class="footer-brand" href="/">
+                <span class="brand-alt">alt</span> <span class="brand-games">games portal</span>
+            </a>
+            <p class="mt-4 mb-0 small opacity-5">© 2026 alt games portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-4.0.0.js"></script>
+    <script src="/js/logo.js"></script>
+
+    <script>
+        async function loadBlogs() {
+            const grid = document.getElementById('blogGrid');
+            try {
+                const response = await fetch('list.json');
+                const blogs = await response.json();
+                
+                grid.innerHTML = '';
+                if (blogs.length === 0) {
+                    grid.innerHTML = '<div class="col-12 text-center"><p class="text-muted">No posts found. Stay tuned!</p></div>';
+                    return;
+                }
+
+                blogs.forEach((blog, index) => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-6 col-lg-4 mb-4 animate-in';
+                    col.style.animationDelay = (index * 0.1) + 's';
+                    col.innerHTML = `
+                        <div class="blog-card" onclick="window.location.href='${blog.url}'" style="cursor: pointer;">
+                            <img src="${blog.imageUrl}" alt="${blog.title}">
+                            <div class="blog-card-content">
+                                <span class="blog-meta">${blog.category} • ${blog.date}</span>
+                                <h3 class="blog-card-title">${blog.title}</h3>
+                                <p class="blog-card-snippet">${blog.review ? blog.review.substring(0, 100) + '...' : ''}</p>
+                                <a href="${blog.url}" class="btn btn-link p-0 text-accent font-weight-bold" style="color: var(--accent);">Read Article →</a>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(col);
+                });
+            } catch (e) {
+                console.error("Error loading blog list:", e);
+                grid.innerHTML = '<div class="col-12 text-center"><p class="text-red">Oops! We couldn\'t load the stories. Please try again later.</p></div>';
+            }
+        }
+
+        loadBlogs();
+    </script>
+</body>
+</html>
