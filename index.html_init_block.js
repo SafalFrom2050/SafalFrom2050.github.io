@@ -41,7 +41,7 @@ categories.forEach(cat => {
 });
 
 // Load AI Games (Cached)
-const aiGames = await getCachedData(CACHE_KEY_AI, () => firestoreService.fetchAIGames(10), masterTimestamp);
+const aiGames = await getCachedData(CACHE_KEY_AI, () => firestoreService.fetchAIGames(12), masterTimestamp);
 renderHorizontalRow('aiGamesRow', aiGames);
 
 // Load Discover Cards (Cached)

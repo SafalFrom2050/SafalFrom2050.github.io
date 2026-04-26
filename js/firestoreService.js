@@ -13,7 +13,7 @@ const firestoreService = {
     },
 
     // 1. Fetch AI Games (Logic from /bio)
-    fetchAIGames: async function(limit = 10) {
+    fetchAIGames: async function(limit = 12) {
         try {
             const querySnapshot = await this.db.collection('ai_games')
                 .where('isPublished', '==', true)

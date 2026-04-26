@@ -1221,7 +1221,7 @@
                 .where('publishStatus', '==', 'complete')
                 .where('bio_shared', '==', true)
                 .orderBy('createdAt', 'desc')
-                .limit(10)
+                .limit(12)
                 .get()
                 .then(function (querySnapshot) {
                     const games = [];
