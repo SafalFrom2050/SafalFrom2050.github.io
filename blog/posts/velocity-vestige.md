@@ -3,7 +3,7 @@ title: "Velocity Vestige: AR Rhythm - Feel the Beat in Your Room"
 date: "2026-04-28"
 category: "AR Rhythm"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1777158546779_preview.jpg?alt=media&token=6ddeac9e-24a4-479e-bd52-fe8cec648be7"
-review: "An immersive AR experience where your physical environment becomes the ultimate rhythm game stage."
+review: "One of the most physically engaging AR games we've seen. Hitting virtual notes in your real room is an absolute workout and a blast."
 ---
 
 ## Turn Your Room Into a Stage

@@ -3,7 +3,7 @@ title: "Catch The Food - Streak Edition"
 date: "2026-04-25"
 category: "Arcade"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1777144818424_preview.jpg?alt=media&token=a697e6de-0300-418a-a226-6528715b0da7"
-review: "Catch snacks with your mouth to build streaks, multiply your score, and evolve the background music in real-time."
+review: "A classic concept polished to a mirror shine. The streak multiplier system turns a simple catching game into a high-stakes test of reflexes."
 ---
 
 ## Experience Catch The Food - Streak Edition

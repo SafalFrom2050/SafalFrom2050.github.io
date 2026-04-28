@@ -3,7 +3,7 @@ title: "2048 with Screen Shake"
 date: "2026-04-03"
 category: "Puzzle"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775245352225_preview.jpg?alt=media&token=0d10a5b7-3aca-4067-a479-5828deb99bd9"
-review: "The classic 2048 puzzle game enhanced with particle effects and dynamic screen shake for high-value tile merges."
+review: "We didn't know 2048 needed screen shake, but now we can't play it any other way. The added 'juice' makes every combination feel immensely satisfying."
 ---
 
 ## Experience 2048 with Screen Shake

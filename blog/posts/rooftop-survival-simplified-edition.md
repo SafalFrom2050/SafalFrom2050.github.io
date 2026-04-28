@@ -3,7 +3,7 @@ title: "Rooftop Survival: Simplified Edition"
 date: "2026-04-03"
 category: "Arcade"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775243216934_preview.jpg?alt=media&token=20ea6f22-d8d2-4371-b35d-56954c368c64"
-review: "A streamlined zombie survival experience with touch-to-move controls and automatic firing for more accessible action."
+review: "A surprisingly addictive distillation of survival mechanics. It strips away the bloat and leaves you with pure, adrenaline-pumping gameplay."
 ---
 
 ## Experience Rooftop Survival: Simplified Edition

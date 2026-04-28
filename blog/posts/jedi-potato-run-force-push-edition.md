@@ -3,7 +3,7 @@ title: "Jedi Potato Run - Force Push Edition"
 date: "2026-04-03"
 category: "Arcade"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775244370037_preview.jpg?alt=media&token=bb24dbe0-aca6-4602-89f3-9fae03d153df"
-review: "An endless runner where a Jedi potato uses the Force to push aside stormtroopers and obstacles while escaping through the Tatooine desert."
+review: "The title says it all. It's absurd, hilarious, and genuinely fun. Using 'force push' as a core mechanic adds a great layer of strategy."
 ---
 
 ## Experience Jedi Potato Run - Force Push Edition

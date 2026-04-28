@@ -3,7 +3,7 @@ title: "JLPT N3 Kanji Pop"
 date: "2026-04-04"
 category: "Word"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775339152545_preview.jpg?alt=media&token=2c8bb6ad-8b1b-46a1-8e65-4d609718ea31"
-review: "Master JLPT N3 vocabulary by matching Kanji with their correct readings and meanings in this fast-paced word bubble game."
+review: "Educational games are rarely this engaging. It gamifies language learning in a way that actually makes studying feel like a high-score chase."
 ---
 
 ## Experience JLPT N3 Kanji Pop

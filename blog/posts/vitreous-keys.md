@@ -3,7 +3,7 @@ title: "Vitreous Keys AR: Play a Virtual Piano Anywhere"
 date: "2026-04-28"
 category: "AR"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1777204142173_preview.jpg?alt=media&token=e043d7f7-5692-4dd7-b1cc-888abd2faaff"
-review: "Transform any flat surface into a beautiful, interactive glass keyboard using the power of AI and Augmented Reality."
+review: "A mesmerizing showcase of WebXR capabilities. Playing a virtual piano on your actual coffee table feels like catching a glimpse of the future."
 ---
 
 ## A Symphony on Your Coffee Table

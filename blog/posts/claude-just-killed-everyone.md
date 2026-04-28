@@ -3,7 +3,7 @@ title: "Claude Just Killed: Everyone"
 date: "2026-04-21"
 category: "Action"
 imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1776779135540_preview.jpg?alt=media&token=2cc02ae7-bd25-41e5-847a-aa3bbf5e70f3"
-review: "An action-packed shooter featuring permanent progression through a Neural Network upgrade tree and role-labeled enemies."
+review: "Darkly hilarious and wildly unpredictable. It's a fascinating look at how AI interprets chaotic narrative prompts into playable mechanics."
 ---
 
 ## Experience Claude Just Killed: Everyone
