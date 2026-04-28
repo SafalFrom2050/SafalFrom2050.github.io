@@ -23,3 +23,6 @@ Unlike traditional rhythm games that rely on pre-programmed tracks, Neon Beats u
 * **Instant Play**: Loads in under 10 seconds on most connections.
 
 We highly recommend checking this out if you have a few minutes to spare. It's the perfect "coffee break" game that offers high-level mastery for those who want to climb the leaderboards.
+
+<br>
+<a href="https://play.google.com/store/apps/details?id=dif.instantgames" style="display:inline-block; padding:12px 24px; background:#22d3ee; color:#0f172a; text-decoration:none; border-radius:15px; font-weight:800; font-family:'Outfit', sans-serif;">Try building your own game in just a minute</a>
