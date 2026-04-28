@@ -1218,9 +1218,8 @@
             db.collection('ai_games')
                 .where('isPublished', '==', true)
                 .where('publishStatus', '==', 'complete')
-                .where('bio_shared', '==', true)
                 .orderBy('createdAt', 'desc')
-                .limit(12)
+                .limit(4)
                 .get()
                 .then(function (querySnapshot) {
                     const games = [];
@@ -1259,35 +1258,38 @@
 
         // --- Hybrid Logic ---
         const cachedPayload = localStorage.getItem(CACHE_KEY);
+        const urlParams = new URLSearchParams(window.location.search);
+        const forceRefresh = urlParams.has('nocache') || urlParams.has('refresh');
 
         // Always check RTDB for the master timestamp
         rtdb.ref('/Game Collection/bio_update_timestamp').once('value').then(snapshot => {
             const masterTimestamp = snapshot.val() || 0;
 
-            if (cachedPayload) {
+            if (cachedPayload && !forceRefresh) {
                 try {
                     const cache = JSON.parse(cachedPayload);
-                    // SMART REFRESH: If cache is missing description or manifestation data, force refetch.
-                    const needsUpgrade = cache.games && cache.games.length > 0 && (!cache.games[0].description || !cache.games[0].storageBasePath);
+                    // SMART REFRESH: If cache is missing description, manifestation data, or is not the requested 4 items, force refetch.
+                    const needsUpgrade = cache.games && cache.games.length > 0 && (!cache.games[0].description || !cache.games[0].storageBasePath || cache.games.length < 4);
 
                     // If local cache matches master timestamp AND has modern data, use it
                     if (!needsUpgrade && cache.rtdbTimestamp >= masterTimestamp && cache.games && cache.games.length > 0) {
                         console.log("Loading bio games from valid cache (Master TS: " + masterTimestamp + ")");
                         renderGames(cache.games);
                     } else {
-                        console.log("Cache outdated. Refetching from Firestore...");
+                        console.log("Cache outdated or incomplete. Refetching from Firestore...");
                         fetchAndCache(masterTimestamp);
                     }
                 } catch (e) {
                     fetchAndCache(masterTimestamp);
                 }
             } else {
+                if (forceRefresh) console.log("Force refresh requested. Fetching from Firestore...");
                 fetchAndCache(masterTimestamp);
             }
         }).catch(err => {
             console.warn("RTDB Check failed, falling back to local storage or live fetch", err);
             // Fallback: If RTDB fails, try using cache even if we can't verify it
-            if (cachedPayload) {
+            if (cachedPayload && !forceRefresh) {
                 try {
                     renderGames(JSON.parse(cachedPayload).games);
                 } catch (e) {
