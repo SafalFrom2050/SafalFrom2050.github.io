@@ -59,6 +59,18 @@ function build() {
         
         const slug = file.replace('.md', '');
         const htmlContent = parseMarkdown(content);
+        const postUrl = `/blog/${slug}.html`;
+        const snippet = data.review ? data.review.substring(0, 160) : (data.title || '');
+        
+        // Inject computed values into data for template replacement
+        data.url = postUrl;
+        data.snippet = snippet;
+        data.description = data.review || data.title;
+
+        // Ensure imageUrl is absolute for OG/Twitter tags
+        if (data.imageUrl && !data.imageUrl.startsWith('http')) {
+            data.imageUrl = `https://gamesp.xyz${data.imageUrl}`;
+        }
         
         // Inject data into template
         let output = template;
@@ -75,8 +87,6 @@ function build() {
         }
 
         output = output.replace('{{content}}', htmlContent);
-        output = output.replace('{{description}}', data.review || data.title);
-        output = output.replace('{{snippet}}', data.review ? data.review.substring(0, 160) : '');
 
         const outputFileName = `${slug}.html`;
         fs.writeFileSync(path.join(OUTPUT_DIR, outputFileName), output);

@@ -40,7 +40,7 @@ async function loadGamePage() {
 }
 
 function renderGameDetails(game) {
-    document.title = (game.name || game.title) + " | alt games portal";
+    document.title = `Play ${game.name || game.title} Free Online | alt games portal`;
     document.getElementById("title").innerHTML = game.name || game.title;
     
     const iframeContent = `<iframe src="${game.url}" scrolling="no" allowfullscreen></iframe>`;
@@ -87,7 +87,7 @@ function renderGameDetails(game) {
     const rawDesc = game.description && game.description.length > 10 ? game.description : `Play ${game.name || game.title} instantly without installing. A premium ${game.category ? game.category[0] : 'instant'} game featured on alt games portal. No downloads required.`;
     const gameDesc = rawDesc.replace(/<[^>]*>?/gm, '').substring(0, 160);
     const gameImage = game.imageUrl || "https://gamesp.xyz/images/cover.png";
-    const gameTitleText = (game.name || game.title) + " | alt games portal";
+    const gameTitleText = `Play ${game.name || game.title} Free Online | alt games portal`;
 
     const seoDesc = document.getElementById("seo-description");
     if (seoDesc) seoDesc.content = gameDesc;
@@ -107,24 +107,73 @@ function renderGameDetails(game) {
     const ogUrl = document.getElementById("og-url");
     if (ogUrl) ogUrl.content = currentUrl;
     
-    // Inject Schema.org VideoGame data
+    // Update Twitter Card meta tags
+    const twTitle = document.getElementById("tw-title");
+    if (twTitle) twTitle.content = gameTitleText;
+    const twDesc = document.getElementById("tw-description");
+    if (twDesc) twDesc.content = gameDesc;
+    const twImg = document.getElementById("tw-image");
+    if (twImg) twImg.content = gameImage;
+
+    // Inject Schema.org VideoGame + BreadcrumbList data
     const schemaBlock = document.getElementById("schema-block");
     if (schemaBlock) {
+        const gameCat = game.category ? (Array.isArray(game.category) ? game.category[0] : game.category) : "Browser Game";
         const schema = {
             "@context": "https://schema.org",
-            "@type": "VideoGame",
-            "name": game.name || game.title,
-            "description": gameDesc,
-            "url": currentUrl,
-            "image": gameImage,
-            "genre": game.category ? (Array.isArray(game.category) ? game.category[0] : game.category) : "Browser Game",
-            "playMode": "SinglePlayer",
-            "applicationCategory": "Game",
-            "operatingSystem": "Web Browser"
+            "@graph": [
+                {
+                    "@type": "VideoGame",
+                    "name": game.name || game.title,
+                    "description": gameDesc,
+                    "url": currentUrl,
+                    "image": gameImage,
+                    "genre": gameCat,
+                    "playMode": "SinglePlayer",
+                    "applicationCategory": "Game",
+                    "operatingSystem": "Web Browser",
+                    "gamePlatform": "Web Browser",
+                    "inLanguage": "en",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "USD",
+                        "availability": "https://schema.org/InStock"
+                    },
+                    "author": {
+                        "@type": "Organization",
+                        "name": "alt games portal",
+                        "url": "https://gamesp.xyz/"
+                    }
+                },
+                {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Home",
+                            "item": "https://gamesp.xyz/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Game Library",
+                            "item": "https://gamesp.xyz/library/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": game.name || game.title,
+                            "item": currentUrl
+                        }
+                    ]
+                }
+            ]
         };
         
         if (stats && stats.averageRating !== undefined && stats.favoriteCount > 0) {
-            schema.aggregateRating = {
+            schema["@graph"][0].aggregateRating = {
                 "@type": "AggregateRating",
                 "ratingValue": stats.averageRating.toString(),
                 "ratingCount": stats.favoriteCount.toString(),

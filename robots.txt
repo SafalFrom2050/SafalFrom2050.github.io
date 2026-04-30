@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /scratch/
+Disallow: /.agents/
+Disallow: /.design-concepts/
+
 Sitemap: https://gamesp.xyz/sitemap.xml

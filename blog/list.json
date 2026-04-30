@@ -4,9 +4,11 @@
     "title": "The Magic of AI: Build Your Own Games in Minutes",
     "date": "2026-04-28",
     "category": "Platform",
-    "imageUrl": "/images/ai_games_collage.png",
+    "imageUrl": "https://gamesp.xyz/images/ai_games_collage.png",
     "review": "Discover how our Game developer agent enables anyone to build playable games in minutes, right from their low-end phones.",
-    "url": "/blog/ai-game-generation.html"
+    "url": "/blog/ai-game-generation.html",
+    "snippet": "Discover how our Game developer agent enables anyone to build playable games in minutes, right from their low-end phones.",
+    "description": "Discover how our Game developer agent enables anyone to build playable games in minutes, right from their low-end phones."
   },
   {
     "id": "alarm-smash",
@@ -15,7 +17,9 @@
     "category": "Action",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775581821865_preview.jpg?alt=media&token=3c44c7f1-c511-42f3-b6b2-ac899be1b02e",
     "review": "The perfect stress reliever. It takes a universal frustration and turns it into a tightly designed, highly cathartic arcade shooter.",
-    "url": "/blog/alarm-smash.html"
+    "url": "/blog/alarm-smash.html",
+    "snippet": "The perfect stress reliever. It takes a universal frustration and turns it into a tightly designed, highly cathartic arcade shooter.",
+    "description": "The perfect stress reliever. It takes a universal frustration and turns it into a tightly designed, highly cathartic arcade shooter."
   },
   {
     "id": "velocity-vestige",
@@ -24,7 +28,9 @@
     "category": "AR Rhythm",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1777158546779_preview.jpg?alt=media&token=6ddeac9e-24a4-479e-bd52-fe8cec648be7",
     "review": "One of the most physically engaging AR games we've seen. Hitting virtual notes in your real room is an absolute workout and a blast.",
-    "url": "/blog/velocity-vestige.html"
+    "url": "/blog/velocity-vestige.html",
+    "snippet": "One of the most physically engaging AR games we've seen. Hitting virtual notes in your real room is an absolute workout and a blast.",
+    "description": "One of the most physically engaging AR games we've seen. Hitting virtual notes in your real room is an absolute workout and a blast."
   },
   {
     "id": "vitreous-keys",
@@ -33,7 +39,9 @@
     "category": "AR",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1777204142173_preview.jpg?alt=media&token=e043d7f7-5692-4dd7-b1cc-888abd2faaff",
     "review": "A mesmerizing showcase of WebXR capabilities. Playing a virtual piano on your actual coffee table feels like catching a glimpse of the future.",
-    "url": "/blog/vitreous-keys.html"
+    "url": "/blog/vitreous-keys.html",
+    "snippet": "A mesmerizing showcase of WebXR capabilities. Playing a virtual piano on your actual coffee table feels like catching a glimpse of the future.",
+    "description": "A mesmerizing showcase of WebXR capabilities. Playing a virtual piano on your actual coffee table feels like catching a glimpse of the future."
   },
   {
     "id": "catch-the-food-streak-edition",
@@ -42,7 +50,9 @@
     "category": "Arcade",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1777144818424_preview.jpg?alt=media&token=a697e6de-0300-418a-a226-6528715b0da7",
     "review": "A classic concept polished to a mirror shine. The streak multiplier system turns a simple catching game into a high-stakes test of reflexes.",
-    "url": "/blog/catch-the-food-streak-edition.html"
+    "url": "/blog/catch-the-food-streak-edition.html",
+    "snippet": "A classic concept polished to a mirror shine. The streak multiplier system turns a simple catching game into a high-stakes test of reflexes.",
+    "description": "A classic concept polished to a mirror shine. The streak multiplier system turns a simple catching game into a high-stakes test of reflexes."
   },
   {
     "id": "neon-beats-review",
@@ -52,7 +62,9 @@
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775335590309_preview.jpg?alt=media",
     "featuredGameId": "S0uylwyxyowBgVFcnbZh",
     "review": "Neon Beats: Fever Edition is a stunning example of how AI-driven mechanics can create a deeply engaging rhythmic experience. The synth-wave aesthetics paired with precise timing challenges make it a must-play for any instant game fan.",
-    "url": "/blog/neon-beats-review.html"
+    "url": "/blog/neon-beats-review.html",
+    "snippet": "Neon Beats: Fever Edition is a stunning example of how AI-driven mechanics can create a deeply engaging rhythmic experience. The synth-wave aesthetics paired wi",
+    "description": "Neon Beats: Fever Edition is a stunning example of how AI-driven mechanics can create a deeply engaging rhythmic experience. The synth-wave aesthetics paired with precise timing challenges make it a must-play for any instant game fan."
   },
   {
     "id": "claude-just-killed-everyone",
@@ -61,7 +73,9 @@
     "category": "Action",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1776779135540_preview.jpg?alt=media&token=2cc02ae7-bd25-41e5-847a-aa3bbf5e70f3",
     "review": "Darkly hilarious and wildly unpredictable. It's a fascinating look at how AI interprets chaotic narrative prompts into playable mechanics.",
-    "url": "/blog/claude-just-killed-everyone.html"
+    "url": "/blog/claude-just-killed-everyone.html",
+    "snippet": "Darkly hilarious and wildly unpredictable. It's a fascinating look at how AI interprets chaotic narrative prompts into playable mechanics.",
+    "description": "Darkly hilarious and wildly unpredictable. It's a fascinating look at how AI interprets chaotic narrative prompts into playable mechanics."
   },
   {
     "id": "jlpt-n3-kanji-pop",
@@ -70,7 +84,9 @@
     "category": "Word",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775339152545_preview.jpg?alt=media&token=2c8bb6ad-8b1b-46a1-8e65-4d609718ea31",
     "review": "Educational games are rarely this engaging. It gamifies language learning in a way that actually makes studying feel like a high-score chase.",
-    "url": "/blog/jlpt-n3-kanji-pop.html"
+    "url": "/blog/jlpt-n3-kanji-pop.html",
+    "snippet": "Educational games are rarely this engaging. It gamifies language learning in a way that actually makes studying feel like a high-score chase.",
+    "description": "Educational games are rarely this engaging. It gamifies language learning in a way that actually makes studying feel like a high-score chase."
   },
   {
     "id": "urban-blasted-crate-chaos",
@@ -79,7 +95,9 @@
     "category": "Arcade",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775296947448_preview.jpg?alt=media&token=743384ae-3dff-4b08-9bc9-d9ac6addb3a6",
     "review": "Pure arcade fun. Smashing crates has never felt so good, and the physics engine holds up surprisingly well against the mayhem.",
-    "url": "/blog/urban-blasted-crate-chaos.html"
+    "url": "/blog/urban-blasted-crate-chaos.html",
+    "snippet": "Pure arcade fun. Smashing crates has never felt so good, and the physics engine holds up surprisingly well against the mayhem.",
+    "description": "Pure arcade fun. Smashing crates has never felt so good, and the physics engine holds up surprisingly well against the mayhem."
   },
   {
     "id": "2048-with-screen-shake",
@@ -88,7 +106,9 @@
     "category": "Puzzle",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775245352225_preview.jpg?alt=media&token=0d10a5b7-3aca-4067-a479-5828deb99bd9",
     "review": "We didn't know 2048 needed screen shake, but now we can't play it any other way. The added 'juice' makes every combination feel immensely satisfying.",
-    "url": "/blog/2048-with-screen-shake.html"
+    "url": "/blog/2048-with-screen-shake.html",
+    "snippet": "We didn't know 2048 needed screen shake, but now we can't play it any other way. The added 'juice' makes every combination feel immensely satisfying.",
+    "description": "We didn't know 2048 needed screen shake, but now we can't play it any other way. The added 'juice' makes every combination feel immensely satisfying."
   },
   {
     "id": "jedi-potato-run-force-push-edition",
@@ -97,7 +117,9 @@
     "category": "Arcade",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775244370037_preview.jpg?alt=media&token=bb24dbe0-aca6-4602-89f3-9fae03d153df",
     "review": "The title says it all. It's absurd, hilarious, and genuinely fun. Using 'force push' as a core mechanic adds a great layer of strategy.",
-    "url": "/blog/jedi-potato-run-force-push-edition.html"
+    "url": "/blog/jedi-potato-run-force-push-edition.html",
+    "snippet": "The title says it all. It's absurd, hilarious, and genuinely fun. Using 'force push' as a core mechanic adds a great layer of strategy.",
+    "description": "The title says it all. It's absurd, hilarious, and genuinely fun. Using 'force push' as a core mechanic adds a great layer of strategy."
   },
   {
     "id": "rooftop-survival-simplified-edition",
@@ -106,6 +128,8 @@
     "category": "Arcade",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775243216934_preview.jpg?alt=media&token=20ea6f22-d8d2-4371-b35d-56954c368c64",
     "review": "A surprisingly addictive distillation of survival mechanics. It strips away the bloat and leaves you with pure, adrenaline-pumping gameplay.",
-    "url": "/blog/rooftop-survival-simplified-edition.html"
+    "url": "/blog/rooftop-survival-simplified-edition.html",
+    "snippet": "A surprisingly addictive distillation of survival mechanics. It strips away the bloat and leaves you with pure, adrenaline-pumping gameplay.",
+    "description": "A surprisingly addictive distillation of survival mechanics. It strips away the bloat and leaves you with pure, adrenaline-pumping gameplay."
   }
 ]
