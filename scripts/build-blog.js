@@ -86,6 +86,13 @@ function build() {
             output = output.replace(/{{#if featuredGameId}}([\s\S]*?){{\/if}}/g, '');
         }
 
+        // Handle conditional block for imageUrl
+        if (data.imageUrl) {
+            output = output.replace(/{{#if imageUrl}}([\s\S]*?){{\/if}}/g, '$1');
+        } else {
+            output = output.replace(/{{#if imageUrl}}([\s\S]*?){{\/if}}/g, '');
+        }
+
         output = output.replace('{{content}}', htmlContent);
 
         const outputFileName = `${slug}.html`;
