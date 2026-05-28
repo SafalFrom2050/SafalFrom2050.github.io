@@ -1,4 +1,4 @@
-google.com, pub-2350069520167148, DIRECT, f08c47fec0942fa0
+google.com, pub-5628420860143366, DIRECT, f08c47fec0942fa0
 
 adyoulike.com, aff404dd1a704f379acae5190701c9c2, RESELLER
 adyoulike.com, f78b24039641337f06634ab9a3da4b48, RESELLER
