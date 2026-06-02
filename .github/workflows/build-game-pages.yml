@@ -1,0 +1,48 @@
+name: Build Game Pages
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'   # Weekly on Monday at 3 AM UTC (full fetch)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Build mode'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - full
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build script
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.mode }}" = "full" ]; then
+            echo "Running full build..."
+            npm run build:full
+          else
+            echo "Running incremental build..."
+            npm run build
+          fi
+
+      - name: Commit generated pages
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: regenerate game pages and sitemaps'
+          file_pattern: |
+            game/*/index.html
+            sitemap*.xml
+            scripts/games-cache.json
+            scripts/build-meta.json

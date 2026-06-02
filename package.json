@@ -1,0 +1,11 @@
+{
+  "name": "gamesp-build",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/generate-game-pages.js",
+    "build:full": "node scripts/generate-game-pages.js --full"
+  },
+  "dependencies": {
+    "firebase": "^10.8.1"
+  }
+}

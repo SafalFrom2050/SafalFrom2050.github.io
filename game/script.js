@@ -3,38 +3,49 @@
  * Handles game loading, metadata rendering, and recommendations.
  */
 
-function getUrlParam(parameter, defaultvalue) {
-    var urlparameter = defaultvalue;
-    var url = window.location.href;
-    if (url.indexOf(parameter) > -1) {
-        var vars = {};
-        url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
-            vars[key] = value;
-        });
-        urlparameter = vars[parameter];
-        return urlparameter;
-    }
-    return defaultvalue;
+/**
+ * Extract game ID from path (/game/XXXX/) or query param (?id=XXXX)
+ */
+function getGameId() {
+    // Try path-based URL first: /game/XXXX/
+    var pathMatch = window.location.pathname.match(/\/game\/([^\/]+)/);
+    if (pathMatch && pathMatch[1] !== 'index.html') return pathMatch[1];
+    // Fallback to query param
+    return new URLSearchParams(window.location.search).get('id');
 }
 
 async function loadGamePage() {
-    const gameId = getUrlParam("id", null);
+    const gameId = getGameId();
     if (!gameId) {
         document.getElementById("title").innerHTML = "Game Not Found";
         return;
     }
 
-    // 1. Fetch Game Details
-    const game = await firestoreService.fetchGameById(gameId);
+    // 1. Check for pre-rendered data (baked in by build script)
+    let game = null;
+    var prerenderedEl = document.getElementById('prerendered-data');
+    if (prerenderedEl) {
+        try {
+            game = JSON.parse(prerenderedEl.textContent);
+        } catch (e) {
+            console.warn('Failed to parse pre-rendered data:', e);
+        }
+    }
+
+    // 2. Fallback: Fetch from Firestore if no pre-rendered data
+    if (!game) {
+        game = await firestoreService.fetchGameById(gameId);
+    }
+
     if (!game) {
         document.getElementById("title").innerHTML = "Oops! This game is currently unavailable.";
         return;
     }
 
-    // 2. Render UI
+    // 3. Render UI
     renderGameDetails(game);
 
-    // 3. Fetch & Render Similar Games
+    // 4. Fetch & Render Similar Games
     const similarGames = await firestoreService.fetchSimilarGames(gameId, game.searchKeys || [], 8);
     renderSimilarGames(similarGames);
 }
@@ -200,7 +211,7 @@ function renderSimilarGames(games) {
     games.forEach(game => {
         // Desktop Sidebar Item
         const sidebarHtml = `
-            <div class="sidebar-item" onclick="window.open('/game/?id=${game.id}', '_self')">
+            <div class="sidebar-item" onclick="window.open('/game/${game.id}/', '_self')">
                 <img src="${game.imageUrl}" onerror="this.src='/images/cover.png'">
                 <div>
                     <h6 class="mb-1">${game.name || game.title}</h6>
@@ -213,7 +224,7 @@ function renderSimilarGames(games) {
         // Mobile Grid Item (Using home screen card style)
         const mobileHtml = `
             <div class="col-6 p-2">
-                <div class="game-card" onclick="window.open('/game/?id=${game.id}', '_self')">
+                <div class="game-card" onclick="window.open('/game/${game.id}/', '_self')">
                     <img src="${game.imageUrl}" onerror="this.src='/images/cover.png'">
                     <h6 style="font-size: 11px;">${game.name || game.title}</h6>
                 </div>

@@ -159,6 +159,13 @@
     </style>
 </head>
 <body style="padding-top: 80px;">
+<script>
+// Redirect legacy ?id= URLs to clean path
+(function() {
+    var id = new URLSearchParams(window.location.search).get('id');
+    if (id) window.location.replace('/game/' + id + '/');
+})();
+</script>
 <main>
 
 
