@@ -92,19 +92,22 @@ const firestoreService = {
     fetchGamesByIds: async function (ids) {
         if (!ids || ids.length === 0) return [];
         try {
-            const chunks = [];
-            for (let i = 0; i < ids.length; i += 30) {
-                chunks.push(ids.slice(i, i + 30));
-            }
-
+            // Note: Firestore security rules disallow querying `where(FieldPath.documentId(), 'in', chunk)`.
+            // Instead, we fetch individual documents directly via doc(id).get() in parallel chunks.
+            const CHUNK_SIZE = 25;
             const allGames = [];
-            for (const chunk of chunks) {
-                const snapshot = await this.db.collection('games')
-                    .where(firebase.firestore.FieldPath.documentId(), 'in', chunk)
-                    .get();
-
-                snapshot.forEach(doc => {
-                    allGames.push({ id: doc.id, ...doc.data() });
+            for (let i = 0; i < ids.length; i += CHUNK_SIZE) {
+                const chunk = ids.slice(i, i + CHUNK_SIZE);
+                const snapshots = await Promise.all(
+                    chunk.map(id => this.db.collection('games').doc(id).get().catch(err => {
+                        console.warn("Failed to get game doc:", id, err);
+                        return null;
+                    }))
+                );
+                snapshots.forEach(doc => {
+                    if (doc && doc.exists) {
+                        allGames.push({ id: doc.id, ...doc.data() });
+                    }
                 });
             }
 
@@ -125,7 +128,21 @@ const firestoreService = {
                     .orderBy(firebase.firestore.FieldPath.documentId());
             } else {
                 const catDoc = await this.db.collection('categories').doc(category.toLowerCase()).get();
-                if (!catDoc.exists) return { games: [], lastVisible: null };
+                if (!catDoc.exists || !catDoc.data().games || catDoc.data().games.length === 0) {
+                    // Fallback to array-contains query if categories doc is missing
+                    let catQuery = this.db.collection('games')
+                        .where('category', 'array-contains', category.toLowerCase());
+                    if (lastVisible) {
+                        catQuery = catQuery.startAfter(lastVisible);
+                    }
+                    const snap = await catQuery.limit(limit).get();
+                    const games = [];
+                    snap.forEach(d => games.push({ id: d.id, ...d.data() }));
+                    return {
+                        games,
+                        lastVisible: snap.docs[snap.docs.length - 1] || null
+                    };
+                }
 
                 const gameIds = catDoc.data().games || [];
                 const startIndex = lastVisible ? lastVisible : 0;
@@ -162,25 +179,27 @@ const firestoreService = {
     },
 
     // 4.1 NEW: Fetch Games with Randomization and 24h Cache
-    fetchGamesWithCache: async function (category = 'all', batchSize = 120) {
-        const CACHE_KEY = `game_cache_${category}`;
-        const PAGINATION_KEY = `game_pagination_${category}`;
+    fetchGamesWithCache: async function (category = 'all', batchSize = 120, forceNext = false) {
+        const CACHE_KEY = `game_cache_${category.toLowerCase()}`;
+        const PAGINATION_KEY = `game_pagination_${category.toLowerCase()}`;
         const EXPIRATION = 24 * 60 * 60 * 1000; // 24 hours
 
-        // 1. Check Cache
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) {
-            try {
-                const data = JSON.parse(cached);
-                const now = Date.now();
-                if (now - data.timestamp < EXPIRATION && data.items && data.items.length > 0) {
-                    console.log(`[Cache] Using cached selection for ${category}`);
-                    return data.items;
-                }
-            } catch (e) { console.warn("Cache parsing failed", e); }
+        // 1. Check Cache (skip if forceNext is true)
+        if (!forceNext) {
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (cached) {
+                try {
+                    const data = JSON.parse(cached);
+                    const now = Date.now();
+                    if (now - data.timestamp < EXPIRATION && Array.isArray(data.items) && data.items.length > 0) {
+                        console.log(`[Cache] Using cached selection for ${category}`);
+                        return data.items;
+                    }
+                } catch (e) { console.warn("Cache parsing failed", e); }
+            }
         }
 
-        // 2. Cache expired or missing: Fetch new batch
+        // 2. Cache expired, missing, or forceNext: Fetch new batch
         console.log(`[Cache] Fetching fresh batch for ${category}...`);
 
         let lastVisibleSerial = null;
@@ -191,7 +210,7 @@ const firestoreService = {
         let resultGames = [];
         let nextVisibleState = null;
 
-        if (category === 'all') {
+        if (category.toLowerCase() === 'all') {
             let query = this.db.collection('games')
                 .orderBy(firebase.firestore.FieldPath.documentId());
 
@@ -229,31 +248,53 @@ const firestoreService = {
         } else {
             // Category specific (indexed pagination)
             const catDoc = await this.db.collection('categories').doc(category.toLowerCase()).get();
-            if (!catDoc.exists) return [];
-
-            const gameIds = catDoc.data().games || [];
-            const startIndex = lastVisibleSerial || 0;
-            let batchIds = gameIds.slice(startIndex, startIndex + batchSize);
-
-            // Wrap around
-            if (batchIds.length === 0 && startIndex > 0) {
-                batchIds = gameIds.slice(0, batchSize);
-                nextVisibleState = batchIds.length;
-            } else {
-                nextVisibleState = (startIndex + batchIds.length) % gameIds.length;
+            let gameIds = [];
+            if (catDoc.exists) {
+                gameIds = catDoc.data().games || [];
             }
 
-            if (batchIds.length > 0) {
-                resultGames = await this.fetchGamesByIds(batchIds);
+            if (gameIds.length > 0) {
+                const startIndex = (typeof lastVisibleSerial === 'number') ? lastVisibleSerial : 0;
+                let batchIds = gameIds.slice(startIndex, startIndex + batchSize);
+
+                // Wrap around
+                if (batchIds.length === 0 && startIndex > 0) {
+                    batchIds = gameIds.slice(0, batchSize);
+                    nextVisibleState = batchIds.length;
+                } else {
+                    nextVisibleState = (startIndex + batchIds.length) % gameIds.length;
+                }
+
+                if (batchIds.length > 0) {
+                    resultGames = await this.fetchGamesByIds(batchIds);
+                }
+            }
+
+            // Fallback: If category doc didn't exist or had no IDs or returned empty
+            if (resultGames.length === 0) {
+                try {
+                    const snap = await this.db.collection('games')
+                        .where('category', 'array-contains', category.toLowerCase())
+                        .limit(batchSize)
+                        .get();
+                    snap.forEach(doc => {
+                        resultGames.push({ id: doc.id, ...doc.data() });
+                    });
+                } catch (catQueryErr) {
+                    console.warn("Fallback category query error:", catQueryErr);
+                }
             }
         }
 
         // 3. Update Storage
         if (resultGames.length > 0) {
-            localStorage.setItem(CACHE_KEY, JSON.stringify({
-                items: resultGames,
-                timestamp: Date.now()
-            }));
+            // Cache the initial batch (or update cache)
+            if (!forceNext) {
+                localStorage.setItem(CACHE_KEY, JSON.stringify({
+                    items: resultGames,
+                    timestamp: Date.now()
+                }));
+            }
             localStorage.setItem(PAGINATION_KEY, JSON.stringify(nextVisibleState));
         }
 

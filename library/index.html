@@ -72,7 +72,7 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script src="../js/firestoreService.js"></script>
+    <script src="../js/firestoreService.js?v=2.1"></script>
 </head>
 <body style="padding-top: 80px;">
 <main>
@@ -191,42 +191,64 @@
             categories.forEach(cat => {
                 const chip = document.createElement('div');
                 // Determine if this chip should be active (matching URL param or default to 'all')
-                const isActive = (category && category === cat) || (!category && cat === 'all');
+                const isActive = (category && category.toLowerCase() === cat.toLowerCase()) || (!category && cat.toLowerCase() === 'all');
                 chip.className = 'category-chip' + (isActive ? ' active' : '');
                 chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-                chip.onclick = () => loadCategory(cat, chip);
+                chip.onclick = () => loadCategory(cat, chip, true);
                 tab.appendChild(chip);
-            });
 
+                if (isActive) {
+                    setTimeout(() => chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }), 100);
+                }
+            });
 
             if (query) {
                 document.getElementById('gameSearch').value = query;
                 performSearch(query);
-            } else if (category && category !== 'all') {
-                loadCategory(category);
+            } else if (category && category.toLowerCase() !== 'all') {
+                loadCategory(category, null, false);
             } else {
-                loadCategory('all');
+                loadCategory('all', null, false);
             }
         }
 
-        async function loadCategory(cat, element) {
+        async function loadCategory(cat, element, updateUrl = true) {
+            const cleanCat = cat ? cat.toLowerCase() : 'all';
+
             document.querySelectorAll('.category-chip').forEach(c => {
                 c.classList.remove('active');
                 if (element && c === element) {
                     c.classList.add('active');
                 } else if (!element) {
                     // Fallback for initial load: match by text
-                    if (c.textContent.toLowerCase() === cat.toLowerCase()) {
+                    if (c.textContent.toLowerCase() === cleanCat) {
                         c.classList.add('active');
+                        c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
                 }
             });
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            if (updateUrl) {
+                const currentCat = new URLSearchParams(window.location.search).get('cat');
+                if (cleanCat === 'all') {
+                    if (window.location.search) {
+                        window.history.pushState({ cat: 'all' }, '', window.location.pathname);
+                    }
+                } else if (!currentCat || currentCat.toLowerCase() !== cleanCat) {
+                    window.history.pushState({ cat: cleanCat }, '', window.location.pathname + '?cat=' + encodeURIComponent(cleanCat));
+                }
+            }
             
             isSearchMode = false;
-            currentCategory = cat;
+            currentCategory = cleanCat;
             shuffledQueue = []; // Reset the randomized pool
             document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(24, "col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2");
             document.getElementById('resultsInfo').innerHTML = '';
+            document.getElementById('loaderContainer').style.display = 'none';
+            document.getElementById('loadMoreContainer').style.display = 'none';
             
             await fetchNextBatch();
         }
@@ -261,27 +283,42 @@
         async function fetchNextBatch() {
             if (isFetching || isSearchMode) return;
             isFetching = true;
+
+            const scrollView = document.getElementById('scrollView');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.textContent = 'Loading...';
             
-            // If queue is empty, fetch more into it from the periodic cache
+            // If queue is empty, fetch more into it from the periodic cache or next page
             if (shuffledQueue.length === 0) {
                 const batchSize = 120;
-                const batch = await firestoreService.fetchGamesWithCache(currentCategory, batchSize);
+                const forceNext = scrollView.querySelectorAll('.game-card').length > 0;
+                const batch = await firestoreService.fetchGamesWithCache(currentCategory, batchSize, forceNext);
                 // Randomize this batch for the current session
                 shuffledQueue = firestoreService.shuffleArray(batch);
                 
                 // Clear skeletons if present
-                if (document.getElementById('scrollView').querySelector('.skeleton')) {
-                    document.getElementById('scrollView').innerHTML = '';
+                if (scrollView.querySelector('.skeleton')) {
+                    scrollView.innerHTML = '';
                 }
             }
 
             // Take next 24 from the randomized queue
             const batchToRender = shuffledQueue.splice(0, 24);
             renderGames(batchToRender, true);
+
+            // Empty state check
+            if (scrollView.children.length === 0) {
+                scrollView.innerHTML = '<div class="col-12 text-center p-5"><p class="text-muted">No games found in this category.</p></div>';
+            }
             
             isFetching = false;
-            // Hide load more if we still have games in the randomized pool
-            document.getElementById('loadMoreContainer').style.display = (shuffledQueue.length > 0) ? 'block' : 'none';
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'Load More Games';
+            document.getElementById('loaderContainer').style.display = 'none';
+
+            // Show load more if games remain in queue or if we have rendered games
+            document.getElementById('loadMoreContainer').style.display = (shuffledQueue.length > 0 || scrollView.querySelectorAll('.game-card').length >= 24) ? 'block' : 'none';
         }
 
         function renderGames(games, append) {
@@ -308,6 +345,20 @@
         }
 
         document.getElementById('loadMoreBtn').onclick = fetchNextBatch;
+
+        // Browser history navigation (Back / Forward)
+        window.addEventListener('popstate', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            const cat = urlParams.get('cat');
+            if (query) {
+                document.getElementById('gameSearch').value = query;
+                performSearch(query);
+            } else {
+                document.getElementById('gameSearch').value = '';
+                loadCategory(cat || 'all', null, false);
+            }
+        });
         
         // Drag to Scroll Implementation
         function setupDragScroll(slider) {
@@ -350,8 +401,6 @@
         setupDragScroll(document.getElementById('categoriesTab'));
         
         init();
-
-        setupDragScroll(document.getElementById('categoriesTab'));
     </script>
 </body>
 </html>
