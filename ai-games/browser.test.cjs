@@ -48,6 +48,7 @@ const server = createServer((req, res) => {
     const play = page.getByRole('button', {name:'Play game',exact:true});
     await play.waitFor();
     assert.match(page.url(), /ai-games\/\?gameId=fixture$/);
+    assert.equal(await page.locator('#android-download').isVisible(), false);
     await play.click();
     await page.frameLocator('iframe').getByText('Game is running',{exact:true}).waitFor();
     const frame = page.frames()[1];
@@ -55,6 +56,13 @@ const server = createServer((req, res) => {
     assert.equal(await frame.evaluate(()=>localStorage.getItem('test')),'ok');
     assert.equal(await page.evaluate(()=>localStorage.getItem('test')),null);
     assert.equal(await frame.evaluate(()=>{try{return !!parent.document;}catch{return false;}}),false);
+    if (await page.evaluate(() => document.fullscreenEnabled)) {
+      await page.locator('#fullscreen').click();
+      await page.waitForFunction(() => document.fullscreenElement?.id === 'player');
+      assert.equal(await page.locator('#stop').isVisible(), true);
+      await page.getByRole('button', {name:'Exit full screen',exact:true}).click();
+      await page.waitForFunction(() => !document.fullscreenElement);
+    }
     await page.getByRole('button',{name:'Close game',exact:true}).click();
     await play.waitFor();
     assert.equal(await page.locator('iframe').count(),0);
@@ -70,7 +78,52 @@ const server = createServer((req, res) => {
     await page.goto(`${base}/ai-games/?gameId=legacy`);
     await play.click();
     await page.frameLocator('iframe').getByText('Legacy game',{exact:true}).waitFor();
+    // Model browsers without element fullscreen (including iPhone Safari).
+    await page.addInitScript(() => {
+      Object.defineProperty(document, 'fullscreenEnabled', {configurable:true, get:()=>false});
+      Object.defineProperty(navigator, 'userAgentData', {value:undefined});
+      Object.defineProperty(navigator, 'userAgent', {value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile Safari/604.1'});
+    });
+    await page.goto(`${base}/ai-games/?gameId=fixture`);
+    await play.click();
+    await page.frameLocator('iframe').getByText('Game is running',{exact:true}).waitFor();
+    assert.equal(await page.locator('#android-download').isVisible(),false);
+    const priorScroll = await page.evaluate(()=>scrollY);
+    await page.getByRole('button',{name:'Expand game',exact:true}).click();
+    await page.waitForFunction(()=>document.querySelector('#player').classList.contains('expanded'));
+    assert.equal(await page.locator('.site-header').evaluate(el=>el.inert),true);
+    let bounds = await page.locator('#player').boundingBox();
+    assert.equal(Math.round(bounds.height),844);
+    assert.equal(Math.round(bounds.y),0);
+    await page.setViewportSize({width:844,height:390});
+    bounds = await page.locator('#player').boundingBox();
+    assert.equal(Math.round(bounds.height),390);
+    assert.equal(await page.frames()[1].evaluate(()=>localStorage.getItem('test')),'ok');
+    await page.setViewportSize({width:390,height:844});
+    await page.getByRole('button',{name:'Exit expanded view',exact:true}).click();
+    assert.equal(await page.locator('.site-header').evaluate(el=>el.inert),false);
+    assert.ok(Math.abs(await page.evaluate(()=>scrollY)-priorScroll)<2);
+    // A rejected native request must also expand instead of displaying an error.
+    await page.evaluate(()=>{
+      Object.defineProperty(document,'fullscreenEnabled',{get:()=>true});
+      document.querySelector('#player').requestFullscreen=()=>Promise.reject(new Error('Denied'));
+    });
+    await page.locator('#fullscreen').click();
+    await page.getByRole('button',{name:'Exit expanded view',exact:true}).waitFor();
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#player').evaluate(el=>el.classList.contains('expanded')),false);
+    await page.locator('#fullscreen').click();
+    await page.getByRole('button',{name:'Exit expanded view',exact:true}).waitFor();
+    await page.getByRole('button',{name:'Close game',exact:true}).click();
+    await play.waitFor();
+    assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('player-expanded')),false);
+    const androidPage = await context.newPage();
+    await androidPage.addInitScript(()=>Object.defineProperty(navigator,'userAgentData',{value:{platform:'Android'}}));
+    await androidPage.goto(`${base}/ai-games/?gameId=fixture`);
+    await androidPage.getByRole('link',{name:'Download app for Android',exact:true}).waitFor();
+    assert.equal(await androidPage.locator('#android-download').getAttribute('href'),'https://play.google.com/store/apps/details?id=dif.instantgames');
+    await androidPage.close();
     assert.deepEqual(errors,[]);
-    console.log('PASS: redirect, reload, modules, dynamic import, CSS, JSON fetch, isolated storage, parent isolation, close, mobile layout, errors, legacy HTML');
+    console.log('PASS: share routes, player isolation, game resources, native fullscreen, fallback expansion, rotation, scroll restoration, Android CTA, errors, legacy HTML');
   } finally { await browser?.close(); server.close(); }
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});

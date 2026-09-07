@@ -1,12 +1,21 @@
 import { validId, loadArtifact } from './artifact.mjs';
 import { playerDocument } from './memory-player.mjs';
+import { setupPlayerDisplay } from './player-display.mjs';
 
 const $ = id => document.getElementById(id);
 const id = new URL(location.href).searchParams.get('gameId');
 let game;
 const status = message => { $('status').textContent = message; };
 
+const display = setupPlayerDisplay({
+  player: $('player'), toggle: $('fullscreen'), close: $('stop'),
+  background: [...document.querySelectorAll('.site-header, .game-heading, #status, #retry, #details')]
+});
+const platform = navigator.userAgentData?.platform || navigator.userAgent;
+$('android-download').hidden = !/android/i.test(platform);
+
 async function closePlayer() {
+  await display.exit();
   $('frame-host').replaceChildren();
   $('player').hidden = true;
   $('details').hidden = false;
@@ -87,7 +96,5 @@ async function load() {
 $('play').addEventListener('click', play);
 $('stop').addEventListener('click', async () => { await closePlayer(); $('play').focus(); });
 $('retry').addEventListener('click', () => location.reload());
-$('fullscreen').addEventListener('click', async () => {
-  try { await $('frame-host').requestFullscreen(); } catch { status('Full screen is not supported in this browser.'); }
-});
+
 load();

@@ -25,6 +25,17 @@ game closes. Camera, microphone, and other privileged native features are not
 enabled. Games requiring those features should be played in the Android app.
 This browser player does not emulate Android bridge APIs.
 
+The share page reuses `/bio/`'s sprite logo, fonts, cyan accent, and warm
+gradient branding. The Play Store download action appears only when the browser
+reports Android through User-Agent Client Hints or its user-agent string.
+
+`player-display.mjs` uses native fullscreen when available. Otherwise, or when
+the browser rejects the request, it expands the existing player to the visible
+viewport using `100dvh` and safe-area padding. The close and exit controls remain
+visible, gameplay is preserved, and leaving expansion restores page scrolling.
+This fallback cannot hide Safari's browser toolbar. It does not require camera
+permissions or relax the game iframe sandbox.
+
 ## Checks
 
 Run the artifact checks with Node.js:
@@ -45,10 +56,12 @@ is not installed. Tests start an ephemeral local server and use public-data
 fixtures; they do not write to Firebase. They cover redirect/query retention,
 reloads, scripts and dynamic imports, styles, relative JSON reads, sandbox and
 storage isolation, closing the player, mobile overflow, legacy games, and errors.
+It also covers native fullscreen, simulated unsupported/rejected fullscreen,
+viewport rotation, scroll restoration, and Android-only download visibility.
 
 The production Storage CORS policy permits `https://gamesp.xyz`; local origins
 may be denied. Test real assets with a production-origin browser route override
 that serves local page files, or on the deployed site. Do not broaden the
 bucket's CORS policy merely to make localhost work.
 
-The source fix must still be published before the public 404 is resolved.
+Updates must be published through the repository's GitHub Pages deployment.
