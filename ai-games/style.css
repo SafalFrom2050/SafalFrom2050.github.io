@@ -1,0 +1,28 @@
+:root { color-scheme: dark; font-family: system-ui, sans-serif; background: #080a10; color: #f5f6fa; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at top left, #291117, transparent 65%); }
+[hidden] { display: none !important; }
+a { color: #7dd9f3; text-underline-offset: 4px; }
+header { max-width: 1100px; margin: auto; padding: 24px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+header a:first-child { color: white; font-weight: 800; text-decoration: none; }
+main { max-width: 1000px; margin: 32px auto; padding: 0 24px 40px; }
+h1 { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.15; overflow-wrap: anywhere; }
+p { font-size: 1rem; line-height: 1.65; }
+.eyebrow { color: #7dd9f3; font-size: .875rem; font-weight: 700; letter-spacing: .1em; }
+#status { color: #c6cbd7; }
+article { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; margin-top: 28px; align-items: center; }
+.preview { height: 380px; border: 1px solid #303a4b; border-radius: 20px; overflow: hidden; display: grid; place-items: center; background: #111825; }
+.preview img { width: 100%; height: 100%; object-fit: contain; }
+#placeholder { font-weight: 800; color: #7dd9f3; }
+#description { white-space: pre-wrap; overflow-wrap: anywhere; }
+button { min-height: 48px; border: 1px solid #536279; border-radius: 12px; padding: 12px 24px; font: inherit; font-weight: 700; cursor: pointer; color: white; background: #1b2638; }
+button:focus-visible, a:focus-visible { outline: 3px solid #7dd9f3; outline-offset: 4px; }
+button:disabled { opacity: .6; cursor: wait; }
+#play { background: #ff711b; color: #170a00; border-color: #ff711b; margin-top: 16px; }
+.hint { color: #a7afc0; font-size: .875rem; }
+.controls { display: flex; justify-content: space-between; gap: 12px; margin: 20px 0; }
+#frame-host { background: #000; width: 100%; height: min(75vh, 800px); }
+#frame-host.portrait { max-width: 480px; margin: auto; }
+iframe { display: block; width: 100%; height: 100%; border: 0; }
+#frame-host:fullscreen { max-width: none; height: 100%; }
+@media (max-width: 600px) { main { margin-top: 12px; } article { grid-template-columns: 1fr; gap: 12px; } .preview { height: 260px; } }
