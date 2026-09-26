@@ -345,7 +345,8 @@ function generateSitemaps(games) {
         { loc: `${SITE_URL}/privacy`, changefreq: 'monthly', priority: '0.4' },
         { loc: `${SITE_URL}/terms`, changefreq: 'monthly', priority: '0.4' },
         { loc: `${SITE_URL}/library/`, changefreq: 'daily', priority: '0.9' },
-        { loc: `${SITE_URL}/bio`, changefreq: 'weekly', priority: '0.8' },
+        { loc: `${SITE_URL}/bio/`, changefreq: 'weekly', priority: '0.7' },
+        { loc: `${SITE_URL}/ai-games/library/`, changefreq: 'weekly', priority: '0.8' },
         { loc: `${SITE_URL}/blog/`, changefreq: 'weekly', priority: '0.7' },
     ];
 

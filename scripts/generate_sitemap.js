@@ -13,7 +13,8 @@ const staticPages = [
     { path: '/privacy', priority: '0.4', changefreq: 'monthly' },
     { path: '/terms', priority: '0.4', changefreq: 'monthly' },
     { path: '/library/', priority: '0.9', changefreq: 'daily' },
-    { path: '/bio', priority: '0.8', changefreq: 'weekly' },
+    { path: '/bio/', priority: '0.7', changefreq: 'weekly' },
+    { path: '/ai-games/library/', priority: '0.8', changefreq: 'weekly' },
     { path: '/blog/', priority: '0.8', changefreq: 'weekly' }
 ];
 

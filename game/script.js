@@ -16,7 +16,7 @@
     nav.querySelectorAll('.nav-link .material-icons').forEach(icon => icon.remove());
     const about = nav.querySelector('a[href="/about"]');
     if (!about) return;
-    [['AI games', '/bio/'], ['Blog', '/blog/']].forEach(([label, href]) => {
+    [['AI games', '/ai-games/library/'], ['Blog', '/blog/']].forEach(([label, href]) => {
         if (nav.querySelector(`a[href="${href}"]`)) return;
         const link = document.createElement('a');
         link.className = 'nav-link';
