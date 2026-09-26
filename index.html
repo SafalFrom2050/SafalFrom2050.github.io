@@ -112,7 +112,7 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=2.0" rel="stylesheet">
+    <link href="style.css?v=2.2" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -205,7 +205,7 @@
                 <p class="hero-subtitle">Thousands of games, one tap away. Explore the classics or create something entirely your own with AI.</p>
                 <div class="hero-actions">
                     <a href="#mainLibrary" class="btn btn-primary btn-lg expressive-button"><i class="material-icons" aria-hidden="true">sports_esports</i> Explore games</a>
-                    <a href="/bio" class="btn btn-ai expressive-button expressive-button-secondary"><i class="material-icons" aria-hidden="true">auto_awesome</i> Create with AI</a>
+                    <a href="/bio" class="btn btn-ai expressive-button expressive-button-secondary"><i class="material-icons" aria-hidden="true">auto_awesome</i> Explore AI games</a>
                 </div>
                 <div class="hero-proof"><span class="material-icons" aria-hidden="true">bolt</span> Instant play <span class="proof-separator"></span> No downloads <span class="proof-separator"></span> Made for curious players</div>
             </div>
@@ -227,6 +227,24 @@
                 <h3 class="mb-0 ai-retro-text">Featured AI Games</h3>
             </div>
             <div class="horizontal-scroll" id="aiGamesRow">
+            </div>
+        </section>
+
+        <section class="skyloop-intro my-5 animate-in" aria-labelledby="skyloop-title">
+            <div class="skyloop-stage">
+                <div class="skyloop-orbit skyloop-orbit-one" aria-hidden="true"></div>
+                <div class="skyloop-orbit skyloop-orbit-two" aria-hidden="true"></div>
+                <img class="skyloop-avatar" src="images/skyloop/idle/3.webp" width="420" height="420" alt="Skyloop, the blue AI game creation mascot" loading="lazy">
+                <span class="skyloop-speech">You dream it.<br>I build it.</span>
+            </div>
+            <div class="skyloop-copy">
+                <span class="skyloop-kicker"><i class="material-icons" aria-hidden="true">auto_awesome</i> YOUR GAME CREATION BUDDY</span>
+                <h2 id="skyloop-title">Meet <span>Skyloop.</span></h2>
+                <p>Got a game idea? In the app, Skyloop helps you choose a genre, describe your world, and turn that idea into a game you can play and share.</p>
+                <div class="skyloop-actions">
+                    <a class="btn expressive-button skyloop-primary-action" href="https://play.google.com/store/apps/details?id=dif.instantgames"><i class="material-icons" aria-hidden="true">smartphone</i> Create in the app</a>
+                    <a class="skyloop-text-link" href="/bio/">See AI games <i class="material-icons" aria-hidden="true">arrow_forward</i></a>
+                </div>
             </div>
         </section>
 
@@ -272,9 +290,9 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="feature-item d-flex flex-column h-100" style="border-radius: 20px; background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(255, 255, 255, 0.05);">
+                        <div class="feature-item d-flex flex-column h-100">
                             <div style="height: 50px; display: flex; align-items: center;">
-                                <i class="material-icons" style="color: #22d3ee !important; font-size: 42px; background: none !important; -webkit-text-fill-color: #22d3ee !important;">auto_awesome</i>
+                                <i class="material-icons" style="color: #6bb6ff !important; font-size: 42px; background: none !important; -webkit-text-fill-color: #6bb6ff !important;">auto_awesome</i>
                             </div>
                             <h5 class="ai-retro-text mt-2" style="font-size: 0.75rem; min-height: 2.5rem; display: flex; align-items: center;">AI Generation</h5>
                             <p>Or, you can ask one of our AI game dev agents to build a game for you.</p>
@@ -284,11 +302,11 @@
                         <div class="feature-item d-flex flex-column h-100">
                             <div style="height: 50px; display: flex; align-items: center; position: relative;">
                                 <!-- Magic Remix Icon (Background) -->
-                                <i class="material-icons" style="color: #22d3ee !important; font-size: 46px; position: absolute; left: -10px; opacity: 0.8; -webkit-text-fill-color: #22d3ee !important;">auto_fix_high</i>
+                                <i class="material-icons" style="color: #6bb6ff !important; font-size: 46px; position: absolute; left: -10px; opacity: 0.8; -webkit-text-fill-color: #6bb6ff !important;">auto_fix_high</i>
                                 <!-- Pro Share Icon (Foreground) -->
                                 <i class="material-icons text-gradient" style="font-size: 38px; position: relative; z-index: 2; transform: rotate(-25deg); margin-left: 15px;">send</i>
                             </div>
-                            <h5 class="mt-2 text-gradient" style="min-height: 2.5rem; display: flex; align-items: center;">Share & <span class="ai-retro-text" style="font-size: 0.8rem; margin-left: 8px; vertical-align: middle; -webkit-text-fill-color: #22d3ee !important;">Remix</span></h5>
+                            <h5 class="mt-2 text-gradient" style="min-height: 2.5rem; display: flex; align-items: center;">Share & <span class="ai-retro-text" style="font-size: 0.8rem; margin-left: 8px; vertical-align: middle; -webkit-text-fill-color: #6bb6ff !important;">Remix</span></h5>
                             <p>Share your best games. Remix your friends' games with our AI agent.</p>
                         </div>
                     </div>
@@ -393,6 +411,7 @@
     <script src="js/popper.min.js"></script> 
     <script src="js/bootstrap-4.0.0.js"></script>
     <script src="js/logo.js"></script>
+    <script src="js/skyloop.js"></script>
     
     <script>
         // --- STATIC BASELINE DATA (Real Firestore Snapshots) ---
@@ -638,8 +657,8 @@
     </script>
     
     <!-- Cookie Consent -->
-    <link href="cookiePopupStyle.css" rel="stylesheet">
-    <script src="cookiePopUp.js"></script>
+    <link href="cookiePopupStyle.css?v=2.2" rel="stylesheet">
+    <script src="cookiePopUp.js?v=2.2"></script>
 </body>
 </html>
 

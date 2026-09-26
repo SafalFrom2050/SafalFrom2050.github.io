@@ -58,7 +58,7 @@
 
 .cookie-btn.primary {
     background: var(--primary);
-    color: white;
+    color: #101d31;
 }
 
 .cookie-btn.primary:hover {

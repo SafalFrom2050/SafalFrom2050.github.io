@@ -28,13 +28,22 @@ $(document).ready(function () {
     }
 
     function saveConsent(value) {
-        localStorage.setItem('cookieConsent', value);
+        try {
+            window.localStorage.setItem('cookieConsent', value);
+        } catch (error) {
+            // Private preview contexts can disable storage; keep the choice for this page.
+        }
         updateGoogleConsent(value);
         $("#cookieConsent").fadeOut(200);
         $("#cookiePreferences").fadeIn(200);
     }
 
-    var consent = localStorage.getItem('cookieConsent');
+    var consent = null;
+    try {
+        consent = window.localStorage.getItem('cookieConsent');
+    } catch (error) {
+        // Still allow the visitor to dismiss the banner when storage is unavailable.
+    }
     if (!consent) {
         setTimeout(function () {
             $("#cookieConsent").fadeIn(200);

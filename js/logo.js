@@ -15,12 +15,17 @@ const LogoComponent = {
             
             if (altSpan && gamesSpan) {
                 if (sprite) {
-                    // Standard Navbar Sequence: Wait for Sprite -> Swap -> Type
+                    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        brand.classList.add('logo-swapped');
+                        return;
+                    }
+
+                    // Let the mark finish its reveal, then type the wordmark beside it.
                     sprite.addEventListener('animationend', (e) => {
                         if (e.animationName === 'sprite-play') {
-                            this.startSequence(brand, sprite, altSpan, gamesSpan);
+                            this.startSequence(brand, altSpan, gamesSpan);
                         }
-                    });
+                    }, { once: true });
                 } else {
                     // Fallback or Footer: Just show/type immediately
                     altSpan.style.opacity = '1';
@@ -33,7 +38,7 @@ const LogoComponent = {
         });
     },
 
-    startSequence: function(brand, sprite, altSpan, gamesSpan) {
+    startSequence: function(brand, altSpan, gamesSpan) {
         brand.classList.add('logo-swapped');
         brand.classList.add('typing-cursor');
         
