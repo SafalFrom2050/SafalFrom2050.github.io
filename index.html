@@ -107,12 +107,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=2.2" rel="stylesheet">
+    <link href="style.css?v=2.3" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -202,9 +202,9 @@
             <div class="hero-copy">
                 <span class="expressive-eyebrow"><span class="eyebrow-dot"></span> Your next play break starts here</span>
                 <h1 id="hero-title">Jump into <span class="hero-highlight">play.</span></h1>
-                <p class="hero-subtitle">Thousands of games, one tap away. Explore the classics or create something entirely your own with AI.</p>
+                <p class="hero-subtitle">Find a game and start playing in your browser. Have an idea of your own? Create it with Skyloop in the Android app.</p>
                 <div class="hero-actions">
-                    <a href="#mainLibrary" class="btn btn-primary btn-lg expressive-button"><i class="material-icons" aria-hidden="true">sports_esports</i> Explore games</a>
+                    <a href="/library/" class="btn btn-primary btn-lg expressive-button"><i class="material-icons" aria-hidden="true">sports_esports</i> Explore games</a>
                     <a href="/bio" class="btn btn-ai expressive-button expressive-button-secondary"><i class="material-icons" aria-hidden="true">auto_awesome</i> Explore AI games</a>
                 </div>
                 <div class="hero-proof"><span class="material-icons" aria-hidden="true">bolt</span> Instant play <span class="proof-separator"></span> No downloads <span class="proof-separator"></span> Made for curious players</div>
@@ -221,11 +221,22 @@
             </div>
         </section>
 
+        <section class="play-now-section mb-5 animate-in" aria-labelledby="play-now-title">
+            <div class="section-heading-row">
+                <div><span class="section-kicker">INSTANT PLAY</span><h2 id="play-now-title">Play now</h2></div>
+                <a href="/library/" class="section-text-link">Explore the library <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="horizontal-scroll" id="playNowRow"></div>
+        </section>
+
+        <aside class="app-callout mb-5" data-app-promo hidden aria-label="Android app invitation"></aside>
+
         <!-- Featured AI Games Section -->
         <section class="mb-5 animate-in" style="animation-delay: 0.2s;">
             <div class="d-flex align-items-center mb-3">
                 <h3 class="mb-0 ai-retro-text">Featured AI Games</h3>
             </div>
+            <p class="section-description">Preview a game made with Skyloop, then build your own in the Android app.</p>
             <div class="horizontal-scroll" id="aiGamesRow">
             </div>
         </section>
@@ -242,77 +253,14 @@
                 <h2 id="skyloop-title">Meet <span>Skyloop.</span></h2>
                 <p>Got a game idea? In the app, Skyloop helps you choose a genre, describe your world, and turn that idea into a game you can play and share.</p>
                 <div class="skyloop-actions">
-                    <a class="btn expressive-button skyloop-primary-action" href="https://play.google.com/store/apps/details?id=dif.instantgames"><i class="material-icons" aria-hidden="true">smartphone</i> Create in the app</a>
+                    <a class="btn expressive-button skyloop-primary-action" href="https://play.google.com/store/apps/details?id=dif.instantgames"><i class="material-icons" aria-hidden="true">smartphone</i> <span data-app-label>Available on Android</span></a>
                     <a class="skyloop-text-link" href="/bio/">See AI games <i class="material-icons" aria-hidden="true">arrow_forward</i></a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Editor's Choice Section (High Value Content) -->
-        <section class="content-block my-5 animate-in" style="animation-delay: 0.3s;">
-            <div class="section-divider mb-4">
-                <span>Editor's Choice</span>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="glass-container h-100 p-4">
-                        <h4 class="ai-retro-text mb-3" style="font-size: 1.1rem;">Top Pick: Neon Beats</h4>
-                        <p class="small text-muted">Our editors have selected <strong>Neon Beats: Fever Edition</strong> as this month's standout instant title. Developed using advanced AI heuristics, it offers a rhythmic combat experience that pushes the boundaries of cross-platform performance. We highly recommend this for fans of synth-wave aesthetics and precise timing challenges.</p>
-                        <a href="/bio/" class="btn btn-link p-0 small font-weight-bold" style="color: var(--accent);">Play Neon Beats →</a>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="glass-container h-100 p-4">
-                        <h4 class="text-gradient mb-3" style="font-size: 1.1rem; font-weight: 800;">Battle Simulator Review</h4>
-                        <p class="small text-muted">A deep dive into the <strong>Police Prison Battle Simulator</strong> reveals a surprisingly complex physics engine for an instant title. It manages to balance chaotic action with strategic unit placement, making it one of the most addictive strategy games in our current library of 10,000+ titles.</p>
-                        <a href="/game/?id=fHg6eu5uGbEAjwdh6vil" class="btn btn-link p-0 small font-weight-bold" style="color: var(--primary);">Review Game →</a>
-                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Discovery Rows (Dynamic) -->
         <div id="discoveryRows"></div>
-
-        <!-- SEO/AdSense Content Section 1 -->
-        <section class="content-block my-5 animate-in">
-            <div class="glass-container">
-                <h2 class="text-gradient mb-3">Unlimited Gaming, No Downloads</h2>
-                <p>Welcome to <strong>alt games portal</strong>, the ultimate destination for instant-play browser games. Our platform hosts a massive collection of over 10,000 games across every genre imaginable. Whether you're into high-octane racing, mind-bending puzzles, or action-packed shooters, we have something for every gamer.</p>
-                <div class="row mt-4">
-                    <div class="col-md-4">
-                        <div class="feature-item d-flex flex-column h-100">
-                            <div style="height: 50px; display: flex; align-items: center;">
-                                <i class="material-icons text-gradient">rocket_launch</i>
-                            </div>
-                            <h5 class="mt-2 text-gradient" style="min-height: 2.5rem; display: flex; align-items: center;">Instant Play</h5>
-                            <p>No downloads, no installations. Just click and play in our app.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="feature-item d-flex flex-column h-100">
-                            <div style="height: 50px; display: flex; align-items: center;">
-                                <i class="material-icons" style="color: #6bb6ff !important; font-size: 42px; background: none !important; -webkit-text-fill-color: #6bb6ff !important;">auto_awesome</i>
-                            </div>
-                            <h5 class="ai-retro-text mt-2" style="font-size: 0.75rem; min-height: 2.5rem; display: flex; align-items: center;">AI Generation</h5>
-                            <p>Or, you can ask one of our AI game dev agents to build a game for you.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="feature-item d-flex flex-column h-100">
-                            <div style="height: 50px; display: flex; align-items: center; position: relative;">
-                                <!-- Magic Remix Icon (Background) -->
-                                <i class="material-icons" style="color: #6bb6ff !important; font-size: 46px; position: absolute; left: -10px; opacity: 0.8; -webkit-text-fill-color: #6bb6ff !important;">auto_fix_high</i>
-                                <!-- Pro Share Icon (Foreground) -->
-                                <i class="material-icons text-gradient" style="font-size: 38px; position: relative; z-index: 2; transform: rotate(-25deg); margin-left: 15px;">send</i>
-                            </div>
-                            <h5 class="mt-2 text-gradient" style="min-height: 2.5rem; display: flex; align-items: center;">Share & <span class="ai-retro-text" style="font-size: 0.8rem; margin-left: 8px; vertical-align: middle; -webkit-text-fill-color: #6bb6ff !important;">Remix</span></h5>
-                            <p>Share your best games. Remix your friends' games with our AI agent.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- Categories Section -->
         <div id="mainLibrary" class="mt-5">
@@ -351,24 +299,6 @@
             <a href="/library/" class="btn btn-primary btn-lg rounded-pill px-5">Browse Full Library</a>
         </div>
 
-        <!-- SEO/AdSense Content Section 2 -->
-        <section class="content-block my-5 py-4">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <img src="images/ai_game_screenshot.png" class="img-fluid rounded-24 shadow-lg border border-glass" alt="AI Game Screenshot">
-                </div>
-                <div class="col-lg-6">
-                    <h2 class="ai-retro-text mb-4" style="font-size: 1.5rem;">How AI is Changing Gaming</h2>
-                    <p class="text-muted">The future of game development is here. At alt games portal, we are pioneering the integration of AI-generated content. Our AI agents can build entire worlds, mechanics, and stories in seconds, providing a unique experience that evolves every time you play.</p>
-                    <ul class="list-unstyled mt-4">
-                        <li class="mb-2"><i class="material-icons mr-2" style="vertical-align: middle; color: var(--accent);">auto_awesome</i> Procedural World Generation</li>
-                        <li class="mb-2"><i class="material-icons mr-2" style="vertical-align: middle; color: var(--accent);">auto_awesome</i> Dynamic AI Narratives</li>
-                        <li class="mb-2"><i class="material-icons mr-2" style="vertical-align: middle; color: var(--accent);">auto_awesome</i> Adaptive Difficulty Scaling</li>
-                    </ul>
-                    <a href="/about" class="btn btn-link p-0 mt-3 font-weight-bold" style="color: var(--accent);">Learn more about our technology →</a>
-                </div>
-            </div>
-        </section>
     </div>
 
     <!-- SEO: Crawlable noscript fallback with keyword-rich links -->
@@ -376,7 +306,7 @@
     <div class="container my-5">
         <h2>Play Free HTML5 Browser Games Online</h2>
         <p>Welcome to alt games portal — the ultimate destination for free online games. Browse our collection of over 10,000 HTML5 games across every genre: <a href="/library/?cat=action">Action Games</a>, <a href="/library/?cat=puzzle">Puzzle Games</a>, <a href="/library/?cat=racing">Racing Games</a>, <a href="/library/?cat=sports">Sports Games</a>, <a href="/library/?cat=arcade">Arcade Games</a>, <a href="/library/?cat=brain">Brain Games</a>, <a href="/library/?cat=casual">Casual Games</a>, and <a href="/library/?cat=kids">Kids Games</a>. All games play instantly in your browser with no downloads or installations required.</p>
-        <p><a href="/library/">Browse the Full Game Library</a> | <a href="/blog/">Read Our Game Blog</a> | <a href="/bio">Try AI Game Generation</a></p>
+        <p><a href="/library/">Browse the Full Game Library</a> | <a href="/blog/">Read Our Game Blog</a> | <a href="/bio/">Preview AI games</a></p>
     </div>
     </noscript>
 </main>
@@ -393,7 +323,7 @@
                 </a>
             </div>
 
-            <p class="mb-4 opacity-7">Premium gaming experience, accessible anywhere.</p>
+            <p class="mb-4 opacity-7">Play instantly on the web. Create with Skyloop on Android.</p>
             
             <div class="d-flex justify-content-center flex-wrap footer-links">
                 <a href="/about" class="mx-3">About</a>
@@ -412,6 +342,7 @@
     <script src="js/bootstrap-4.0.0.js"></script>
     <script src="js/logo.js"></script>
     <script src="js/skyloop.js"></script>
+    <script src="js/app-promo.js"></script>
     
     <script>
         // --- STATIC BASELINE DATA (Real Firestore Snapshots) ---
@@ -424,9 +355,7 @@
             ],
             discoverCards: [
                 { id: "row-action", title: "Jump Straight Into the Danger Zone", subtitle: "Action Packed", categories: ["ACTION", "GDEVELOP"] },
-                { id: "row-sports", title: "Bring Home the Trophy", subtitle: "Sports & Soccer", categories: ["SPORTS", "SOCCER"] },
-                { id: "row-puzzle", title: "Master the Mind Games", subtitle: "Puzzle & Brain", categories: ["PUZZLE", "BRAIN"] },
-                { id: "row-kids", title: "Fun for the Whole Family", subtitle: "Kids & Casual", categories: ["KIDS", "CASUAL"] }
+                { id: "row-puzzle", title: "Master the Mind Games", subtitle: "Puzzle & Brain", categories: ["PUZZLE", "BRAIN"] }
             ],
             gamesPool: [
                 {"id":"fHg6eu5uGbEAjwdh6vil","title":"Battle Simulator - Police Prison","imageUrl":"https://img.gamepix.com/games/police-prison-battle-simulator/icon/police-prison-battle-simulator.png?w=105","category":["ACTION"]},
@@ -503,7 +432,10 @@
             const tab = document.getElementById('categoriesTab');
             const allCats = await firestoreService.fetchCategories();
             
-            allCats.forEach(cat => {
+            const homeCategories = ['all', 'action', 'arcade', 'puzzle', 'racing', 'sports', 'casual', 'brain'];
+            allCats.filter(cat => homeCategories.includes(cat.toLowerCase())).sort((a, b) =>
+                homeCategories.indexOf(a.toLowerCase()) - homeCategories.indexOf(b.toLowerCase())
+            ).forEach(cat => {
                 const chip = document.createElement('button');
                 chip.type = 'button';
                 chip.className = 'category-chip' + (cat === 'all' ? ' active' : '');
@@ -513,7 +445,8 @@
                 tab.appendChild(chip);
             });
 
-            // 2. Instant AI Games Render
+            // 2. Stable, immediately playable picks and AI previews
+            renderHorizontalRow('playNowRow', STATIC_HOME_DATA.gamesPool.slice(0, 6));
             renderHorizontalRow('aiGamesRow', STATIC_HOME_DATA.aiGames);
 
             // 3. Instant Discovery Rows Render
@@ -528,7 +461,7 @@
                 const cardGames = STATIC_HOME_DATA.gamesPool.filter(g => 
                     g.category.some(c => card.categories.includes(c.toUpperCase()))
                 );
-                const randomized = firestoreService.shuffleArray(cardGames.length > 0 ? cardGames : STATIC_HOME_DATA.gamesPool);
+                const curated = cardGames.length > 0 ? cardGames : STATIC_HOME_DATA.gamesPool;
 
                 section.innerHTML = `
                     <div class="mb-3">
@@ -538,7 +471,7 @@
                     <div class="horizontal-scroll" id="card-${card.id}"></div>
                 `;
                 discoveryContainer.appendChild(section);
-                renderHorizontalRow(`card-${card.id}`, randomized.slice(0, 12));
+                renderHorizontalRow(`card-${card.id}`, curated.slice(0, 12));
             });
 
             // 4. Load Library Preview Grid
@@ -552,8 +485,8 @@
 
         async function loadLibraryPreview() {
             const container = document.getElementById('scrollView');
-            const pool = firestoreService.shuffleArray(STATIC_HOME_DATA.gamesPool);
-            renderPreviewGrid(pool.slice(0, 18));
+            const pool = STATIC_HOME_DATA.gamesPool;
+            renderPreviewGrid(pool.slice(0, 12));
         }
 
         function renderPreviewGrid(games) {
@@ -602,11 +535,12 @@
             games.forEach(game => {
                 const card = document.createElement('a');
                 card.className = game.isAI ? 'horizontal-card ai-card-gradient' : 'horizontal-card';
-                card.href = game.isAI ? '/bio' : `/game/?id=${encodeURIComponent(game.id)}`;
+                card.href = game.isAI ? `/bio/?game=${encodeURIComponent(game.id)}` : `/game/?id=${encodeURIComponent(game.id)}`;
                 card.innerHTML = `
                     <img src="${game.imageUrl}" alt="" loading="lazy" onerror="this.src='/images/cover.png'">
                     <div class="h-card-info">
-                        <h6 class="${game.isAI ? 'ai-retro-text' : ''}" style="${game.isAI ? 'font-size: 8px;' : ''}">${game.name || game.title}</h6>
+                        <h6>${game.name || game.title}</h6>
+                        ${game.isAI ? '<span class="card-action">Preview game →</span>' : ''}
                     </div>
                 `;
                 row.appendChild(card);

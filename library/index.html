@@ -50,12 +50,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css?v=2.2" rel="stylesheet">
+    <link href="../style.css?v=2.3" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -88,8 +88,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
                 <div class="navbar-nav ml-auto align-items-lg-center">
-                    <form class="form-inline my-2 my-lg-0 mr-lg-3" onsubmit="event.preventDefault(); triggerSearch();">
-                        <input id="gameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-3 d-none d-lg-block" onsubmit="event.preventDefault(); window.location.href='/library/?q='+encodeURIComponent(document.getElementById('navGameSearch').value);">
+                        <input id="navGameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search games">
                     </form>
                     <a href="/library/" class="nav-link active">Library</a>
                     <a href="/about" class="nav-link">About</a>
@@ -106,6 +106,14 @@
             <span class="expressive-eyebrow"><span class="eyebrow-dot"></span> The full collection</span>
             <h1 class="h2 mb-2">Find your next favorite game</h1>
             <p class="library-intro">Pick a category or search for a mood. Every game starts in your browser.</p>
+            <form class="library-search" role="search" onsubmit="event.preventDefault(); triggerSearch();">
+                <label for="gameSearch">Search the library</label>
+                <div class="library-search-controls">
+                    <input id="gameSearch" class="form-control" type="search" placeholder="Game, genre, or mood" autocomplete="off">
+                    <button class="btn btn-primary" type="submit"><i class="material-icons" aria-hidden="true">search</i> Search</button>
+                </div>
+            </form>
+            <div class="category-heading"><strong>Browse by category</strong><button id="allCategoriesBtn" class="category-expand" type="button" aria-expanded="false" aria-controls="categoriesTab">All categories <span aria-hidden="true">⌄</span></button></div>
             <div class="row align-items-center">
                 <div class="col-12">
                     <div class="d-flex align-items-center mb-3">
@@ -125,6 +133,8 @@
                 </div>
             </div>
         </div>
+
+        <aside class="app-callout mb-5" data-app-promo hidden aria-label="Android app invitation"></aside>
 
         <!-- Games Grid -->
         <div id="scrollView" class="row"></div>
@@ -153,7 +163,7 @@
                 </a>
             </div>
 
-            <p class="mb-4 opacity-7">Premium gaming experience, accessible anywhere.</p>
+            <p class="mb-4 opacity-7">Play instantly on the web. Create with Skyloop on Android.</p>
             
             <div class="d-flex justify-content-center flex-wrap footer-links">
                 <a href="/about" class="mx-3">About</a>
@@ -173,12 +183,14 @@
     <script src="../js/popper.min.js"></script> 
     <script src="../js/bootstrap-4.0.0.js"></script>
     <script src="../js/logo.js"></script>
+    <script src="../js/app-promo.js"></script>
     
     <script>
         let currentCategory = 'all';
         let isFetching = false;
         let isSearchMode = false;
-        let shuffledQueue = []; // Session-level queue for randomized games
+        let gameQueue = [];
+        const popularCategories = ['all', 'action', 'arcade', 'puzzle', 'racing', 'sports', 'casual', 'brain'];
 
         async function init() {
             // Check for search query in URL
@@ -190,12 +202,23 @@
             const categories = await firestoreService.fetchCategories();
             const tab = document.getElementById('categoriesTab');
             
-            categories.forEach(cat => {
+            const sortedCategories = [...categories].sort((a, b) => {
+                const aRank = popularCategories.indexOf(a.toLowerCase());
+                const bRank = popularCategories.indexOf(b.toLowerCase());
+                return (aRank < 0 ? 999 : aRank) - (bRank < 0 ? 999 : bRank) || a.localeCompare(b);
+            });
+            const showAll = !!category && !popularCategories.includes(category.toLowerCase());
+            if (showAll) {
+                document.getElementById('allCategoriesBtn').setAttribute('aria-expanded', 'true');
+                tab.classList.add('expanded');
+            }
+            sortedCategories.forEach(cat => {
                 const chip = document.createElement('button');
                 chip.type = 'button';
                 // Determine if this chip should be active (matching URL param or default to 'all')
                 const isActive = (category && category.toLowerCase() === cat.toLowerCase()) || (!category && cat.toLowerCase() === 'all');
                 chip.className = 'category-chip' + (isActive ? ' active' : '');
+                if (!showAll && !popularCategories.includes(cat.toLowerCase())) chip.hidden = true;
                 chip.setAttribute('aria-pressed', String(isActive));
                 chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
                 chip.onclick = () => loadCategory(cat, chip, true);
@@ -206,8 +229,18 @@
                 }
             });
 
+            document.getElementById('allCategoriesBtn').onclick = function () {
+                const expanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', String(!expanded));
+                tab.classList.toggle('expanded', !expanded);
+                tab.querySelectorAll('.category-chip').forEach(chip => {
+                    if (!popularCategories.includes(chip.textContent.toLowerCase()) && !chip.classList.contains('active')) chip.hidden = expanded;
+                });
+            };
+
             if (query) {
                 document.getElementById('gameSearch').value = query;
+                document.getElementById('navGameSearch').value = query;
                 performSearch(query);
             } else if (category && category.toLowerCase() !== 'all') {
                 loadCategory(category, null, false);
@@ -251,7 +284,8 @@
             
             isSearchMode = false;
             currentCategory = cleanCat;
-            shuffledQueue = []; // Reset the randomized pool
+            gameQueue = [];
+            if (updateUrl) document.getElementById('gameSearch').value = '';
             document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(24, "col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2");
             document.getElementById('resultsInfo').innerHTML = '';
             document.getElementById('loaderContainer').style.display = 'none';
@@ -261,7 +295,11 @@
         }
 
         async function performSearch(query) {
-            if (!query || query.length < 3) return;
+            if (!query || query.trim().length < 2) {
+                await loadCategory('all', null, false);
+                document.getElementById('resultsInfo').textContent = 'Enter at least two characters to search.';
+                return;
+            }
             isSearchMode = true;
             document.getElementById('scrollView').innerHTML = firestoreService.getSkeletonGrid(12, "col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2");
             document.getElementById('loaderContainer').style.display = 'none';
@@ -270,12 +308,12 @@
 
             const games = await firestoreService.searchGames(query, 24);
             renderGames(games, false);
-            document.getElementById('resultsInfo').innerHTML = 'Found ' + games.length + ' results for "' + query + '"';
+            document.getElementById('resultsInfo').textContent = 'Found ' + games.length + ' results for "' + query + '"';
         }
 
         function triggerSearch() {
             const query = document.getElementById('gameSearch').value;
-            if (query.length >= 3) {
+            if (query.trim().length >= 2) {
                 // Update URL without reload
                 const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?q=' + encodeURIComponent(query);
                 window.history.pushState({path:newurl},'',newurl);
@@ -297,12 +335,11 @@
             loadMoreBtn.textContent = 'Loading...';
             
             // If queue is empty, fetch more into it from the periodic cache or next page
-            if (shuffledQueue.length === 0) {
+            if (gameQueue.length === 0) {
                 const batchSize = 120;
                 const forceNext = scrollView.querySelectorAll('.game-card').length > 0;
                 const batch = await firestoreService.fetchGamesWithCache(currentCategory, batchSize, forceNext);
-                // Randomize this batch for the current session
-                shuffledQueue = firestoreService.shuffleArray(batch);
+                gameQueue = batch;
                 
                 // Clear skeletons if present
                 if (scrollView.querySelector('.skeleton')) {
@@ -310,13 +347,12 @@
                 }
             }
 
-            // Take next 24 from the randomized queue
-            const batchToRender = shuffledQueue.splice(0, 24);
+            const batchToRender = gameQueue.splice(0, 24);
             renderGames(batchToRender, true);
 
             // Empty state check
             if (scrollView.children.length === 0) {
-                scrollView.innerHTML = '<div class="col-12 text-center p-5"><p class="text-muted">No games found in this category.</p></div>';
+                scrollView.innerHTML = '<div class="col-12 text-center p-5 empty-results"><h2>No games here yet</h2><p>Try another category or search the full library.</p><a href="/library/" class="btn btn-outline-light">Show all games</a></div>';
             }
             
             isFetching = false;
@@ -325,7 +361,7 @@
             document.getElementById('loaderContainer').style.display = 'none';
 
             // Show load more if games remain in queue or if we have rendered games
-            document.getElementById('loadMoreContainer').style.display = (shuffledQueue.length > 0 || scrollView.querySelectorAll('.game-card').length >= 24) ? 'block' : 'none';
+            document.getElementById('loadMoreContainer').style.display = (gameQueue.length > 0 || scrollView.querySelectorAll('.game-card').length >= 24) ? 'block' : 'none';
         }
 
         function renderGames(games, append) {
@@ -333,7 +369,7 @@
             if (!append) container.innerHTML = '';
             
             if (games.length === 0 && !append) {
-                container.innerHTML = '<div class="col-12 text-center p-5"><p class="text-muted">No games found.</p></div>';
+                container.innerHTML = '<div class="col-12 text-center p-5 empty-results"><h2>No matching games</h2><p>Try a broader search or explore every game.</p><a href="/library/" class="btn btn-outline-light">Show all games</a></div>';
                 return;
             }
 

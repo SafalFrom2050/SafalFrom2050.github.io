@@ -36,6 +36,7 @@ $(document).ready(function () {
         updateGoogleConsent(value);
         $("#cookieConsent").fadeOut(200);
         $("#cookiePreferences").fadeIn(200);
+        document.dispatchEvent(new Event('app:consent-settled'));
     }
 
     var consent = null;
@@ -67,6 +68,7 @@ $(document).ready(function () {
     $("#closeCookieConsent").click(function () {
         $("#cookieConsent").fadeOut(200);
         $("#cookiePreferences").fadeIn(200);
+        document.dispatchEvent(new Event('app:consent-settled'));
     });
 
     $("#cookiePreferences").click(function () {

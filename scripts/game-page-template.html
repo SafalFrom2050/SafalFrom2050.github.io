@@ -33,12 +33,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
     <link href="/css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="/style.css?v=2.2" rel="stylesheet">
+    <link href="/style.css?v=2.3" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -270,7 +270,7 @@
                 </a>
             </div>
 
-            <p class="mb-4 opacity-7">Premium gaming experience, accessible anywhere.</p>
+            <p class="mb-4 opacity-7">Play instantly on the web. Create with Skyloop on Android.</p>
             
             <div class="d-flex justify-content-center flex-wrap footer-links">
                 <a href="/about" class="mx-3">About</a>
@@ -284,32 +284,10 @@
     </footer>
 
     <!-- Scripts -->
-    <!-- Android App Recommendation Popup -->
-    <div id="appPromoModal" class="app-promo-modal">
-        <div class="promo-content">
-            <div class="promo-icon">
-                <i class="material-icons">install_mobile</i>
-            </div>
-            <h3 class="promo-title">Experience More in the App</h3>
-            <p class="promo-text">Get faster loading, full-screen immersion, and exclusive AI features by downloading our official Android app.</p>
-            <div class="promo-actions">
-                <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="promo-btn btn-get-app">Download Free</a>
-                <button onclick="dismissAppPromo()" class="promo-btn btn-not-now">Maybe Later</button>
-            </div>
-        </div>
-    </div>
-
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/popper.min.js"></script> 
     <script src="/js/bootstrap-4.0.0.js"></script>
     <script src="/js/logo.js"></script>
     <script src="/game/script.js"></script>
-    <script>
-        // App Promo Logic (simplified)
-        function dismissAppPromo() {
-            document.getElementById('appPromoModal').classList.remove('visible');
-            localStorage.setItem('appPromoDismissed', Date.now());
-        }
-    </script>
 </body>
 </html>

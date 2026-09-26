@@ -79,13 +79,17 @@ function renderGameDetails(game) {
     const stats = game.stats || {};
     
     // Ratings
-    if (stats.averageRating !== undefined) {
+    if (Number(stats.averageRating) > 0) {
         document.getElementById("ratingValue").innerHTML = Number(stats.averageRating).toFixed(1) + " ★";
+    } else {
+        document.getElementById("ratingValue").parentElement.hidden = true;
     }
 
     // Favorites
-    if (stats.favoriteCount !== undefined) {
+    if (Number(stats.favoriteCount) > 0) {
         document.getElementById("favCount").innerHTML = stats.favoriteCount;
+    } else {
+        document.getElementById("favCount").parentElement.hidden = true;
     }
 
     // AI Retro Text (Apply only if isAI is true, without adding/showing the AI Status field)
@@ -211,23 +215,23 @@ function renderSimilarGames(games) {
     games.forEach(game => {
         // Desktop Sidebar Item
         const sidebarHtml = `
-            <div class="sidebar-item" onclick="window.open('/game/${game.id}/', '_self')">
-                <img src="${game.imageUrl}" onerror="this.src='/images/cover.png'">
+            <a class="sidebar-item" href="/game/${encodeURIComponent(game.id)}/">
+                <img src="${game.imageUrl}" alt="" onerror="this.src='/images/cover.png'">
                 <div>
                     <h6 class="mb-1">${game.name || game.title}</h6>
                     <span class="badge badge-dark small" style="font-size: 9px; opacity: 0.7;">${game.category && game.category[0] || 'Game'}</span>
                 </div>
-            </div>
+            </a>
         `;
         sidebar.innerHTML += sidebarHtml;
 
         // Mobile Grid Item (Using home screen card style)
         const mobileHtml = `
             <div class="col-6 p-2">
-                <div class="game-card" onclick="window.open('/game/${game.id}/', '_self')">
-                    <img src="${game.imageUrl}" onerror="this.src='/images/cover.png'">
-                    <h6 style="font-size: 11px;">${game.name || game.title}</h6>
-                </div>
+                <a class="game-card" href="/game/${encodeURIComponent(game.id)}/">
+                    <img src="${game.imageUrl}" alt="" onerror="this.src='/images/cover.png'">
+                    <h6>${game.name || game.title}</h6>
+                </a>
             </div>
         `;
         mobileGrid.innerHTML += mobileHtml;
@@ -275,29 +279,21 @@ function handleFullscreenChange() {
 // Global scope initialization
 window.addEventListener('load', () => {
     loadGamePage();
-    checkAndroidAppPromotion();
+    setupGameAppInvitation();
 });
 
-/**
- * App Promotion Logic (Android Specific)
- */
-function checkAndroidAppPromotion() {
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const hasSeenPromo = sessionStorage.getItem('app_promo_dismissed');
-    
-    if (isAndroid && !hasSeenPromo) {
-        // Show after a short delay to ensure game rendering has started
-        setTimeout(() => {
-            const modal = document.getElementById('appPromoModal');
-            if (modal) modal.classList.add('visible');
-        }, 3000);
-    }
-}
-
-function dismissAppPromo() {
-    const modal = document.getElementById('appPromoModal');
-    if (modal) {
-        modal.classList.remove('visible');
-        sessionStorage.setItem('app_promo_dismissed', 'true');
-    }
+function setupGameAppInvitation() {
+    // Older generated game pages still contain the former modal markup.
+    document.getElementById('appPromoModal')?.remove();
+    const details = document.querySelector('.game-detail-container');
+    if (!details) return;
+    const slot = document.createElement('aside');
+    slot.className = 'app-callout mb-4';
+    slot.setAttribute('data-app-promo', '');
+    slot.setAttribute('aria-label', 'Android app invitation');
+    slot.hidden = true;
+    details.insertAdjacentElement('afterend', slot);
+    const script = document.createElement('script');
+    script.src = '/js/app-promo.js';
+    document.body.appendChild(script);
 }

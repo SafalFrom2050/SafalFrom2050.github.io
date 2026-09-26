@@ -5,21 +5,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AI Game Generator — Create Free HTML5 Games | alt games portal</title>
+    <title>AI Games by Skyloop — Play Previews | alt games portal</title>
     <meta name="description"
-        content="Create your own free HTML5 browser games in minutes using AI. Watch AI agents generate unique interactive games instantly at alt games portal.">
+        content="Preview games made with Skyloop on the web. Create, play, and share your own game in the alt games portal Android app.">
     <link rel="canonical" href="https://gamesp.xyz/bio">
     
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="alt games portal">
-    <meta property="og:title" content="AI Game Generator — Create Free HTML5 Games | alt games portal">
-    <meta property="og:description" content="Create your own free HTML5 browser games in minutes using AI. No coding required.">
+    <meta property="og:title" content="AI Games by Skyloop | alt games portal">
+    <meta property="og:description" content="Preview AI games on the web and create your own in the Android app.">
     <meta property="og:image" content="https://gamesp.xyz/images/cover.png">
     <meta property="og:url" content="https://gamesp.xyz/bio">
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AI Game Generator — Create Free HTML5 Games">
-    <meta name="twitter:description" content="Create your own free HTML5 browser games in minutes using AI. No coding required.">
+    <meta name="twitter:title" content="AI Games by Skyloop">
+    <meta name="twitter:description" content="Preview AI games on the web and create your own in the Android app.">
     <meta name="twitter:image" content="https://gamesp.xyz/images/cover.png">
     
     <!-- JSON-LD Structured Data -->
@@ -31,8 +31,8 @@
           "@type": "SoftwareApplication",
           "name": "alt games portal AI Game Generator",
           "applicationCategory": "GameApplication",
-          "operatingSystem": "Web Browser, Android",
-          "description": "Create your own free HTML5 browser games in minutes using AI agents. No coding required.",
+          "operatingSystem": "Android",
+          "description": "Create, play, and share games with Skyloop in the Android app. Preview published games on the web.",
           "url": "https://gamesp.xyz/bio",
           "offers": {
             "@type": "Offer",
@@ -70,6 +70,8 @@
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
+    <link href="../style.css?v=2.3" rel="stylesheet">
+    <link href="../cookiePopupStyle.css?v=2.2" rel="stylesheet">
 
     <!-- Google Analytics (Performance Optimized) -->
     <link rel="preconnect" href="https://www.googletagmanager.com">
@@ -848,7 +850,7 @@
         body {
             background: radial-gradient(ellipse 55% 30% at 50% 0%, rgba(107, 182, 255, .12), transparent), #000;
             font-family: 'Roboto', sans-serif;
-            padding: 42px 20px 75px;
+            padding: 100px 20px 75px;
         }
         .shape-1 { background: #2f93f7; opacity: .16; }
         .shape-2 { background: #6bb6ff; opacity: .12; }
@@ -859,8 +861,8 @@
         .brand-alt { font-size: 16px; }
         .brand-games { font: 900 25px 'Roboto', sans-serif; letter-spacing: -.05em; background: none; -webkit-text-fill-color: #fff !important; }
         .bio-text { font: 600 15px/1.5 'Roboto', sans-serif; color: #b3b7c0; opacity: 1; max-width: none; margin-top: 12px; }
-        .app-button { margin-top: 22px; background: #6bb6ff; color: #101d31; border-radius: 20px; font: 800 14px 'Roboto', sans-serif; padding: 13px 22px; box-shadow: 0 12px 25px rgba(107, 182, 255, .16); }
-        .app-button:hover { background: #8bcbff; color: #101d31; border-radius: 28px 17px 28px 17px; }
+        .app-button { margin-top: 22px; background: #222630; color: #d8edff; border: 1px solid #47505d; border-radius: 20px; font: 800 14px 'Roboto', sans-serif; padding: 13px 22px; box-shadow: none; }
+        .app-button:hover { background: #2c3442; color: #fff; border-radius: 28px 17px 28px 17px; }
         .section-header { max-width: 700px; margin: 30px 0 18px; font: 900 clamp(20px, 3vw, 31px)/1.15 'Roboto', sans-serif; letter-spacing: -.04em; }
         .typing-container { color: #fff; text-shadow: none; line-height: 1.3; }
         .cursor { width: 5px; height: 22px; border-radius: 4px; box-shadow: none; }
@@ -879,8 +881,8 @@
         .modal-meta { font-family: 'Roboto', sans-serif; font-size: 13px; }
         #modalCategory { background: #16283e; color: #b8dfff; border-color: #355577; border-radius: 999px; }
         .modal-btn { border-radius: 20px; font: 800 14px 'Roboto', sans-serif; }
-        .btn-play { background: #6bb6ff; color: #101d31; box-shadow: none; }
-        .btn-play:hover { background: #8bcbff; box-shadow: 0 8px 20px rgba(107,182,255,.16); }
+        .btn-play { background: #3475a8; color: #fff; box-shadow: none; }
+        .btn-play:hover { background: #2d6795; color: #fff; box-shadow: 0 8px 20px rgba(52,117,168,.16); }
         .btn-download { background: #222630; color: #fff; }
         .btn-vibing { font: 700 13px 'Roboto', sans-serif; }
         :focus-visible { outline: 3px solid #6bb6ff !important; outline-offset: 3px; }
@@ -888,7 +890,7 @@
             .sprite-icon { animation: none; background-position: 100% 0; }
         }
         @media (max-width: 480px) {
-            body { padding: 30px 16px 60px; }
+            body { padding: 93px 16px 60px; }
             .section-header { font-size: 20px !important; margin: 25px 0 16px !important; }
             .link-card { min-height: 85px; padding: 11px 13px; border-radius: 22px; }
             .link-img { width: 56px; height: 56px; border-radius: 15px; margin-right: 12px; }
@@ -898,10 +900,22 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
         }
+        .gallery-nav { position: fixed; inset: 0 0 auto; z-index: 100; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 10px max(20px, calc((100vw - 1180px)/2)); background: rgba(9,10,14,.96); border-bottom: 1px solid #2b3039; backdrop-filter: blur(18px); }
+        .gallery-nav .navbar-brand { display: inline-flex; align-items: center; margin: 0; white-space: nowrap; }
+        .gallery-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+        .gallery-nav-links a { color: #ced0d6; border-radius: 999px; padding: 9px 13px; font: 700 13px 'Roboto', sans-serif; text-decoration: none; }
+        .gallery-nav-links a:hover, .gallery-nav-links a[aria-current="page"] { color: #fff; background: #222630; }
+        .gallery-intro { max-width: 700px; margin: 0 auto 18px; color: #cdd0d6; text-align: center; font: 400 16px/1.5 'Roboto', sans-serif; }
+        .gallery-nav .sprite-logo { flex: 0 0 42px; }
+        @media (max-width: 600px) { .gallery-nav { min-height: 70px; padding: 8px 15px; } .gallery-nav-links a { padding: 8px 7px; font-size: 12px; } .gallery-nav-links a:nth-child(n+3) { display: none; } .gallery-nav .brand-games { font-size: 14px; } }
     </style>
 </head>
 
 <body>
+    <nav class="gallery-nav" aria-label="Main navigation">
+        <a class="navbar-brand" href="/"><span class="sprite-logo" aria-hidden="true"></span><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
+        <div class="gallery-nav-links"><a href="/">Home</a><a href="/library/">Library</a><a href="/bio/" aria-current="page">AI games</a><a href="/about/">About</a></div>
+    </nav>
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
 
@@ -913,18 +927,21 @@
             </div>
             <div class="profile-info">
                 <h1><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></h1>
-                <p class="bio-text">Build any game in minutes</p>
+                <p class="bio-text">Games made with Skyloop</p>
             </div>
         </a>
         <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button"
             onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'BioHeader' });">
             <i class="material-icons">download</i>
-            Get App on Play Store
+            Available on Android
         </a>
     </div>
 
+    <p class="gallery-intro">Play these examples on the web. Create, play, and share your own game with Skyloop in the Android app.</p>
+    <aside class="app-callout" data-app-promo hidden aria-label="Android app invitation"></aside>
+
     <div class="section-header">
-        <div class="typing-container" id="typewriter">AI AGENTS CREATE GAMES LIKE THESE IN MINUTES</div>
+        <div class="typing-container" id="typewriter">PLAY GAMES MADE WITH SKYLOOP</div>
     </div>
 
     <div class="links-container" id="linksList">
@@ -970,10 +987,6 @@
                     <button id="modalPlayBtn" class="modal-btn btn-play">
                         <i class="material-icons" style="font-size: 18px; margin-right: 5px;">play_arrow</i> PLAY NOW
                     </button>
-                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" id="modalDownloadBtn"
-                        class="modal-btn btn-download" style="display: none;"
-                        onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'AI_Game_Download_Create' });">Download
-                        & Create Yours</a>
                     <button class="modal-btn btn-vibing"
                         onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'NotVibing', 'game_id': currentPlayerGame?.id });">Not
                         Vibing</button>
@@ -989,6 +1002,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
     <script src="../js/logo.js"></script>
+    <script src="../js/app-promo.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../cookiePopUp.js?v=2.2"></script>
 
     <script>
         // Set configuration
@@ -1049,8 +1065,45 @@
         const db = firebase.firestore();
         const rtdb = firebase.database();
         const CACHE_KEY = 'bio_games_cache';
+        const requestedGameId = new URLSearchParams(window.location.search).get('game');
+        let requestedGameOpened = false;
+        let requestedGameFetching = false;
+
+        function mapGame(doc) {
+            const data = doc.data();
+            return {
+                id: doc.id, title: data.title, category: data.category,
+                description: data.description,
+                playCount: data.stats ? data.stats.playCount : 0,
+                rating: data.stats ? data.stats.averageRating : 0,
+                isPortrait: data.isPortrait || false,
+                storageBasePath: data.storageBasePath || null,
+                projectId: data.projectId || null,
+                fileManifest: data.fileManifest || null,
+                imageUrl: (data.screenshotUrls && data.screenshotUrls.length > 0) ? data.screenshotUrls[0] : '../images/cover.png'
+            };
+        }
 
         function renderGames(games) {
+            if (requestedGameId && !games.some(game => game.id === requestedGameId) && !requestedGameFetching) {
+                requestedGameFetching = true;
+                db.collection('ai_games').doc(requestedGameId).get().then(doc => {
+                    const data = doc.exists ? doc.data() : null;
+                    if (data && data.isPublished && data.publishStatus === 'complete') {
+                        renderGames([mapGame(doc), ...games]);
+                    } else {
+                        const note = document.createElement('p');
+                        note.className = 'gallery-intro';
+                        note.textContent = 'This preview is unavailable. Try another game below.';
+                        linksList.before(note);
+                    }
+                }).catch(() => {
+                    const note = document.createElement('p');
+                    note.className = 'gallery-intro';
+                    note.textContent = 'This preview could not load. Try another game below.';
+                    linksList.before(note);
+                });
+            }
             const loader = document.getElementById('loader');
             if (loader) loader.remove();
 
@@ -1090,6 +1143,14 @@
                 };
                 linksList.appendChild(card);
             });
+
+            if (requestedGameId && !requestedGameOpened) {
+                const requested = games.find(game => game.id === requestedGameId);
+                if (requested) {
+                    requestedGameOpened = true;
+                    openModal(requested);
+                }
+            }
 
             // Add static "Human Made Games" card at the bottom
             const humanCard = document.createElement('div');
@@ -1144,7 +1205,6 @@
         const mStats = document.getElementById('modalStats');
         const mDesc = document.getElementById('modalDescription');
         const mPlayBtn = document.getElementById('modalPlayBtn');
-        const mDownloadBtn = document.getElementById('modalDownloadBtn');
 
         let currentPlayerGame = null;
 
@@ -1173,7 +1233,6 @@
             mDesc.innerText = game.description || "No description available for this AI game.";
 
             // Initial button states
-            mDownloadBtn.style.display = 'none';
             if (game.storageBasePath && game.fileManifest) {
                 mPlayBtn.style.display = 'flex';
                 mPlayBtn.onclick = () => launchGame(game);
@@ -1302,7 +1361,6 @@
 
                 // Update Buttons
                 mPlayBtn.style.display = 'none';
-                mDownloadBtn.style.display = 'flex';
 
                 // Short delay to ensure SW message is processed
                 setTimeout(() => {
@@ -1350,20 +1408,7 @@
                 .then(function (querySnapshot) {
                     const games = [];
                     querySnapshot.forEach(function (doc) {
-                        const data = doc.data();
-                        games.push({
-                            id: doc.id,
-                            title: data.title,
-                            category: data.category,
-                            description: data.description,
-                            playCount: data.stats ? data.stats.playCount : 0,
-                            rating: data.stats ? data.stats.averageRating : 0,
-                            isPortrait: data.isPortrait || false,
-                            storageBasePath: data.storageBasePath || null,
-                            projectId: data.projectId || null,
-                            fileManifest: data.fileManifest || null,
-                            imageUrl: (data.screenshotUrls && data.screenshotUrls.length > 0) ? data.screenshotUrls[0] : '../images/cover.png'
-                        });
+                        games.push(mapGame(doc));
                     });
 
                     // Update Cache with fresh games and the timestamp from RTDB
@@ -1386,6 +1431,11 @@
         const cachedPayload = localStorage.getItem(CACHE_KEY);
         const urlParams = new URLSearchParams(window.location.search);
         const forceRefresh = urlParams.has('nocache') || urlParams.has('refresh');
+
+        // Show cached previews immediately while the freshness check runs.
+        if (cachedPayload && !forceRefresh) {
+            try { renderGames(JSON.parse(cachedPayload).games); } catch (_) { /* Fetch below. */ }
+        }
 
         // Always check RTDB for the master timestamp
         rtdb.ref('/Game Collection/bio_update_timestamp').once('value').then(snapshot => {
