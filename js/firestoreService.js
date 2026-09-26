@@ -423,29 +423,57 @@ const firestoreService = {
     },
 
     // 8. NEW: Fetch Similar Games
-    fetchSimilarGames: async function (currentGameId, keys = [], limit = 6) {
+    fetchSimilarGames: async function (currentGameId, keys = [], limit = 6, categories = []) {
         try {
-            if (!keys || keys.length === 0) return [];
+            const normalize = values => (Array.isArray(values) ? values : [values])
+                .filter(Boolean).map(value => String(value).toLowerCase());
+            const currentCategories = new Set(normalize(categories));
+            const genericKeys = new Set(['all', 'game', 'games', 'play', 'free', 'online', 'fun', 'browser', 'html5', 'instant']);
+            // Search keys also contain categories and title trigrams. Whole title
+            // words give far more meaningful matches than those broad tokens.
+            const usefulKeys = normalize(keys).filter(key =>
+                !genericKeys.has(key) && !currentCategories.has(key) && key.length >= 4 && !key.includes('-')
+            ).slice(0, 5);
+            const candidates = new Map();
 
-            // Take up to 10 keys for 'array-contains-any'
-            const searchKeys = keys.slice(0, 10);
-
-            const querySnapshot = await this.db.collection('games')
-                .where('searchKeys', 'array-contains-any', searchKeys)
-                .limit(limit + 1) // Fetch one extra to filter out current game
-                .get();
-
-            const games = [];
-            querySnapshot.forEach(doc => {
-                if (doc.id !== currentGameId) {
-                    games.push({ id: doc.id, ...doc.data() });
+            if (usefulKeys.length) {
+                try {
+                    const snapshot = await this.db.collection('games')
+                        .where('searchKeys', 'array-contains-any', usefulKeys)
+                        .limit(40).get();
+                    snapshot.forEach(doc => {
+                        if (doc.id !== currentGameId) candidates.set(doc.id, { id: doc.id, ...doc.data() });
+                    });
+                } catch (error) {
+                    console.warn('Search-key recommendations unavailable; trying category matches.', error);
                 }
-            });
+            }
 
-            return games.slice(0, limit);
+            // Categories keep the list relevant when broad search keys overlap.
+            const sameCategoryCount = [...candidates.values()].filter(game =>
+                normalize(game.category).some(cat => currentCategories.has(cat))
+            ).length;
+            if (currentCategories.size && sameCategoryCount < limit) {
+                const fallback = await this.fetchGamesByCategories([...currentCategories].slice(0, 2), 24);
+                fallback.forEach(game => {
+                    if (game.id !== currentGameId) candidates.set(game.id, game);
+                });
+            }
+
+            return [...candidates.values()]
+                .map(game => {
+                    const gameCategories = normalize(game.category);
+                    const sharedCategory = gameCategories.some(cat => currentCategories.has(cat));
+                    const sharedKeys = normalize(game.searchKeys).filter(key => usefulKeys.includes(key)).length;
+                    const primaryMatch = gameCategories[0] && currentCategories.has(gameCategories[0]);
+                    return { game, sharedCategory, score: sharedKeys * 20 + (primaryMatch ? 5 : sharedCategory ? 2 : 0) };
+                })
+                .filter(item => currentCategories.size ? item.sharedCategory : item.score > 0)
+                .sort((a, b) => b.score - a.score || String(a.game.name || a.game.title).localeCompare(String(b.game.name || b.game.title)))
+                .slice(0, limit)
+                .map(item => item.game);
         } catch (error) {
             console.error("Error fetching similar games:", error);
-            // Fallback: Fetch by category if available?
             return [];
         }
     }

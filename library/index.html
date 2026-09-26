@@ -55,7 +55,7 @@
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css?v=2.6" rel="stylesheet">
+    <link href="../style.css?v=2.7" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -92,17 +92,16 @@
                         <input id="navGameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search games">
                     </form>
                     <a href="/library/" class="nav-link active">Library</a>
+                    <a href="/bio/" class="nav-link">AI games</a>
+                    <a href="/blog/" class="nav-link">Blog</a>
                     <a href="/about" class="nav-link">About</a>
-                    <a href="/contact" class="nav-link">Contact</a>
-                    <a href="/privacy" class="nav-link">Privacy</a>
-                    <a href="/terms" class="nav-link">Terms</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        <div class="glass-container mb-5 animate-in">
+        <div class="glass-container library-finder mb-5 animate-in">
             <span class="expressive-eyebrow"><span class="eyebrow-dot"></span> The full collection</span>
             <h1 class="h2 mb-2">Find your next favorite game</h1>
             <p class="library-intro">Pick a category or search for a mood. Every game starts in your browser.</p>
@@ -181,6 +180,7 @@
         let isSearchMode = false;
         let gameQueue = [];
         const popularCategories = ['all', 'action', 'arcade', 'puzzle', 'racing', 'sports', 'casual', 'brain'];
+        const mobileCategories = ['all', 'action', 'puzzle', 'casual'];
 
         async function init() {
             // Check for search query in URL
@@ -221,6 +221,7 @@
                 tab.scrollTop = 0;
             };
             document.getElementById('categorySearch').addEventListener('input', updateCategoryVisibility);
+            window.matchMedia('(max-width: 480px)').addEventListener('change', updateCategoryVisibility);
             updateCategoryVisibility();
             if (showAll) requestAnimationFrame(() => revealActiveCategory());
 
@@ -240,16 +241,17 @@
             const expanded = document.getElementById('allCategoriesBtn').getAttribute('aria-expanded') === 'true';
             const filter = document.getElementById('categorySearch').value.trim().toLowerCase();
             const active = tab.querySelector('.category-chip.active');
-            const extraActive = active && !popularCategories.includes(active.dataset.category) ? active : null;
+            const visiblePopular = window.matchMedia('(max-width: 480px)').matches ? mobileCategories : popularCategories;
+            const extraActive = active && !visiblePopular.includes(active.dataset.category) ? active : null;
             let visibleCount = 0;
 
             tab.classList.toggle('expanded', expanded);
             document.getElementById('categoryFilter').hidden = !expanded;
             tab.querySelectorAll('.category-chip').forEach(chip => {
-                const rank = popularCategories.indexOf(chip.dataset.category);
+                const rank = visiblePopular.indexOf(chip.dataset.category);
                 const visible = expanded
                     ? chip.dataset.category.includes(filter)
-                    : (rank >= 0 && rank < popularCategories.length - (extraActive ? 1 : 0)) || chip === extraActive;
+                    : (rank >= 0 && rank < visiblePopular.length - (extraActive ? 1 : 0)) || chip === extraActive;
                 chip.hidden = !visible;
                 if (visible) visibleCount++;
             });

@@ -3,6 +3,29 @@
  * Handles game loading, metadata rendering, and recommendations.
  */
 
+// Generated game pages share this script, so the page chrome stays current
+// without rewriting thousands of pre-rendered game URLs.
+(function prepareGameChrome() {
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = '/game/expressive.css?v=1';
+    document.head.appendChild(stylesheet);
+
+    const nav = document.querySelector('#navbarMain .navbar-nav');
+    if (!nav) return;
+    nav.querySelectorAll('.nav-link .material-icons').forEach(icon => icon.remove());
+    const about = nav.querySelector('a[href="/about"]');
+    if (!about) return;
+    [['AI games', '/bio/'], ['Blog', '/blog/']].forEach(([label, href]) => {
+        if (nav.querySelector(`a[href="${href}"]`)) return;
+        const link = document.createElement('a');
+        link.className = 'nav-link';
+        link.href = href;
+        link.textContent = label;
+        nav.insertBefore(link, about);
+    });
+})();
+
 /**
  * Extract game ID from path (/game/XXXX/) or query param (?id=XXXX)
  */
@@ -46,13 +69,24 @@ async function loadGamePage() {
     renderGameDetails(game);
 
     // 4. Fetch & Render Similar Games
-    const similarGames = await firestoreService.fetchSimilarGames(gameId, game.searchKeys || [], 8);
-    renderSimilarGames(similarGames);
+    const categories = Array.isArray(game.category) ? game.category : [game.category].filter(Boolean);
+    const similarGames = await firestoreService.fetchSimilarGames(gameId, game.searchKeys || [], 8, categories);
+    renderSimilarGames(similarGames, categories[0]);
 }
 
 function renderGameDetails(game) {
     document.title = `Play ${game.name || game.title} Free Online | alt games portal`;
     document.getElementById("title").innerHTML = game.name || game.title;
+    const title = document.getElementById('title');
+    const context = document.createElement('div');
+    context.className = 'game-context';
+    const libraryLink = document.createElement('a');
+    libraryLink.href = '/library/';
+    libraryLink.textContent = 'Library';
+    const categoryLabel = document.createElement('span');
+    categoryLabel.textContent = ' / ' + (Array.isArray(game.category) ? game.category[0] : game.category || 'Game');
+    context.append(libraryLink, categoryLabel);
+    title.before(context);
     
     const iframeContent = `<iframe src="${game.url}" scrolling="no" allowfullscreen></iframe>`;
     document.getElementById("iframeContainer").innerHTML = iframeContent;
@@ -199,9 +233,18 @@ function renderGameDetails(game) {
     }
 }
 
-function renderSimilarGames(games) {
+function renderSimilarGames(games, category) {
     const sidebar = document.getElementById("similarSidebar");
     const mobileGrid = document.getElementById("similarMobile");
+    if (category) {
+        const label = `More ${String(category).toLowerCase()} games`;
+        const desktopHeading = document.querySelector('.recommendation-sidebar h5');
+        const mobileHeading = mobileGrid.parentElement.querySelector('h3');
+        if (desktopHeading) desktopHeading.textContent = label;
+        if (mobileHeading) mobileHeading.textContent = label;
+        const browse = document.querySelector('.recommendation-sidebar > a');
+        if (browse) browse.href = '/library/?cat=' + encodeURIComponent(String(category).toLowerCase());
+    }
     
     if (games.length === 0) {
         sidebar.innerHTML = '<p class="text-muted small">No similar games found.</p>';

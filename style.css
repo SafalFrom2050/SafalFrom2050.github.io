@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Roboto:wght@400;500;600;700;800;900&display=swap');
 
 /* 
    alt games portal - Global Design System
@@ -1779,4 +1779,115 @@ footer::before { opacity: .24; }
     .library-search-controls .btn { min-width: 52px; font-size: 0; }
     .library-search-controls .material-icons { font-size: 22px; }
     .game-card h6 { font-size: 14px !important; }
+}
+
+/* Expressive pass: one shape and color language across discovery surfaces. */
+:root {
+    --brand-signal: #fa5411;
+    --skyloop-signal: #6bb6ff;
+    --surface-low: #121212;
+    --surface-high: #191c24;
+}
+
+h1, h2, h3, .page-title, .section-divider span,
+.expressive-hero h1, .skyloop-copy h2, .section-heading-row h2 {
+    font-family: 'Outfit', 'Roboto', sans-serif !important;
+}
+.expressive-eyebrow, .section-kicker, .skyloop-kicker {
+    font: 800 11px/1.4 'Roboto', sans-serif;
+    letter-spacing: .13em;
+}
+.eyebrow-dot { background: var(--brand-signal); box-shadow: 0 0 0 5px rgba(250, 84, 17, .11); }
+.hero-highlight::after { background: var(--brand-signal); height: 6px; }
+.section-divider span { background: none; color: #f4f4f6; -webkit-text-fill-color: #f4f4f6 !important; }
+.expressive-hero::before {
+    background: radial-gradient(circle at 76% 42%, rgba(107, 182, 255, .105), transparent 38%),
+                radial-gradient(circle at 16% 82%, rgba(250, 84, 17, .045), transparent 42%), #0d0e12;
+}
+.game-card, .horizontal-card {
+    transition: transform 190ms var(--expressive-ease), border-radius 220ms var(--expressive-ease),
+                background 190ms var(--expressive-ease), border-color 190ms var(--expressive-ease),
+                box-shadow 190ms var(--expressive-ease);
+}
+.game-card:hover, .horizontal-card:hover {
+    transform: translateY(-2px);
+    border-radius: 28px 20px 28px 20px;
+    border-color: #527eab;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, .25);
+}
+.game-card:active, .horizontal-card:active { transform: scale(.98); border-radius: 16px; }
+.category-chip.active {
+    border-radius: 17px 24px 17px 24px;
+    border-color: #527eab;
+    background: #19314b;
+}
+.category-chip:active { transform: scale(.97); border-radius: 14px; }
+
+.skyloop-showcase {
+    overflow: hidden;
+    border: 1px solid #355577;
+    border-radius: 62px 30px 62px 30px;
+    background: #101722;
+}
+.skyloop-showcase .skyloop-intro {
+    min-height: 340px;
+    padding-bottom: 8px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+.skyloop-showcase .skyloop-stage { min-height: 285px; }
+.skyloop-gallery { padding: 0 clamp(24px, 4.5vw, 68px) 35px; }
+.skyloop-gallery .section-heading-row { margin-bottom: 15px; }
+.skyloop-gallery h3 { margin: 3px 0 0; font-size: clamp(25px, 2.5vw, 32px); }
+.skyloop-preview-grid {
+    display: grid;
+    grid-template-columns: 1.18fr 1fr 1fr;
+    gap: 12px;
+}
+.skyloop-preview-grid .horizontal-card {
+    display: grid;
+    grid-template-columns: minmax(90px, 39%) minmax(0, 1fr);
+    align-items: center;
+    gap: 13px;
+    width: auto;
+    min-height: 145px;
+    padding: 10px;
+    background: #191f2a !important;
+}
+.skyloop-preview-grid .horizontal-card:first-child {
+    border-color: #52708b !important;
+    border-radius: 28px 18px 28px 18px;
+    background: #1a2940 !important;
+}
+.skyloop-preview-grid .horizontal-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    margin: 0;
+    border-radius: 16px;
+}
+.skyloop-preview-grid .h-card-info { padding: 0; }
+.skyloop-preview-grid .h-card-info h6 { min-height: 0; }
+.skyloop-preview-grid .card-action { margin-top: 12px; }
+
+.library-finder { padding: 30px; }
+.library-finder .library-search { margin: 20px 0 22px; }
+
+@media (max-width: 991px) {
+    .skyloop-preview-grid { grid-template-columns: 1fr; }
+    .skyloop-preview-grid .horizontal-card { grid-template-columns: 110px minmax(0, 1fr); min-height: 128px; }
+}
+@media (max-width: 576px) {
+    .skyloop-showcase { border-radius: 38px 22px 38px 22px; }
+    .skyloop-showcase .skyloop-intro { padding-bottom: 6px; }
+    .skyloop-gallery { padding: 0 20px 21px; }
+    .skyloop-preview-grid { gap: 9px; }
+    .skyloop-preview-grid .horizontal-card { grid-template-columns: 92px minmax(0, 1fr); min-height: 108px; }
+    .skyloop-preview-grid .card-action { margin-top: 6px; }
+    .library-finder { padding: 20px 20px 15px; margin-bottom: 26px !important; }
+    .library-finder .expressive-eyebrow { margin-bottom: 10px; }
+    .library-finder .library-intro { margin-bottom: 8px; font-size: 14px; line-height: 1.4; }
+    .library-finder .library-search { margin: 14px 0 17px; }
+    .library-finder .category-heading { margin-bottom: 8px; }
+    .library-finder .library-category-grid { margin-bottom: 3px !important; }
 }

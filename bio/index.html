@@ -70,7 +70,7 @@
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css?v=2.3" rel="stylesheet">
+    <link href="../style.css?v=2.7" rel="stylesheet">
     <link href="../cookiePopupStyle.css?v=2.2" rel="stylesheet">
 
     <!-- Google Analytics (Performance Optimized) -->
@@ -881,6 +881,8 @@
         .modal-meta { font-family: 'Roboto', sans-serif; font-size: 13px; }
         #modalCategory { background: #16283e; color: #b8dfff; border-color: #355577; border-radius: 999px; }
         .modal-btn { border-radius: 20px; font: 800 14px 'Roboto', sans-serif; }
+        .modal-close { position: absolute; top: 12px; right: 12px; z-index: 12; display: grid; place-items: center; width: 40px; height: 40px; color: #fff; background: #222630; border: 1px solid #47505d; border-radius: 14px; cursor: pointer; }
+        .modal-close:hover { background: #343a46; }
         .btn-play { background: #3475a8; color: #fff; box-shadow: none; }
         .btn-play:hover { background: #2d6795; color: #fff; box-shadow: 0 8px 20px rgba(52,117,168,.16); }
         .btn-download { background: #222630; color: #fff; }
@@ -908,40 +910,98 @@
         .gallery-intro { max-width: 700px; margin: 0 auto 18px; color: #cdd0d6; text-align: center; font: 400 16px/1.5 'Roboto', sans-serif; }
         .gallery-nav .sprite-logo { flex: 0 0 42px; }
         @media (max-width: 600px) { .gallery-nav { min-height: 70px; padding: 8px 15px; } .gallery-nav-links a { padding: 8px 7px; font-size: 12px; } .gallery-nav-links a:nth-child(n+3) { display: none; } .gallery-nav .brand-games { font-size: 14px; } }
+
+        /* Gallery shares the site's feature, card, and motion hierarchy. */
+        body { background: #000; padding: 103px 20px 45px; }
+        .gallery-nav { padding-inline: max(20px, calc((100vw - 1200px)/2)); }
+        .gallery-nav-right { display: flex; align-items: center; gap: 15px; }
+        .gallery-search input { width: 216px; min-height: 44px; padding: 10px 17px; color: #fff; background: #191c24; border: 1px solid #343a46; border-radius: 999px; font: 500 14px 'Roboto', sans-serif; }
+        .gallery-search input::placeholder { color: #adb0ba; }
+        .gallery-search input:focus { outline: 3px solid #6bb6ff; outline-offset: 2px; }
+        .gallery-hero { display: grid; grid-template-columns: minmax(260px, .78fr) minmax(0, 1.22fr); align-items: center; gap: clamp(14px, 4vw, 55px); width: min(100%, 1160px); min-height: 340px; margin-bottom: 32px; padding: 25px clamp(24px, 5vw, 70px); background: #111823; border: 1px solid #355577; border-radius: 62px 30px 62px 30px; }
+        .gallery-hero-art { position: relative; display: grid; place-items: center; min-height: 280px; isolation: isolate; }
+        .gallery-hero-art::before { content: ''; position: absolute; z-index: -1; width: min(78%, 250px); aspect-ratio: 1; background: #213d67; border: 1px solid #4e82b7; border-radius: 40% 60% 54% 46% / 53% 42% 58% 47%; }
+        .gallery-hero-art img { width: min(86%, 285px); height: auto; filter: drop-shadow(0 22px 24px rgba(0, 8, 33, .35)); animation: skyloop-float 4s ease-in-out infinite; }
+        .gallery-hero-copy .expressive-eyebrow { margin-bottom: 13px; }
+        .gallery-hero-copy h1 { display: block; margin: 0 0 13px; max-width: 600px; color: #fff; font: 800 clamp(45px, 5vw, 70px)/.98 'Outfit', 'Roboto', sans-serif; letter-spacing: -.055em; }
+        .gallery-hero-copy h1 span { color: #8bcbff; }
+        .gallery-hero-copy p { max-width: 550px; margin: 0 0 23px; color: #d1dfed; font: 400 clamp(15px, 1.5vw, 18px)/1.5 'Roboto', sans-serif; }
+        .gallery-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .gallery-play-link, .gallery-hero-actions .app-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; margin: 0; padding: 11px 18px; border-radius: 17px; font: 800 14px 'Roboto', sans-serif; text-decoration: none !important; transition: transform 190ms cubic-bezier(.2,0,0,1), border-radius 190ms cubic-bezier(.2,0,0,1), background 190ms cubic-bezier(.2,0,0,1); }
+        .gallery-play-link { color: #fff; background: #3475a8; border: 1px solid #3475a8; }
+        .gallery-play-link:hover { color: #fff; background: #2d6795; }
+        .gallery-hero-actions .app-button { color: #d8edff; background: #222630; border: 1px solid #52708b; box-shadow: none; }
+        .gallery-hero-actions .app-button:hover { color: #fff; background: #2c3442; }
+        .gallery-play-link:hover, .gallery-hero-actions .app-button:hover { transform: translateY(-2px); border-radius: 23px 13px 23px 13px; }
+        .gallery-play-link:active, .gallery-hero-actions .app-button:active { transform: scale(.97); border-radius: 13px; }
+        .platform-android .gallery-play-link { color: #d8edff; background: #222630; border-color: #52708b; }
+        .platform-android .gallery-hero-actions .app-button { color: #fff; background: #3475a8; border-color: #3475a8; }
+        .app-callout { max-width: 1160px; margin: 0 auto 30px; }
+        .section-header { width: min(100%, 1160px); max-width: none; margin: 0 0 18px; padding: 0; justify-content: space-between; text-align: left; }
+        .section-header h2 { margin: 3px 0 0; font: 800 clamp(27px, 3vw, 36px)/1.1 'Outfit', 'Roboto', sans-serif; letter-spacing: -.04em; }
+        .section-header p { margin: 0; color: #b3b7c0; font: 400 14px 'Roboto', sans-serif; }
+        .links-container { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 1160px); max-width: none; gap: 13px; }
+        .link-card { min-width: 0; min-height: 116px; animation: none; }
+        .link-card:first-child:not(.human-made-card) { grid-column: 1 / -1; min-height: 165px; background: #1a2940; border-color: #52708b; border-radius: 34px 22px 34px 22px; }
+        .link-card:first-child:not(.human-made-card) .link-img { width: 130px; height: 130px; border-radius: 23px; }
+        .link-card:first-child:not(.human-made-card) .link-title { font-size: 24px; }
+        .link-card:hover { transform: translateY(-2px); border-color: #527eab; }
+        .link-title { font-family: 'Outfit', 'Roboto', sans-serif; font-weight: 700; }
+        .link-subtitle { font: 700 11px/1.2 'Roboto', sans-serif; letter-spacing: .03em; }
+        .human-made-card { grid-column: 1 / -1; margin-top: 10px; background: #121212; border-style: dashed; }
+        .human-made-icon { display: grid; place-items: center; background: #222630; color: #b8dfff; }
+        .human-made-icon .material-icons { font-size: 28px; }
+        .gallery-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; width: min(100%, 1160px); margin-top: 55px; padding: 25px 0 10px; border-top: 1px solid #343a46; color: #b3b7c0; font: 400 13px 'Roboto', sans-serif; }
+        .gallery-footer div { display: flex; flex-wrap: wrap; gap: 20px; }
+        .gallery-footer a { color: #ced0d6; text-decoration: none; }
+        .gallery-footer a:hover { color: #fff; }
+        @media (max-width: 991px) { .gallery-search { display: none; } }
+        @media (max-width: 700px) {
+            body { padding: 88px 15px 40px; }
+            .gallery-hero { grid-template-columns: 1fr; gap: 0; padding: 15px 22px 26px; border-radius: 38px 22px 38px 22px; }
+            .gallery-hero-art { min-height: 175px; }
+            .gallery-hero-art::before { width: 150px; }
+            .gallery-hero-art img { width: 165px; }
+            .gallery-hero-copy h1 { font-size: clamp(42px, 11vw, 58px); }
+            .gallery-hero-actions { display: grid; grid-template-columns: 1fr; }
+            .section-header { align-items: start; }
+            .section-header p { display: none; }
+            .links-container { grid-template-columns: 1fr; }
+            .link-card:first-child:not(.human-made-card), .human-made-card { grid-column: 1; }
+            .link-card:first-child:not(.human-made-card) { min-height: 116px; }
+            .link-card:first-child:not(.human-made-card) .link-img { width: 68px; height: 68px; border-radius: 18px; }
+            .link-card:first-child:not(.human-made-card) .link-title { font-size: 17px; }
+        }
     </style>
 </head>
 
 <body>
     <nav class="gallery-nav" aria-label="Main navigation">
         <a class="navbar-brand" href="/"><span class="sprite-logo" aria-hidden="true"></span><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
-        <div class="gallery-nav-links"><a href="/">Home</a><a href="/library/">Library</a><a href="/bio/" aria-current="page">AI games</a><a href="/about/">About</a></div>
+        <div class="gallery-nav-right">
+            <form class="gallery-search" role="search" onsubmit="event.preventDefault(); window.location.href='/library/?q='+encodeURIComponent(this.querySelector('input').value);"><input type="search" aria-label="Search games" placeholder="Search games..."></form>
+            <div class="gallery-nav-links"><a href="/library/">Library</a><a href="/bio/" aria-current="page">AI games</a><a href="/blog/">Blog</a><a href="/about/">About</a></div>
+        </div>
     </nav>
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-
-    <div class="profile-section">
-        <a href="/"
-            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; cursor: pointer;">
-            <div class="profile-img">
-                <div class="sprite-icon"></div>
+    <header class="gallery-hero">
+        <div class="gallery-hero-art">
+            <img src="../images/skyloop/idle/3.webp" alt="Skyloop, the AI game creation mascot" width="320" height="320">
+        </div>
+        <div class="gallery-hero-copy">
+            <span class="expressive-eyebrow"><span class="eyebrow-dot"></span> MADE WITH SKYLOOP</span>
+            <h1>Ideas you can <span>play.</span></h1>
+            <p>These games began as ideas. Preview them here, then bring your own world to life with Skyloop in the Android app.</p>
+            <div class="gallery-hero-actions">
+                <a href="#linksList" class="gallery-play-link">Explore games <span aria-hidden="true">↓</span></a>
+                <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button" onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'BioHeader' });"><i class="material-icons" aria-hidden="true">smartphone</i><span data-app-label>Available on Android</span></a>
             </div>
-            <div class="profile-info">
-                <h1><span class="brand-alt">alt</span> <span class="brand-games">games portal</span></h1>
-                <p class="bio-text">Games made with Skyloop</p>
-            </div>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="app-button"
-            onclick="gtag('event', 'conversion', { 'send_to': 'G-LZJ70L7WQQ', 'event_category': 'AppStore', 'event_label': 'BioHeader' });">
-            <i class="material-icons">download</i>
-            Available on Android
-        </a>
-    </div>
-
-    <p class="gallery-intro">Play these examples on the web. Create, play, and share your own game with Skyloop in the Android app.</p>
+        </div>
+    </header>
     <aside class="app-callout" data-app-promo hidden aria-label="Android app invitation"></aside>
 
     <div class="section-header">
-        <div class="typing-container" id="typewriter">PLAY GAMES MADE WITH SKYLOOP</div>
+        <div><span class="section-kicker">FROM IDEA TO GAME</span><h2>Play the creations</h2></div>
+        <p>Choose one to preview and play.</p>
     </div>
 
     <div class="links-container" id="linksList">
@@ -950,9 +1010,12 @@
         </div>
     </div>
 
+    <footer class="gallery-footer"><span>Play on the web. Create with Skyloop on Android.</span><div><a href="/library/">Library</a><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></footer>
+
     <!-- Modal Dialog -->
     <div id="appModal" class="modal-overlay">
         <div id="modalCard" class="modal-card">
+            <button class="modal-close" type="button" aria-label="Close preview" onclick="closeModal()"><i class="material-icons" aria-hidden="true">close</i></button>
             <div id="modalPlayer" class="modal-player" style="display: none; position: relative;">
                 <iframe id="gameIframe" src=""></iframe>
                 <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">
@@ -988,8 +1051,8 @@
                         <i class="material-icons" style="font-size: 18px; margin-right: 5px;">play_arrow</i> PLAY NOW
                     </button>
                     <button class="modal-btn btn-vibing"
-                        onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'NotVibing', 'game_id': currentPlayerGame?.id });">Not
-                        Vibing</button>
+                       Vibing</button>
+                        onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'ClosePreview', 'game_id': currentPlayerGame?.id });">Close preview</button>
                 </div>
             </div>
         </div>
@@ -1027,32 +1090,7 @@
             );
         } catch (e) { console.warn("AppCheck failed to init", e); }
 
-        // --- Multiline Typewriter Effect ---
-        function initTypewriter() {
-            const container = document.getElementById('typewriter');
-            const fullText = container.innerText;
-            container.innerText = "";
-            container.style.opacity = "1";
-
-            let i = 0;
-            function type() {
-                if (i < fullText.length) {
-                    container.innerHTML = fullText.substring(0, i + 1) + '<span class="cursor"></span>';
-                    i++;
-                    setTimeout(type, 40 + Math.random() * 30); // Random typing speed for natural GenAI feel
-                } else {
-                    container.innerHTML = fullText + '<span class="cursor"></span>';
-                }
-            }
-
-            // Start after a short delay
-            setTimeout(type, 800);
-        }
-
-        // Initial call
         window.addEventListener('DOMContentLoaded', () => {
-            initTypewriter();
-
             // Register AI Game Service Worker for virtual runtime
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('../ai-game-sw.js', { scope: '/' })
@@ -1152,45 +1190,26 @@
                 }
             }
 
-            // Add static "Human Made Games" card at the bottom
-            const humanCard = document.createElement('div');
+            const humanCard = document.createElement('a');
             humanCard.className = 'link-card human-made-card';
-            humanCard.setAttribute('role', 'link');
-            humanCard.tabIndex = 0;
+            humanCard.href = '/library/';
             humanCard.setAttribute('aria-label', 'Browse human made games');
-            humanCard.style.animationDelay = (games.length * 0.1) + 's';
-            humanCard.style.cursor = 'pointer';
-            humanCard.style.border = '1px solid rgba(107, 182, 255, 0.4)';
-            humanCard.style.overflow = 'visible';
-            humanCard.style.marginTop = '25px';
-
             humanCard.innerHTML = `
-                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #6bb6ff; padding: 2px 12px; border-radius: 10px; font-size: 8px; font-weight: 800; color: #101d31; border: 1px solid rgba(255,255,255,0.3); z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-                    OR
-                </div>
-                <div class="link-img" style="background: #6bb6ff; display:flex; align-items:center; justify-content:center;">
-                    <i class="material-icons" style="font-size: 30px; color: #101d31;">sports_esports</i>
+                <div class="link-img human-made-icon">
+                    <i class="material-icons" aria-hidden="true">sports_esports</i>
                 </div>
                 <div class="link-content">
-                    <p class="link-title">Play Human Made Games</p>
-                    <p class="link-subtitle">10,000+ HAND-PICKED TITLES</p>
+                    <p class="link-title">Explore the full library</p>
+                    <p class="link-subtitle">BROWSER GAMES</p>
                 </div>
-                <i class="material-icons play-icon" style="color: #6bb6ff; opacity: 1; transform: translateX(0);">arrow_forward</i>
+                <i class="material-icons play-icon" aria-hidden="true">arrow_forward</i>
             `;
-
-            humanCard.onclick = () => {
+            humanCard.addEventListener('click', () => {
                 gtag('event', 'engagement', {
                     'event_category': 'Bio_Navigation',
                     'event_label': 'Go_To_Library'
                 });
-                window.location.href = '/library/';
-            };
-            humanCard.onkeydown = event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    humanCard.click();
-                }
-            };
+            });
             linksList.appendChild(humanCard);
         }
 

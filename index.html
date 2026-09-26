@@ -112,7 +112,7 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=2.4" rel="stylesheet">
+    <link href="style.css?v=2.7" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -186,11 +186,9 @@
                         <input id="gameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
                     </form>
                     <a href="/library/" class="nav-link">Library</a>
+                    <a href="/bio/" class="nav-link">AI games</a>
                     <a href="/blog/" class="nav-link">Blog</a>
                     <a href="/about" class="nav-link">About</a>
-                    <a href="/contact" class="nav-link">Contact</a>
-                    <a href="/privacy" class="nav-link">Privacy</a>
-                    <a href="/terms" class="nav-link">Terms</a>
                 </div>
             </div>
         </div>
@@ -227,41 +225,37 @@
 
         <aside class="app-callout mb-5" data-app-promo hidden aria-label="Android app invitation"></aside>
 
-        <!-- Featured AI Games Section -->
-        <section class="mb-5 animate-in" style="animation-delay: 0.2s;">
-            <div class="d-flex align-items-center mb-3">
-                <h3 class="mb-0 ai-retro-text">Featured AI Games</h3>
-            </div>
-            <p class="section-description">Preview a game made with Skyloop, then build your own in the Android app.</p>
-            <div class="horizontal-scroll" id="aiGamesRow">
-            </div>
-        </section>
-
-        <section class="skyloop-intro my-5 animate-in" aria-labelledby="skyloop-title">
-            <div class="skyloop-stage">
-                <div class="skyloop-orbit skyloop-orbit-one" aria-hidden="true"></div>
-                <div class="skyloop-orbit skyloop-orbit-two" aria-hidden="true"></div>
-                <img class="skyloop-avatar" src="images/skyloop/idle/3.webp" width="420" height="420" alt="Skyloop, the blue AI game creation mascot" loading="lazy">
-                <span class="skyloop-speech">You dream it.<br>I build it.</span>
-            </div>
-            <div class="skyloop-copy">
-                <span class="skyloop-kicker">YOUR GAME CREATION BUDDY</span>
-                <h2 id="skyloop-title">Meet <span>Skyloop.</span></h2>
-                <p>Got a game idea? In the app, Skyloop helps you choose a genre, describe your world, and turn that idea into a game you can play and share.</p>
-                <div class="skyloop-actions">
-                    <a class="btn expressive-button skyloop-primary-action" href="https://play.google.com/store/apps/details?id=dif.instantgames"><i class="material-icons" aria-hidden="true">smartphone</i> <span data-app-label>Available on Android</span></a>
-                    <a class="skyloop-text-link" href="/bio/">See AI games <i class="material-icons" aria-hidden="true">arrow_forward</i></a>
+        <section class="skyloop-showcase my-5 animate-in" aria-labelledby="skyloop-title">
+            <div class="skyloop-intro">
+                <div class="skyloop-stage">
+                    <div class="skyloop-orbit skyloop-orbit-one" aria-hidden="true"></div>
+                    <div class="skyloop-orbit skyloop-orbit-two" aria-hidden="true"></div>
+                    <img class="skyloop-avatar" src="images/skyloop/idle/3.webp" width="420" height="420" alt="Skyloop, the blue AI game creation mascot" loading="lazy">
+                    <span class="skyloop-speech">You dream it.<br>I build it.</span>
+                </div>
+                <div class="skyloop-copy">
+                    <span class="skyloop-kicker">CREATE IN THE APP</span>
+                    <h2 id="skyloop-title">Meet <span>Skyloop.</span></h2>
+                    <p>Choose a genre, describe your world, and turn an idea into a game you can play and share.</p>
+                    <div class="skyloop-actions">
+                        <a class="btn expressive-button skyloop-primary-action" href="https://play.google.com/store/apps/details?id=dif.instantgames"><i class="material-icons" aria-hidden="true">smartphone</i> <span data-app-label>Available on Android</span></a>
+                        <a class="skyloop-text-link" href="/bio/">See AI games <i class="material-icons" aria-hidden="true">arrow_forward</i></a>
+                    </div>
                 </div>
             </div>
+            <div class="skyloop-gallery">
+                <div class="section-heading-row">
+                    <div><span class="section-kicker">PLAY THE POSSIBILITIES</span><h3>Made with Skyloop</h3></div>
+                    <a href="/bio/" class="section-text-link">All AI games <span aria-hidden="true">→</span></a>
+                </div>
+                <div class="skyloop-preview-grid" id="aiGamesRow"></div>
+            </div>
         </section>
-
-        <!-- Discovery Rows (Dynamic) -->
-        <div id="discoveryRows"></div>
 
         <!-- Categories Section -->
         <div id="mainLibrary" class="mt-5">
             <div class="section-divider mb-4">
-                <span>Game Library</span>
+                <span>Find your kind of game</span>
             </div>
             <div class="home-category-grid mb-4" id="categoriesTab" role="group" aria-label="Browse game categories"></div>
         </div>
@@ -332,10 +326,6 @@
                 { id: "i5FIRk63ywcPZiLCFJpA", title: "JLPT N3 Kanji Pop", category: "Word", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775339152545_preview.jpg?alt=media", isAI: true },
                 { id: "S0uylwyxyowBgVFcnbZh", title: "Neon Beats: Fever Edition", category: "Music", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775335590309_preview.jpg?alt=media", isAI: true },
                 { id: "YrXmxk5u7Bpr3IPWH4Cc", title: "Urban Blasted: Crate Chaos", category: "Arcade", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775296947448_preview.jpg?alt=media", isAI: true }
-            ],
-            discoverCards: [
-                { id: "row-action", title: "Jump Straight Into the Danger Zone", subtitle: "Action Packed", categories: ["ACTION", "GDEVELOP"] },
-                { id: "row-puzzle", title: "Master the Mind Games", subtitle: "Puzzle & Brain", categories: ["PUZZLE", "BRAIN"] }
             ],
             gamesPool: [
                 {"id":"fHg6eu5uGbEAjwdh6vil","title":"Battle Simulator - Police Prison","imageUrl":"https://img.gamepix.com/games/police-prison-battle-simulator/icon/police-prison-battle-simulator.png?w=105","category":["ACTION"]},
@@ -411,51 +401,27 @@
             // 1. Fetch Complete Category List (using the optimized 72h cache)
             const tab = document.getElementById('categoriesTab');
             const allCats = await firestoreService.fetchCategories();
+            const availableCats = allCats.length ? allCats : STATIC_HOME_DATA.categories;
             
             const homeCategories = ['all', 'action', 'arcade', 'puzzle', 'racing', 'sports', 'casual', 'brain'];
-            allCats.filter(cat => homeCategories.includes(cat.toLowerCase())).sort((a, b) =>
+            availableCats.filter(cat => homeCategories.includes(cat.toLowerCase())).sort((a, b) =>
                 homeCategories.indexOf(a.toLowerCase()) - homeCategories.indexOf(b.toLowerCase())
             ).forEach(cat => {
                 const chip = document.createElement('button');
                 chip.type = 'button';
-                chip.className = 'category-chip' + (cat === 'all' ? ' active' : '');
+                chip.className = 'category-chip' + (cat.toLowerCase() === 'all' ? ' active' : '');
+                chip.setAttribute('aria-pressed', String(cat.toLowerCase() === 'all'));
                 // Capitalize for display
                 chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase();
                 chip.onclick = () => window.location.href = '/library/?cat=' + encodeURIComponent(cat.toLowerCase());
                 tab.appendChild(chip);
             });
 
-            // 2. Stable, immediately playable picks and AI previews
-            renderHorizontalRow('playNowRow', STATIC_HOME_DATA.gamesPool.slice(0, 6));
+            // Curate across genres so the first row and library preview do not repeat.
+            const mixedGames = getMixedGames();
+            renderHorizontalRow('playNowRow', mixedGames.slice(0, 6));
             renderHorizontalRow('aiGamesRow', STATIC_HOME_DATA.aiGames);
-
-            // 3. Instant Discovery Rows Render
-            const discoveryContainer = document.getElementById('discoveryRows');
-            discoveryContainer.innerHTML = '';
-            
-            STATIC_HOME_DATA.discoverCards.forEach(card => {
-                const section = document.createElement('section');
-                section.className = 'mb-5 animate-in';
-                
-                // Get relevant games from pool and shuffle (Case-insensitive check)
-                const cardGames = STATIC_HOME_DATA.gamesPool.filter(g => 
-                    g.category.some(c => card.categories.includes(c.toUpperCase()))
-                );
-                const curated = cardGames.length > 0 ? cardGames : STATIC_HOME_DATA.gamesPool;
-
-                section.innerHTML = `
-                    <div class="mb-3">
-                        <h3 class="mb-0" style="color: white; font-weight: 800;">${card.title}</h3>
-                        <p class="text-muted small">${card.subtitle}</p>
-                    </div>
-                    <div class="horizontal-scroll" id="card-${card.id}"></div>
-                `;
-                discoveryContainer.appendChild(section);
-                renderHorizontalRow(`card-${card.id}`, curated.slice(0, 12));
-            });
-
-            // 4. Load Library Preview Grid
-            loadLibraryPreview();
+            renderPreviewGrid(mixedGames.slice(6, 18));
 
             // Background update check
             try {
@@ -463,10 +429,16 @@
             } catch (e) {}
         }
 
-        async function loadLibraryPreview() {
-            const container = document.getElementById('scrollView');
+        function getMixedGames() {
             const pool = STATIC_HOME_DATA.gamesPool;
-            renderPreviewGrid(pool.slice(0, 12));
+            const groups = ['ACTION', 'KIDS', 'SPORTS', 'BRAIN'].map(category =>
+                pool.filter(game => game.category.some(value => value.toUpperCase() === category))
+            );
+            const mixed = [];
+            for (let index = 0; index < Math.max(...groups.map(group => group.length)); index++) {
+                groups.forEach(group => { if (group[index]) mixed.push(group[index]); });
+            }
+            return mixed;
         }
 
         function renderPreviewGrid(games) {
