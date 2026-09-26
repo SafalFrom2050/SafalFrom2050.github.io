@@ -1526,14 +1526,17 @@ section > .d-flex > h3.ai-retro-text { font: 900 clamp(23px, 2.8vw, 32px)/1.1 'R
 .category-chip:hover { background: #222630; border-color: #6bb6ff; box-shadow: none; transform: translateY(-2px); }
 .category-chip.active { background: #6bb6ff; color: #101d31; border-color: transparent; box-shadow: 0 6px 17px rgba(107, 182, 255, .16); transform: none; }
 .category-chip:active { transform: scale(.94); border-radius: 16px; }
-.home-category-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; width: 100%; }
-.home-category-grid .category-chip { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 44px; width: 100%; margin: 0; padding: 9px 7px; }
+.home-category-grid, .library-category-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.home-category-grid .category-chip, .library-category-grid .category-chip { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 44px; width: 100%; margin: 0; padding: 9px 7px; }
 @media (max-width: 991px) {
-    .home-category-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .home-category-grid, .library-category-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 576px) {
-    .home-category-grid { gap: 7px; }
-    .home-category-grid .category-chip { padding: 9px 4px; font-size: 12px; }
+    .home-category-grid, .library-category-grid { gap: 7px; }
+    .home-category-grid .category-chip, .library-category-grid .category-chip { padding: 9px 4px; font-size: 12px; }
+}
+@media (max-width: 480px) {
+    .library-category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .arrow-btn { background: #222630 !important; border: 1px solid #343a46 !important; width: 42px !important; height: 42px !important; }
 .arrow-btn:hover { background: #343a46 !important; border-color: #6bb6ff !important; box-shadow: none !important; }
@@ -1710,8 +1713,26 @@ footer::before { opacity: .24; }
 .category-heading strong { margin: 0; }
 .category-expand { min-height: 42px; padding: 8px 12px; border: 1px solid #47505d; background: #222630; border-radius: 14px; color: #d8edff; font: 700 12px 'Roboto', sans-serif; }
 .category-expand:hover { background: #2c3442; }
-div.scrollmenu.expanded { white-space: normal; max-height: 260px; overflow-y: auto; scrollbar-width: thin; }
-div.scrollmenu.expanded .category-chip { margin-bottom: 5px; }
+.category-expand span { display: inline-block; transition: transform 180ms var(--expressive-ease); }
+.category-expand[aria-expanded="true"] span { transform: rotate(180deg); }
+.library-category-filter { display: flex; align-items: center; gap: 8px; max-width: 340px; min-height: 44px; margin: 0 0 13px; padding: 0 12px; border: 1px solid #47505d; border-radius: 14px; background: #191c24; color: #a6d5ff; }
+.library-category-filter[hidden], .category-empty[hidden] { display: none !important; }
+.library-category-filter:focus-within { border-color: #6bb6ff; }
+.library-category-filter .material-icons { font-size: 19px; }
+.library-category-filter input { flex: 1; min-width: 0; height: 42px; border: 0; outline: 0; background: transparent; color: #f4f4f6; font: 500 14px 'Roboto', sans-serif; }
+.library-category-filter input::placeholder { color: #aab3be; }
+.library-category-grid.expanded { grid-template-columns: repeat(6, minmax(0, 1fr)); max-height: 320px; overflow-y: auto; padding: 12px; border: 1px solid #343a46; border-radius: 20px; background: #151920; scrollbar-width: thin; scrollbar-color: #475d75 #151920; }
+.library-category-grid.expanded .category-chip { overflow-wrap: anywhere; white-space: normal; }
+.library-category-grid.expanded::-webkit-scrollbar { width: 7px; }
+.library-category-grid.expanded::-webkit-scrollbar-track { background: #151920; }
+.library-category-grid.expanded::-webkit-scrollbar-thumb { background: #475d75; border-radius: 999px; }
+.category-empty { margin: -2px 0 14px; color: #b3b7c0; font-size: 13px; }
+@media (max-width: 991px) {
+    .library-category-grid.expanded { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+    .library-category-grid.expanded { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .empty-results { border: 1px solid #343a46; background: #191c24; border-radius: 24px; }
 .empty-results h2 { font-size: 24px; }
 

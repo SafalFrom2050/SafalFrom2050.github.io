@@ -55,7 +55,7 @@
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css?v=2.3" rel="stylesheet">
+    <link href="../style.css?v=2.6" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -114,24 +114,14 @@
                 </div>
             </form>
             <div class="category-heading"><strong>Browse by category</strong><button id="allCategoriesBtn" class="category-expand" type="button" aria-expanded="false" aria-controls="categoriesTab">All categories <span aria-hidden="true">⌄</span></button></div>
-            <div class="row align-items-center">
-                <div class="col-12">
-                    <div class="d-flex align-items-center mb-3">
-                        <button class="arrow-btn mr-2" onclick="document.getElementById('categoriesTab').scrollBy({ left: -150, behavior: 'smooth' });">
-                            <i class="material-icons">arrow_back_ios_new</i>
-                        </button>
-                        <div class="scrollmenu flex-grow-1" id="categoriesTab">
-
-                        </div>
-                        <button class="arrow-btn ml-2" onclick="document.getElementById('categoriesTab').scrollBy({ left: 150, behavior: 'smooth' });">
-                            <i class="material-icons">arrow_forward_ios</i>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div id="resultsInfo" class="text-muted small"></div>
-                </div>
+            <div class="library-category-filter" id="categoryFilter" hidden>
+                <label class="sr-only" for="categorySearch">Find a category</label>
+                <i class="material-icons" aria-hidden="true">search</i>
+                <input id="categorySearch" type="search" placeholder="Find a category" autocomplete="off">
             </div>
+            <div class="library-category-grid mb-3" id="categoriesTab" role="group" aria-label="Game categories"></div>
+            <p class="category-empty" id="categoryEmpty" hidden>No categories found.</p>
+            <div id="resultsInfo" class="text-muted small"></div>
         </div>
 
         <aside class="app-callout mb-5" data-app-promo hidden aria-label="Android app invitation"></aside>
@@ -208,35 +198,31 @@
                 return (aRank < 0 ? 999 : aRank) - (bRank < 0 ? 999 : bRank) || a.localeCompare(b);
             });
             const showAll = !!category && !popularCategories.includes(category.toLowerCase());
-            if (showAll) {
-                document.getElementById('allCategoriesBtn').setAttribute('aria-expanded', 'true');
-                tab.classList.add('expanded');
-            }
+            if (showAll) document.getElementById('allCategoriesBtn').setAttribute('aria-expanded', 'true');
             sortedCategories.forEach(cat => {
                 const chip = document.createElement('button');
                 chip.type = 'button';
                 // Determine if this chip should be active (matching URL param or default to 'all')
                 const isActive = (category && category.toLowerCase() === cat.toLowerCase()) || (!category && cat.toLowerCase() === 'all');
                 chip.className = 'category-chip' + (isActive ? ' active' : '');
-                if (!showAll && !popularCategories.includes(cat.toLowerCase())) chip.hidden = true;
+                chip.dataset.category = cat.toLowerCase();
                 chip.setAttribute('aria-pressed', String(isActive));
                 chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
                 chip.onclick = () => loadCategory(cat, chip, true);
                 tab.appendChild(chip);
 
-                if (isActive) {
-                    setTimeout(() => chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }), 100);
-                }
             });
 
             document.getElementById('allCategoriesBtn').onclick = function () {
                 const expanded = this.getAttribute('aria-expanded') === 'true';
                 this.setAttribute('aria-expanded', String(!expanded));
-                tab.classList.toggle('expanded', !expanded);
-                tab.querySelectorAll('.category-chip').forEach(chip => {
-                    if (!popularCategories.includes(chip.textContent.toLowerCase()) && !chip.classList.contains('active')) chip.hidden = expanded;
-                });
+                if (expanded) document.getElementById('categorySearch').value = '';
+                updateCategoryVisibility();
+                tab.scrollTop = 0;
             };
+            document.getElementById('categorySearch').addEventListener('input', updateCategoryVisibility);
+            updateCategoryVisibility();
+            if (showAll) requestAnimationFrame(() => revealActiveCategory());
 
             if (query) {
                 document.getElementById('gameSearch').value = query;
@@ -247,6 +233,34 @@
             } else {
                 loadCategory('all', null, false);
             }
+        }
+
+        function updateCategoryVisibility() {
+            const tab = document.getElementById('categoriesTab');
+            const expanded = document.getElementById('allCategoriesBtn').getAttribute('aria-expanded') === 'true';
+            const filter = document.getElementById('categorySearch').value.trim().toLowerCase();
+            const active = tab.querySelector('.category-chip.active');
+            const extraActive = active && !popularCategories.includes(active.dataset.category) ? active : null;
+            let visibleCount = 0;
+
+            tab.classList.toggle('expanded', expanded);
+            document.getElementById('categoryFilter').hidden = !expanded;
+            tab.querySelectorAll('.category-chip').forEach(chip => {
+                const rank = popularCategories.indexOf(chip.dataset.category);
+                const visible = expanded
+                    ? chip.dataset.category.includes(filter)
+                    : (rank >= 0 && rank < popularCategories.length - (extraActive ? 1 : 0)) || chip === extraActive;
+                chip.hidden = !visible;
+                if (visible) visibleCount++;
+            });
+            document.getElementById('categoryEmpty').hidden = !expanded || visibleCount > 0;
+        }
+
+        function revealActiveCategory() {
+            const tab = document.getElementById('categoriesTab');
+            const active = tab.querySelector('.category-chip.active');
+            if (!active || !tab.classList.contains('expanded')) return;
+            tab.scrollTop += active.getBoundingClientRect().top - tab.getBoundingClientRect().top - 16;
         }
 
         async function loadCategory(cat, element, updateUrl = true) {
@@ -263,13 +277,11 @@
                     if (c.textContent.toLowerCase() === cleanCat) {
                         c.classList.add('active');
                         c.setAttribute('aria-pressed', 'true');
-                        c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
                 }
             });
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
+            updateCategoryVisibility();
+            if (!element) requestAnimationFrame(() => revealActiveCategory());
 
             if (updateUrl) {
                 const currentCat = new URLSearchParams(window.location.search).get('cat');
@@ -402,46 +414,6 @@
                 loadCategory(cat || 'all', null, false);
             }
         });
-        
-        // Drag to Scroll Implementation
-        function setupDragScroll(slider) {
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                slider.classList.add('active');
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
-                slider.style.scrollBehavior = 'auto'; // Disable smooth scroll while dragging
-            });
-
-            slider.addEventListener('mouseleave', () => {
-                isDown = false;
-                slider.style.scrollBehavior = 'smooth';
-            });
-
-            slider.addEventListener('mouseup', () => {
-                isDown = false;
-                slider.style.scrollBehavior = 'smooth';
-            });
-
-            slider.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 2; // Scroll speed multiplier
-                slider.scrollLeft = scrollLeft - walk;
-            });
-
-            // Prevent click interference if dragged
-            slider.addEventListener('click', (e) => {
-                if (isDown) e.preventDefault();
-            });
-        }
-
-        setupDragScroll(document.getElementById('categoriesTab'));
         
         init();
     </script>
