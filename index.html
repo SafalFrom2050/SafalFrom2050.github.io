@@ -112,7 +112,7 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=2.3" rel="stylesheet">
+    <link href="style.css?v=2.4" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -205,19 +205,15 @@
                 <p class="hero-subtitle">Find a game and start playing in your browser. Have an idea of your own? Create it with Skyloop in the Android app.</p>
                 <div class="hero-actions">
                     <a href="/library/" class="btn btn-primary btn-lg expressive-button"><i class="material-icons" aria-hidden="true">sports_esports</i> Explore games</a>
-                    <a href="/bio" class="btn btn-ai expressive-button expressive-button-secondary"><i class="material-icons" aria-hidden="true">auto_awesome</i> Explore AI games</a>
+                    <a href="/bio" class="btn btn-ai expressive-button expressive-button-secondary">Explore AI games</a>
                 </div>
-                <div class="hero-proof"><span class="material-icons" aria-hidden="true">bolt</span> Instant play <span class="proof-separator"></span> No downloads <span class="proof-separator"></span> Made for curious players</div>
             </div>
             <div class="hero-art" aria-hidden="true">
                 <div class="hero-art-orbit"></div>
                 <div class="hero-art-card">
                     <img src="images/ai_game_screenshot.png" alt="" loading="eager">
-                    <div class="hero-art-caption"><span class="hero-art-label">FEATURED WORLD</span><strong>Every tap opens a new adventure</strong></div>
                 </div>
                 <div class="hero-art-emblem"><img src="images/logo.png" alt=""></div>
-                <span class="hero-art-spark hero-art-spark-one material-icons">auto_awesome</span>
-                <span class="hero-art-spark hero-art-spark-two material-icons">star</span>
             </div>
         </section>
 
@@ -249,7 +245,7 @@
                 <span class="skyloop-speech">You dream it.<br>I build it.</span>
             </div>
             <div class="skyloop-copy">
-                <span class="skyloop-kicker"><i class="material-icons" aria-hidden="true">auto_awesome</i> YOUR GAME CREATION BUDDY</span>
+                <span class="skyloop-kicker">YOUR GAME CREATION BUDDY</span>
                 <h2 id="skyloop-title">Meet <span>Skyloop.</span></h2>
                 <p>Got a game idea? In the app, Skyloop helps you choose a genre, describe your world, and turn that idea into a game you can play and share.</p>
                 <div class="skyloop-actions">
@@ -267,23 +263,7 @@
             <div class="section-divider mb-4">
                 <span>Game Library</span>
             </div>
-            <div class="d-flex align-items-center mb-4 flex-nowrap mw-100">
-                <div class="flex-shrink-0">
-                    <button class="arrow-btn" onclick="document.getElementById('categoriesTab').scrollBy({ left: -150, behavior: 'smooth' });">
-                        <i class="material-icons">arrow_back_ios_new</i>
-                    </button>
-                </div>
-                <div class="flex-grow-1 overflow-hidden px-2" style="min-width: 0;">
-                    <div class="scrollmenu" id="categoriesTab">
-
-                    </div>
-                </div>
-                <div class="flex-shrink-0">
-                    <button class="arrow-btn" onclick="document.getElementById('categoriesTab').scrollBy({ left: 150, behavior: 'smooth' });">
-                        <i class="material-icons">arrow_forward_ios</i>
-                    </button>
-                </div>
-            </div>
+            <div class="home-category-grid mb-4" id="categoriesTab" role="group" aria-label="Browse game categories"></div>
         </div>
 
         <!-- Loading Animation -->
@@ -550,44 +530,6 @@
         // Start initialization
         init();
 
-        // Drag to Scroll Implementation
-        function setupDragScroll(slider) {
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                slider.classList.add('active');
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
-                slider.style.scrollBehavior = 'auto';
-            });
-
-            slider.addEventListener('mouseleave', () => {
-                isDown = false;
-                slider.style.scrollBehavior = 'smooth';
-            });
-
-            slider.addEventListener('mouseup', () => {
-                isDown = false;
-                slider.style.scrollBehavior = 'smooth';
-            });
-
-            slider.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 2;
-                slider.scrollLeft = scrollLeft - walk;
-            });
-
-            slider.addEventListener('click', (e) => {
-                if (isDown) e.preventDefault();
-            });
-        }
-
-        setupDragScroll(document.getElementById('categoriesTab'));
     </script>
     
     <!-- Cookie Consent -->
