@@ -60,7 +60,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -836,6 +836,65 @@
                 height: 8px;
             }
         }
+
+        /* The AI gallery shares the Flutter app's expressive surfaces and brand roles. */
+        :root {
+            --primary-bg: #000;
+            --card-bg: #191c24;
+            --card-border: #343a46;
+            --accent: #6bb6ff;
+            --primary-gradient: linear-gradient(135deg, #611417, #fa5411 58%, #ff0000);
+        }
+        body {
+            background: radial-gradient(ellipse 55% 30% at 50% 0%, rgba(250, 84, 17, .13), transparent), #000;
+            font-family: 'Roboto', sans-serif;
+            padding: 42px 20px 75px;
+        }
+        .shape-1 { background: #fa5411; opacity: .16; }
+        .shape-2 { background: #6bb6ff; opacity: .12; }
+        .profile-section { margin-bottom: 18px; }
+        .profile-img { width: 98px; height: 98px; background: #090a0e; border: 2px solid #47505d; border-radius: 30px 44px 28px 45px; }
+        .sprite-icon { width: 90px; height: 90px; background: url('../images/logo.png') center / contain no-repeat; animation: none; }
+        .profile-info h1 { font: 900 25px/1.1 'Roboto', sans-serif; letter-spacing: -.05em; }
+        .brand-alt { font-size: 16px; }
+        .brand-games { font: 900 25px 'Roboto', sans-serif; letter-spacing: -.05em; background: none; -webkit-text-fill-color: #fff !important; }
+        .bio-text { font: 600 15px/1.5 'Roboto', sans-serif; color: #b3b7c0; opacity: 1; max-width: none; margin-top: 12px; }
+        .app-button { margin-top: 22px; background: #fa5411; color: #fff; border-radius: 20px; font: 800 14px 'Roboto', sans-serif; padding: 13px 22px; box-shadow: 0 12px 25px rgba(250, 84, 17, .2); }
+        .app-button:hover { background: #ff722f; color: #fff; border-radius: 28px 17px 28px 17px; }
+        .section-header { max-width: 700px; margin: 30px 0 18px; font: 900 clamp(20px, 3vw, 31px)/1.15 'Roboto', sans-serif; letter-spacing: -.04em; }
+        .typing-container { color: #fff; text-shadow: none; line-height: 1.3; }
+        .cursor { width: 5px; height: 22px; border-radius: 4px; box-shadow: none; }
+        .links-container { max-width: 700px; gap: 12px; }
+        .link-card { min-height: 98px; background: #191c24; border-color: #343a46; border-radius: 28px; padding: 14px 18px; backdrop-filter: none; transition: transform 220ms cubic-bezier(.2, 0, 0, 1), border-radius 220ms cubic-bezier(.2, 0, 0, 1), background 220ms cubic-bezier(.2, 0, 0, 1); }
+        .link-card::after { display: none; }
+        .link-card:hover, .link-card:focus-visible { transform: translateY(-3px) scale(1.015); border-radius: 36px 22px 36px 22px; background: #222630; border-color: #6bb6ff; box-shadow: 0 15px 28px rgba(0,0,0,.3); }
+        .link-card:active { transform: scale(.98); border-radius: 18px; }
+        .link-img { width: 68px; height: 68px; border-radius: 18px; margin-right: 18px; }
+        .link-title { font: 800 17px/1.25 'Roboto', sans-serif; letter-spacing: -.025em; margin-bottom: 7px; }
+        .link-subtitle { font: 7px/1.35 'Press Start 2P', system-ui; color: #ffae83; background: #32170d; border: 1px solid #633321; border-radius: 999px; padding: 6px 9px; }
+        .play-icon { opacity: 1; transform: none; color: #6bb6ff; }
+        .modal-card { background: #191c24; border-color: #47505d; border-radius: 32px; backdrop-filter: none; }
+        .modal-card h2 { font: 900 25px/1.15 'Roboto', sans-serif; letter-spacing: -.035em; }
+        .modal-description { font: 400 15px/1.55 'Roboto', sans-serif; color: #cdd0d6; }
+        .modal-meta { font-family: 'Roboto', sans-serif; font-size: 13px; }
+        #modalCategory { background: #32170d; color: #ffae83; border-color: #633321; border-radius: 999px; }
+        .modal-btn { border-radius: 20px; font: 800 14px 'Roboto', sans-serif; }
+        .btn-play { background: #fa5411; color: #fff; box-shadow: none; }
+        .btn-play:hover { background: #ff722f; box-shadow: 0 8px 20px rgba(250,84,17,.2); }
+        .btn-download { background: #222630; color: #fff; }
+        .btn-vibing { font: 700 13px 'Roboto', sans-serif; }
+        :focus-visible { outline: 3px solid #ffe017 !important; outline-offset: 3px; }
+        @media (max-width: 480px) {
+            body { padding: 30px 16px 60px; }
+            .section-header { font-size: 20px !important; margin: 25px 0 16px !important; }
+            .link-card { min-height: 85px; padding: 11px 13px; border-radius: 22px; }
+            .link-img { width: 56px; height: 56px; border-radius: 15px; margin-right: 12px; }
+            .link-title { font-size: 14px; }
+            .link-subtitle { font-size: 6px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+        }
     </style>
 </head>
 
@@ -862,7 +921,7 @@
     </div>
 
     <div class="section-header">
-        " <div class="typing-container" id="typewriter">AI AGENTS CREATE GAMES LIKE THESE IN MINUTES</div> "
+        <div class="typing-container" id="typewriter">AI AGENTS CREATE GAMES LIKE THESE IN MINUTES</div>
     </div>
 
     <div class="links-container" id="linksList">
@@ -997,6 +1056,9 @@
             games.forEach((game, index) => {
                 const card = document.createElement('div');
                 card.className = 'link-card';
+                card.setAttribute('role', 'button');
+                card.tabIndex = 0;
+                card.setAttribute('aria-label', `Preview ${game.title}`);
                 card.style.animationDelay = (index * 0.1) + 's';
                 card.style.cursor = 'pointer';
 
@@ -1017,12 +1079,21 @@
                     });
                     openModal(game);
                 };
+                card.onkeydown = event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        card.click();
+                    }
+                };
                 linksList.appendChild(card);
             });
 
             // Add static "Human Made Games" card at the bottom
             const humanCard = document.createElement('div');
             humanCard.className = 'link-card human-made-card';
+            humanCard.setAttribute('role', 'link');
+            humanCard.tabIndex = 0;
+            humanCard.setAttribute('aria-label', 'Browse human made games');
             humanCard.style.animationDelay = (games.length * 0.1) + 's';
             humanCard.style.cursor = 'pointer';
             humanCard.style.border = '1px solid rgba(255, 140, 0, 0.4)';
@@ -1049,6 +1120,12 @@
                     'event_label': 'Go_To_Library'
                 });
                 window.location.href = '/library/';
+            };
+            humanCard.onkeydown = event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    humanCard.click();
+                }
             };
             linksList.appendChild(humanCard);
         }

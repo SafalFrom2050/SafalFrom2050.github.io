@@ -112,7 +112,7 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=1.8" rel="stylesheet">
+    <link href="style.css?v=2.0" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -198,12 +198,26 @@
 
     <div class="container">
         <!-- Hero Section -->
-        <section class="hero-section text-center mb-5 animate-in">
-            <h1><span class="text-red">Play Games without Installing, or</span> <br> <span class="text-blue">build your own in minutes using AI</span></h1>
-            <p class="lead">Play 10,000+ games or ask our AI Agent to build your dream game in minutes. It's like magic, but with zero math involved.</p>
-            <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center px-4">
-                <a href="#mainLibrary" class="btn btn-outline-red btn-lg rounded-pill px-4 mb-3 mb-sm-0">Explore Library</a>
-                <a href="/bio" class="btn btn-ai ml-sm-3">Try AI Games</a>
+        <section class="hero-section expressive-hero mb-5 animate-in" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <span class="expressive-eyebrow"><span class="eyebrow-dot"></span> Your next play break starts here</span>
+                <h1 id="hero-title">Jump into <span class="hero-highlight">play.</span></h1>
+                <p class="hero-subtitle">Thousands of games, one tap away. Explore the classics or create something entirely your own with AI.</p>
+                <div class="hero-actions">
+                    <a href="#mainLibrary" class="btn btn-primary btn-lg expressive-button"><i class="material-icons" aria-hidden="true">sports_esports</i> Explore games</a>
+                    <a href="/bio" class="btn btn-ai expressive-button expressive-button-secondary"><i class="material-icons" aria-hidden="true">auto_awesome</i> Create with AI</a>
+                </div>
+                <div class="hero-proof"><span class="material-icons" aria-hidden="true">bolt</span> Instant play <span class="proof-separator"></span> No downloads <span class="proof-separator"></span> Made for curious players</div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="hero-art-orbit"></div>
+                <div class="hero-art-card">
+                    <img src="images/ai_game_screenshot.png" alt="" loading="eager">
+                    <div class="hero-art-caption"><span class="hero-art-label">FEATURED WORLD</span><strong>Every tap opens a new adventure</strong></div>
+                </div>
+                <div class="hero-art-emblem"><img src="images/logo.png" alt=""></div>
+                <span class="hero-art-spark hero-art-spark-one material-icons">auto_awesome</span>
+                <span class="hero-art-spark hero-art-spark-two material-icons">star</span>
             </div>
         </section>
 
@@ -471,7 +485,8 @@
             const allCats = await firestoreService.fetchCategories();
             
             allCats.forEach(cat => {
-                const chip = document.createElement('div');
+                const chip = document.createElement('button');
+                chip.type = 'button';
                 chip.className = 'category-chip' + (cat === 'all' ? ' active' : '');
                 // Capitalize for display
                 chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase();
@@ -529,11 +544,11 @@
                 const col = document.createElement('div');
                 col.className = 'col-6 col-md-4 col-lg-2 p-2 animate-in';
                 col.innerHTML = `
-                    <div class="game-card" onclick="window.open('/game/?id=${game.id}', '_self')">
-                        <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
+                    <a class="game-card" href="/game/?id=${encodeURIComponent(game.id)}">
+                        <img src="${game.imageUrl}" alt="" loading="lazy" onerror="this.src='/images/cover.png'">
                         <h6>${game.title || game.name}</h6>
                         <span class="game-badge">${game.category && game.category[0] || 'Game'}</span>
-                    </div>
+                    </a>
                 `;
                 container.appendChild(col);
             });
@@ -566,11 +581,11 @@
                 return;
             }
             games.forEach(game => {
-                const card = document.createElement('div');
+                const card = document.createElement('a');
                 card.className = game.isAI ? 'horizontal-card ai-card-gradient' : 'horizontal-card';
-                card.onclick = () => window.open(game.isAI ? `/bio` : `/game/?id=${game.id}`, '_self');
+                card.href = game.isAI ? '/bio' : `/game/?id=${encodeURIComponent(game.id)}`;
                 card.innerHTML = `
-                    <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
+                    <img src="${game.imageUrl}" alt="" loading="lazy" onerror="this.src='/images/cover.png'">
                     <div class="h-card-info">
                         <h6 class="${game.isAI ? 'ai-retro-text' : ''}" style="${game.isAI ? 'font-size: 8px;' : ''}">${game.name || game.title}</h6>
                     </div>

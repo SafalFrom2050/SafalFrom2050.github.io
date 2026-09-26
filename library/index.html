@@ -55,7 +55,7 @@
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css?v=1.8" rel="stylesheet">
+    <link href="../style.css?v=2.0" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -103,7 +103,9 @@
 
     <div class="container mt-4">
         <div class="glass-container mb-5 animate-in">
-            <h1 class="h2 mb-4">Discover Your Next Favorite Game</h1>
+            <span class="expressive-eyebrow"><span class="eyebrow-dot"></span> The full collection</span>
+            <h1 class="h2 mb-2">Find your next favorite game</h1>
+            <p class="library-intro">Pick a category or search for a mood. Every game starts in your browser.</p>
             <div class="row align-items-center">
                 <div class="col-12">
                     <div class="d-flex align-items-center mb-3">
@@ -189,10 +191,12 @@
             const tab = document.getElementById('categoriesTab');
             
             categories.forEach(cat => {
-                const chip = document.createElement('div');
+                const chip = document.createElement('button');
+                chip.type = 'button';
                 // Determine if this chip should be active (matching URL param or default to 'all')
                 const isActive = (category && category.toLowerCase() === cat.toLowerCase()) || (!category && cat.toLowerCase() === 'all');
                 chip.className = 'category-chip' + (isActive ? ' active' : '');
+                chip.setAttribute('aria-pressed', String(isActive));
                 chip.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
                 chip.onclick = () => loadCategory(cat, chip, true);
                 tab.appendChild(chip);
@@ -217,12 +221,15 @@
 
             document.querySelectorAll('.category-chip').forEach(c => {
                 c.classList.remove('active');
+                c.setAttribute('aria-pressed', 'false');
                 if (element && c === element) {
                     c.classList.add('active');
+                    c.setAttribute('aria-pressed', 'true');
                 } else if (!element) {
                     // Fallback for initial load: match by text
                     if (c.textContent.toLowerCase() === cleanCat) {
                         c.classList.add('active');
+                        c.setAttribute('aria-pressed', 'true');
                         c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
                 }
@@ -333,11 +340,11 @@
             games.forEach(game => {
                 const card = `
                     <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 p-2 animate-in">
-                        <div class="game-card" onclick="window.open('/game/?id=${game.id}', '_self')">
-                            <img src="${game.imageUrl}" loading="lazy" onerror="this.src='/images/cover.png'">
+                        <a class="game-card" href="/game/?id=${encodeURIComponent(game.id)}">
+                            <img src="${game.imageUrl}" alt="" loading="lazy" onerror="this.src='/images/cover.png'">
                             <h6>${game.name || game.title}</h6>
                             <span class="game-badge">${game.category && game.category[0] || 'Game'}</span>
-                        </div>
+                        </a>
                     </div>
                 `;
                 container.innerHTML += card;

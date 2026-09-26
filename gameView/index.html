@@ -8,11 +8,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <link rel="icon" type="image/x-icon" href="favicons/favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.0">
     <title>alt games portal</title>
 </head>
 <body>
@@ -21,10 +21,10 @@
     </div>
 
     <div class="floating" id="floatingControls" style="display: none;">
-        <div id="full-screen-btn" onclick="goFullScreen();">
+        <button id="full-screen-btn" type="button" onclick="goFullScreen();" aria-label="Full screen">
             <h4 id="msg">Full Screen</h4>
             <img src="images/fullscreen.png" alt="Full Screen">
-        </div>
+        </button>
     </div>
 
     <div id="gameView"></div>
