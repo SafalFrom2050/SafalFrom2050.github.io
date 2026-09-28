@@ -11,6 +11,15 @@
     stylesheet.href = '/game/expressive.css?v=1';
     document.head.appendChild(stylesheet);
 
+    const footerStyles = document.createElement('link');
+    footerStyles.id = 'expressive-footer-styles';
+    footerStyles.rel = 'stylesheet';
+    footerStyles.href = '/css/expressive-footer.css?v=1';
+    document.head.appendChild(footerStyles);
+    const footerScript = document.createElement('script');
+    footerScript.src = '/js/footer.js?v=1';
+    document.body.appendChild(footerScript);
+
     const footerMessage = document.querySelector('footer p.mb-4.opacity-7');
     if (footerMessage) footerMessage.textContent = 'Play instantly on the web. Create with Skyloop on Android.';
 
