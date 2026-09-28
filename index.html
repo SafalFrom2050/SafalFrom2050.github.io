@@ -112,7 +112,7 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=2.9" rel="stylesheet">
+    <link href="style.css?v=3.4" rel="stylesheet">
     <link id="expressive-footer-styles" href="/css/expressive-footer.css?v=2" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
@@ -130,7 +130,7 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script src="js/firestoreService.js?v=2.8"></script>
+    <script src="js/firestoreService.js"></script>
     
     <!-- Google Analytics: load only after the visitor accepts non-essential cookies. -->
     <script>
@@ -183,11 +183,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
                 <div class="navbar-nav ml-auto align-items-lg-center">
-                    <form class="form-inline my-2 my-lg-0 mr-lg-3 d-none d-lg-block" onsubmit="event.preventDefault(); window.location.href='/library/?q='+document.getElementById('gameSearch').value;">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-3 d-none d-lg-block" onsubmit="event.preventDefault(); window.location.href='/library/?q='+encodeURIComponent(document.getElementById('gameSearch').value.trim());">
                         <input id="gameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
                     </form>
                     <a href="/library/" class="nav-link">Library</a>
-                    <a href="/bio/" class="nav-link">AI games</a>
+                    <a href="/ai-games/library/" class="nav-link">AI games</a>
+                    <a href="/bio/" class="nav-link">Get the app</a>
                     <a href="/blog/" class="nav-link">Blog</a>
                     <a href="/about" class="nav-link">About</a>
                 </div>
@@ -203,16 +204,21 @@
                 <h1 id="hero-title">Jump into <span class="hero-highlight">play.</span></h1>
                 <p class="hero-subtitle">Find a game and start playing in your browser. Have an idea of your own? Create it with Skyloop in the Android app.</p>
                 <div class="hero-actions">
-                    <a href="/library/" class="btn btn-primary btn-lg expressive-button"><i class="material-icons" aria-hidden="true">sports_esports</i> Explore games</a>
-                    <a href="/bio" class="btn btn-ai expressive-button expressive-button-secondary">Explore AI games</a>
+                    <a href="/library/" class="btn btn-primary btn-lg expressive-button hero-action hero-action-primary">Browse games</a>
+                    <a href="https://play.google.com/store/apps/details?id=dif.instantgames" class="btn expressive-button hero-action hero-action-create">Create with Skyloop</a>
                 </div>
             </div>
-            <div class="hero-art" aria-hidden="true">
-                <div class="hero-art-orbit"></div>
+            <div class="hero-art">
                 <div class="hero-art-card">
-                    <img src="images/ai_game_screenshot.png" alt="" loading="eager">
+                    <img src="images/hero-play-world.jpg" alt="A playful game character jumping toward a glowing blue star" width="1200" height="800" fetchpriority="high">
                 </div>
-                <div class="hero-art-emblem"><img src="images/logo.png" alt=""></div>
+                <a class="hero-play-fab" href="/game/OgDy0wAsCHtFYvhLf6QW/" data-android-href="https://play.google.com/store/apps/details?id=dif.instantgames" aria-label="Play Road Fury now">
+                    <span class="hero-play-glyph" aria-hidden="true">
+                        <img class="hero-play-blue" src="images/brand_play_blue_layer.png" alt="">
+                        <img class="hero-play-red" src="images/brand_play_red_layer.png" alt="">
+                    </span>
+                    <span class="hero-play-caption">Play now</span>
+                </a>
             </div>
         </section>
 
@@ -240,14 +246,14 @@
                     <p>Choose a genre, describe your world, and turn an idea into a game you can play and share.</p>
                     <div class="skyloop-actions">
                         <a class="btn expressive-button skyloop-primary-action" href="https://play.google.com/store/apps/details?id=dif.instantgames"><i class="material-icons" aria-hidden="true">smartphone</i> <span data-app-label>Available on Android</span></a>
-                        <a class="skyloop-text-link" href="/bio/">See AI games <i class="material-icons" aria-hidden="true">arrow_forward</i></a>
+                        <a class="skyloop-text-link" href="/ai-games/library/">See AI games <i class="material-icons" aria-hidden="true">arrow_forward</i></a>
                     </div>
                 </div>
             </div>
             <div class="skyloop-gallery">
                 <div class="section-heading-row">
                     <div><span class="section-kicker">PLAY THE POSSIBILITIES</span><h3>Made with Skyloop</h3></div>
-                    <a href="/bio/" class="section-text-link">All AI games <span aria-hidden="true">→</span></a>
+                    <a href="/ai-games/library/" class="section-text-link">All AI games <span aria-hidden="true">→</span></a>
                 </div>
                 <div class="skyloop-preview-grid" id="aiGamesRow"></div>
             </div>
@@ -281,10 +287,27 @@
     <div class="container my-5">
         <h2>Play Free HTML5 Browser Games Online</h2>
         <p>Welcome to alt games portal — the ultimate destination for free online games. Browse our collection of over 10,000 HTML5 games across every genre: <a href="/library/?cat=action">Action Games</a>, <a href="/library/?cat=puzzle">Puzzle Games</a>, <a href="/library/?cat=racing">Racing Games</a>, <a href="/library/?cat=sports">Sports Games</a>, <a href="/library/?cat=arcade">Arcade Games</a>, <a href="/library/?cat=brain">Brain Games</a>, <a href="/library/?cat=casual">Casual Games</a>, and <a href="/library/?cat=kids">Kids Games</a>. All games play instantly in your browser with no downloads or installations required.</p>
-        <p><a href="/library/">Browse the Full Game Library</a> | <a href="/blog/">Read Our Game Blog</a> | <a href="/bio/">Preview AI games</a></p>
+        <p><a href="/library/">Browse the Full Game Library</a> | <a href="/blog/">Read Our Game Blog</a> | <a href="/ai-games/library/">Preview AI games</a></p>
     </div>
     </noscript>
 </main>
+
+    <a class="skyloop-dock-fab" id="skyloopDockFab" href="https://play.google.com/store/apps/details?id=dif.instantgames"
+       target="_blank" rel="noopener noreferrer" aria-label="Meet Skyloop" aria-haspopup="dialog" aria-controls="skyloopDockSheet" aria-expanded="false" hidden>
+        <img src="images/skyloop/idle/3.webp" width="68" height="68" alt="">
+    </a>
+    <dialog class="skyloop-dock-sheet" id="skyloopDockSheet" aria-labelledby="skyloopDockTitle">
+        <div class="skyloop-dock-sheet-content">
+            <span class="skyloop-dock-handle" aria-hidden="true"></span>
+            <button class="skyloop-dock-close" type="button" aria-label="Close Skyloop panel">×</button>
+            <img src="images/skyloop/idle/3.webp" width="112" height="112" alt="">
+            <p class="skyloop-dock-eyebrow">YOUR GAME-MAKING SIDEKICK</p>
+            <h2 id="skyloopDockTitle">Meet Skyloop</h2>
+            <p>Turn your idea into a playable game in the Android app.</p>
+            <a class="skyloop-dock-app-button" href="https://play.google.com/store/apps/details?id=dif.instantgames"
+               target="_blank" rel="noopener noreferrer">Create with Skyloop <span aria-hidden="true">↗</span></a>
+        </div>
+    </dialog>
 
     <footer class="mt-5 py-5 text-center">
         <div class="container">
@@ -316,14 +339,19 @@
     <script src="js/popper.min.js"></script> 
     <script src="js/bootstrap-4.0.0.js"></script>
     <script src="js/logo.js"></script>
-    <script src="js/footer.js?v=1"></script>
-    <script src="js/skyloop.js"></script>
+    <script src="js/footer.js?v=2"></script>
+    <script src="js/skyloop.js?v=4"></script>
     <script src="js/app-promo.js"></script>
     
     <script>
         // --- STATIC BASELINE DATA (Real Firestore Snapshots) ---
         const STATIC_HOME_DATA = {
             categories: ["ACTION", "ADVENTURE", "ARCADE", "RACING", "SPORTS", "SOCCER", "PUZZLE", "BRAIN", "CASUAL", "KIDS", "GDEVELOP"],
+            aiGames: [
+                { id: "i5FIRk63ywcPZiLCFJpA", title: "JLPT N3 Kanji Pop", category: "Word", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775339152545_preview.jpg?alt=media", isAI: true },
+                { id: "S0uylwyxyowBgVFcnbZh", title: "Neon Beats: Fever Edition", category: "Music", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775335590309_preview.jpg?alt=media", isAI: true },
+                { id: "YrXmxk5u7Bpr3IPWH4Cc", title: "Urban Blasted: Crate Chaos", category: "Arcade", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775296947448_preview.jpg?alt=media", isAI: true }
+            ],
             gamesPool: [
                 {"id":"fHg6eu5uGbEAjwdh6vil","title":"Battle Simulator - Police Prison","imageUrl":"https://img.gamepix.com/games/police-prison-battle-simulator/icon/police-prison-battle-simulator.png?w=105","category":["ACTION"]},
                 {"id":"KnatsOgd4DDAtoNSedPN","title":"World Z Defense - Zombie Defense","imageUrl":"https://img.gamepix.com/games/world-z-defense-zombie-defense/icon/world-z-defense-zombie-defense.png?w=105","category":["ACTION"]},
@@ -395,12 +423,6 @@
         let isFetching = false;
 
         async function init() {
-            // The library preview is available immediately, even while Firebase starts.
-            const mixedGames = getMixedGames();
-            renderHorizontalRow('playNowRow', mixedGames.slice(0, 6));
-            renderPreviewGrid(mixedGames.slice(6, 18));
-            renderAIGamePreviews();
-
             // 1. Fetch Complete Category List (using the optimized 72h cache)
             const tab = document.getElementById('categoriesTab');
             const allCats = await firestoreService.fetchCategories();
@@ -420,6 +442,12 @@
                 tab.appendChild(chip);
             });
 
+            // Curate across genres so the first row and library preview do not repeat.
+            const mixedGames = getMixedGames();
+            renderHorizontalRow('playNowRow', mixedGames.slice(0, 6));
+            renderHorizontalRow('aiGamesRow', STATIC_HOME_DATA.aiGames);
+            renderPreviewGrid(mixedGames.slice(6, 18));
+
             // Background update check
             try {
                 firebase.database().ref('/Game Collection/bio_update_timestamp').once('value');
@@ -436,32 +464,6 @@
                 groups.forEach(group => { if (group[index]) mixed.push(group[index]); });
             }
             return mixed;
-        }
-
-        async function renderAIGamePreviews() {
-            let hadCachedGames = false;
-            try {
-                const cached = JSON.parse(localStorage.getItem('bio_games_cache') || 'null');
-                const games = Array.isArray(cached?.games) ? cached.games.filter(game => game.id && game.title) : [];
-                if (games.length) {
-                    renderHorizontalRow('aiGamesRow', games.slice(0, 3).map(game => ({ ...game, isAI: true })));
-                    hadCachedGames = true;
-                }
-            } catch (_) { /* The live query below can still populate the section. */ }
-
-            if (!hadCachedGames) showAIGalleryFallback();
-            const games = await firestoreService.fetchAIGames(3);
-            if (games.length) renderHorizontalRow('aiGamesRow', games);
-        }
-
-        function showAIGalleryFallback() {
-            const row = document.getElementById('aiGamesRow');
-            row.innerHTML = `
-                <a class="ai-gallery-fallback" href="/bio/">
-                    <img src="/images/ai_games_collage.png" alt="A collage of AI game worlds" loading="lazy">
-                    <span><strong>Explore games made with Skyloop</strong><small>Open the AI games gallery</small></span>
-                    <i class="material-icons" aria-hidden="true">arrow_forward</i>
-                </a>`;
         }
 
         function renderPreviewGrid(games) {
@@ -510,7 +512,7 @@
             games.forEach(game => {
                 const card = document.createElement('a');
                 card.className = game.isAI ? 'horizontal-card ai-card-gradient' : 'horizontal-card';
-                card.href = game.isAI ? `/bio/?game=${encodeURIComponent(game.id)}` : `/game/?id=${encodeURIComponent(game.id)}`;
+                card.href = game.isAI ? `/ai-games/library/?game=${encodeURIComponent(game.id)}` : `/game/?id=${encodeURIComponent(game.id)}`;
                 const img = document.createElement('img');
                 img.src = game.imageUrl || '/images/cover.png';
                 img.alt = '';
@@ -538,8 +540,8 @@
     </script>
     
     <!-- Cookie Consent -->
-    <link href="cookiePopupStyle.css?v=2.2" rel="stylesheet">
-    <script src="cookiePopUp.js?v=2.2"></script>
+    <link href="cookiePopupStyle.css?v=2.4" rel="stylesheet">
+    <script src="cookiePopUp.js?v=2.4"></script>
 </body>
 </html>
 

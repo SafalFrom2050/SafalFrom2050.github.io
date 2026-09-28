@@ -1918,6 +1918,215 @@ h1, h2, h3, .page-title, .section-divider span,
     .library-finder .library-category-grid { margin-bottom: 3px !important; }
 }
 
+/* Material Expressive polish shared with the Flutter app. */
+:root {
+    --app-canvas: #000;
+    --app-surface: #121212;
+    --app-surface-high: #191c24;
+    --app-surface-raised: #222630;
+    --app-outline: #343a46;
+    --app-blue: #6bb6ff;
+    --app-nav: #090a0e;
+    --expressive-ease: cubic-bezier(.2, 0, 0, 1);
+}
+
+h1, h2, h3, .page-title, .section-divider span,
+.expressive-hero h1, .skyloop-copy h2, .section-heading-row h2 {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.expressive-eyebrow, .section-kicker, .skyloop-kicker {
+    font: 700 8px/1.5 'Press Start 2P', system-ui;
+    letter-spacing: 0;
+}
+
+.expressive-hero::before {
+    background: radial-gradient(circle at 78% 36%, rgba(107,182,255,.09), transparent 42%), #0d0e12;
+    border-radius: 64px 112px 64px 112px;
+}
+.hero-art { height: min(37vw, 410px); min-height: 330px; margin-right: clamp(16px, 3vw, 42px); }
+.hero-art-card {
+    inset: 5% 4% 7% 0;
+    border: 1px solid #424b5c;
+    border-radius: 46px 70px 42px 70px;
+    background: var(--app-nav);
+    transform: none;
+    box-shadow: 0 26px 54px rgba(0,0,0,.34);
+}
+.hero-art-card > img { display: block; object-position: center; }
+.hero-art:hover .hero-art-card { transform: none; }
+.hero-play-fab {
+    position: absolute;
+    right: -1%;
+    bottom: 0;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 72px;
+    padding: 3px 19px 3px 2px;
+    border: 1.5px solid rgba(107,182,255,.6);
+    border-radius: 999px;
+    background: var(--app-nav);
+    box-shadow: 0 14px 32px rgba(0,0,0,.5);
+    color: #fff;
+    font: 800 15px/1 'Roboto', sans-serif;
+    text-decoration: none !important;
+    transition: transform 180ms var(--expressive-ease), border-radius 180ms var(--expressive-ease), background 180ms var(--expressive-ease), border-color 180ms var(--expressive-ease);
+}
+.hero-play-fab:hover { color: #fff; background: var(--app-surface-raised); border-radius: 26px 40px 26px 40px; transform: translateY(-3px); }
+.hero-play-fab:active { transform: scale(.95); border-radius: 22px; }
+.hero-play-glyph { position: relative; display: block; width: 65px; height: 65px; flex: 0 0 65px; }
+.hero-play-glyph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hero-play-red { transition: transform 140ms var(--expressive-ease); transform-origin: 32% 50%; }
+.hero-play-fab:active .hero-play-red { transform: scaleX(1.2); }
+
+.btn-primary, .btn-submit, .expressive-button.btn-primary, .app-callout-link,
+.skyloop-primary-action, .btn-get-app {
+    min-height: 48px;
+    border-radius: 20px !important;
+    transition: transform 180ms var(--expressive-ease), border-radius 180ms var(--expressive-ease), background 180ms var(--expressive-ease), box-shadow 180ms var(--expressive-ease) !important;
+}
+.btn-primary:hover, .btn-submit:hover, .expressive-button.btn-primary:hover,
+.app-callout-link:hover, .skyloop-primary-action:hover, .btn-get-app:hover {
+    border-radius: 28px 18px 28px 18px !important;
+    transform: translateY(-2px);
+}
+.btn-primary:active, .btn-submit:active, .expressive-button:active,
+.app-callout-link:active, .skyloop-primary-action:active, .btn-get-app:active { transform: scale(.97); border-radius: 15px !important; }
+.expressive-button-secondary.btn-ai { color: #f4f4f6 !important; border-color: var(--app-outline) !important; }
+.expressive-button-secondary.btn-ai:hover { background: #2c3442 !important; border-color: #527eab !important; }
+
+.game-card:focus-visible, .horizontal-card:focus-visible, .link-card:focus-visible {
+    border-color: var(--app-blue);
+    border-radius: 28px 20px 28px 20px;
+}
+.game-card img, .horizontal-card img { background: var(--app-surface-raised); }
+.navbar-toggler, .gallery-menu-toggle {
+    min-width: 48px;
+    min-height: 48px;
+    border: 1px solid var(--app-outline);
+    border-radius: 999px;
+    background: var(--app-nav);
+    color: #fff;
+}
+.navbar-toggler:hover, .gallery-menu-toggle:hover { background: var(--app-surface-raised); border-color: #527eab; }
+.form-control:focus, .gallery-search input:focus { box-shadow: 0 0 0 3px rgba(107,182,255,.15) !important; }
+
+@media (max-width: 991px) {
+    .hero-art { height: 360px; min-height: 0; margin: 14px 50px 0; }
+}
+@media (max-width: 576px) {
+    .expressive-hero::before { border-radius: 38px; }
+    .expressive-eyebrow, .section-kicker, .skyloop-kicker { font-size: 7px; }
+    .hero-art { height: 185px; margin: 8px 24px 0; }
+    .hero-art-card { inset: 0 0 4% 0; border-radius: 26px 42px 26px 42px; }
+    .hero-play-fab { min-height: 54px; padding: 2px 13px 2px 2px; font-size: 12px; right: -2%; bottom: -3px; }
+    .hero-play-glyph { width: 48px; height: 48px; flex-basis: 48px; }
+    .hero-actions .expressive-button-secondary.btn-ai { min-height: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-play-fab, .hero-play-red { transition-duration: .01ms !important; }
+}
+
+/* Quiet, touchable hero actions and the Skyloop companion dock. */
+.hero-actions .hero-action {
+    min-height: 56px;
+    padding: 12px 25px !important;
+    border-radius: 999px !important;
+    white-space: nowrap;
+    transition: transform 180ms var(--expressive-ease), border-radius 180ms var(--expressive-ease), box-shadow 180ms var(--expressive-ease), background 180ms var(--expressive-ease) !important;
+}
+.hero-actions .hero-action-primary.btn-primary {
+    background: #3475a8 !important;
+    border: 1px solid #4d8fc0 !important;
+    color: #fff !important;
+    box-shadow: 0 9px 20px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.12) !important;
+}
+.hero-actions .hero-action-create {
+    background: #222630 !important;
+    border: 1px solid #47505d !important;
+    color: #f4f4f6 !important;
+    box-shadow: 0 8px 18px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+.hero-actions .hero-action:hover { transform: translateY(-2px); }
+.hero-actions .hero-action-primary:hover { background: #3d82b7 !important; }
+.hero-actions .hero-action-create:hover { background: #2b303d !important; }
+.hero-actions .hero-action:active { transform: translateY(1px) scale(.98); border-radius: 18px !important; box-shadow: 0 3px 8px rgba(0,0,0,.2) !important; }
+
+.skyloop-avatar.is-migrating { visibility: hidden; }
+.skyloop-dock-fab[hidden] { display: none !important; }
+.skyloop-dock-fab {
+    position: fixed;
+    z-index: 10000;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border: 1px solid #6daee2;
+    border-radius: 25px;
+    background: #3475a8;
+    box-shadow: 0 10px 30px rgba(0,0,0,.38), 0 3px 0 rgba(255,255,255,.13) inset;
+    transition: transform 180ms var(--expressive-ease), border-radius 180ms var(--expressive-ease), background 180ms var(--expressive-ease), opacity 180ms var(--expressive-ease);
+}
+.skyloop-dock-fab.is-arriving { opacity: 0; pointer-events: none; }
+.skyloop-dock-fab:hover { transform: translateY(-3px); border-radius: 31px 20px 31px 20px; background: #3e86bf; }
+.skyloop-dock-fab:active { transform: scale(.94); border-radius: 20px; }
+.skyloop-dock-fab img { display: block; width: 66px; height: 66px; object-fit: contain; animation: skyloop-dock-float 3.2s ease-in-out infinite; }
+.skyloop-dock-fab:hover img, .skyloop-dock-fab:focus-visible img { animation: skyloop-dock-greet 650ms var(--expressive-ease) both; }
+.skyloop-dock-fab:active img { animation: none; transform: translateY(4px) scale(.88) rotate(-8deg); }
+@keyframes skyloop-dock-float { 0%, 100% { transform: translateY(1px) rotate(-3deg); } 50% { transform: translateY(-4px) rotate(3deg); } }
+@keyframes skyloop-dock-greet { 0%, 100% { transform: none; } 32% { transform: translateY(-8px) rotate(-10deg) scale(1.07); } 64% { transform: translateY(-4px) rotate(9deg) scale(1.05); } }
+.skyloop-flight { position: fixed; z-index: 10001; pointer-events: none; object-fit: contain; filter: drop-shadow(0 12px 14px rgba(0,0,0,.3)); }
+body #cookiePreferences { left: 18px; right: auto; }
+
+.skyloop-dock-sheet {
+    position: fixed;
+    inset: auto 0 0;
+    width: min(100%, 440px);
+    max-width: none;
+    max-height: min(90dvh, 540px);
+    margin: 0 auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid #46536a;
+    border-bottom: 0;
+    border-radius: 30px 30px 0 0;
+    background: #1a1e27;
+    color: #f4f4f6;
+    box-shadow: 0 -16px 42px rgba(0,0,0,.4);
+}
+.skyloop-dock-sheet:not([open]) { display: none; }
+.skyloop-dock-sheet::backdrop { background: rgba(0,0,0,.67); backdrop-filter: blur(5px); }
+.skyloop-dock-sheet[open] { animation: skyloop-dock-sheet-enter 220ms var(--expressive-ease); }
+@keyframes skyloop-dock-sheet-enter { from { transform: translateY(28px); opacity: .6; } to { transform: none; opacity: 1; } }
+.skyloop-dock-sheet-content { position: relative; display: flex; flex-direction: column; align-items: center; padding: 13px 26px max(30px, env(safe-area-inset-bottom)); text-align: center; }
+.skyloop-dock-handle { width: 38px; height: 4px; border-radius: 99px; background: #738096; }
+.skyloop-dock-close { position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid #526078; border-radius: 50%; background: #252b37; color: #fff; font: 25px/1 'Roboto', sans-serif; cursor: pointer; }
+.skyloop-dock-close:hover { background: #344057; }
+.skyloop-dock-sheet-content > img { width: 112px; height: 112px; margin-top: 10px; object-fit: contain; }
+.skyloop-dock-sheet[open] .skyloop-dock-sheet-content > img { animation: skyloop-dock-sheet-greet 550ms var(--expressive-ease) both; }
+@keyframes skyloop-dock-sheet-greet { from { opacity: 0; transform: translateY(22px) scale(.82) rotate(-12deg); } to { opacity: 1; transform: none; } }
+.skyloop-dock-eyebrow { margin: 5px 0 7px; color: #a9d9ff; font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+.skyloop-dock-sheet h2 { margin: 0; font-size: 27px; font-weight: 900; letter-spacing: -.04em; }
+.skyloop-dock-sheet p:not(.skyloop-dock-eyebrow) { max-width: 290px; margin: 10px 0 0; color: #c6cbd4; font-size: 14px; line-height: 1.5; }
+.skyloop-dock-app-button { display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; min-height: 51px; margin-top: 22px; padding: 12px; border-radius: 18px; background: #82c7ff; color: #0b1b2c; font-size: 14px; font-weight: 800; text-decoration: none !important; }
+.skyloop-dock-app-button:hover { background: #a1d5ff; color: #0b1b2c; }
+
+@media (max-width: 576px) {
+    .hero-actions { gap: 12px; }
+    .hero-actions .hero-action { min-height: 52px; justify-content: center; padding: 10px 18px !important; }
+    .skyloop-dock-fab { right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 68px; height: 68px; }
+    .skyloop-dock-fab img { width: 62px; height: 62px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .skyloop-dock-fab img, .skyloop-dock-fab:hover img, .skyloop-dock-fab:focus-visible img,
+    .skyloop-dock-sheet[open], .skyloop-dock-sheet[open] .skyloop-dock-sheet-content > img { animation: none !important; transform: none !important; }
+}
+
 /* Match the app's type hierarchy: pixel headings and labels, fluid display and body copy. */
 .expressive-eyebrow,
 .section-kicker,

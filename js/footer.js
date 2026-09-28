@@ -49,7 +49,7 @@
                     <nav class="footer-nav" aria-label="Explore">
                         <span class="footer-nav-heading">Explore</span>
                         <a href="/library/">Game library</a>
-                        <a href="/bio/">AI games</a>
+                        <a href="/ai-games/library/">AI games</a>
                         <a href="/blog/">Blog</a>
                     </nav>
                     <nav class="footer-nav" aria-label="More information">

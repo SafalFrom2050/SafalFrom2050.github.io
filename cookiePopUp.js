@@ -28,6 +28,7 @@ $(document).ready(function () {
     }
 
     function saveConsent(value) {
+        consent = value;
         try {
             window.localStorage.setItem('cookieConsent', value);
         } catch (error) {
@@ -47,7 +48,7 @@ $(document).ready(function () {
     }
     if (!consent) {
         setTimeout(function () {
-            $("#cookieConsent").fadeIn(200);
+            if (!document.querySelector('#appModal.active')) $("#cookieConsent").fadeIn(200);
         }, 500);
     } else {
         updateGoogleConsent(consent);
@@ -74,5 +75,14 @@ $(document).ready(function () {
     $("#cookiePreferences").click(function () {
         $("#cookiePreferences").hide();
         $("#cookieConsent").fadeIn(200);
+    });
+
+    document.addEventListener('app:modal-opened', function () {
+        $("#cookieConsent").stop(true, true).hide();
+        $("#cookiePreferences").stop(true, true).hide();
+    });
+    document.addEventListener('app:modal-closed', function () {
+        if (consent) $("#cookiePreferences").fadeIn(200);
+        else $("#cookieConsent").fadeIn(200);
     });
 });

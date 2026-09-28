@@ -17,7 +17,7 @@
     footerStyles.href = '/css/expressive-footer.css?v=2';
     document.head.appendChild(footerStyles);
     const footerScript = document.createElement('script');
-    footerScript.src = '/js/footer.js?v=1';
+    footerScript.src = '/js/footer.js?v=2';
     document.body.appendChild(footerScript);
 
     const footerMessage = document.querySelector('footer p.mb-4.opacity-7');
@@ -28,7 +28,7 @@
     nav.querySelectorAll('.nav-link .material-icons').forEach(icon => icon.remove());
     const about = nav.querySelector('a[href="/about"]');
     if (!about) return;
-    [['AI games', '/bio/'], ['Blog', '/blog/']].forEach(([label, href]) => {
+    [['AI games', '/ai-games/library/'], ['Blog', '/blog/']].forEach(([label, href]) => {
         if (nav.querySelector(`a[href="${href}"]`)) return;
         const link = document.createElement('a');
         link.className = 'nav-link';
