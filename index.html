@@ -112,7 +112,7 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=2.7" rel="stylesheet">
+    <link href="style.css?v=2.8" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -129,7 +129,7 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script src="js/firestoreService.js"></script>
+    <script src="js/firestoreService.js?v=2.8"></script>
     
     <!-- Google Analytics: load only after the visitor accepts non-essential cookies. -->
     <script>
@@ -322,11 +322,6 @@
         // --- STATIC BASELINE DATA (Real Firestore Snapshots) ---
         const STATIC_HOME_DATA = {
             categories: ["ACTION", "ADVENTURE", "ARCADE", "RACING", "SPORTS", "SOCCER", "PUZZLE", "BRAIN", "CASUAL", "KIDS", "GDEVELOP"],
-            aiGames: [
-                { id: "i5FIRk63ywcPZiLCFJpA", title: "JLPT N3 Kanji Pop", category: "Word", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775339152545_preview.jpg?alt=media", isAI: true },
-                { id: "S0uylwyxyowBgVFcnbZh", title: "Neon Beats: Fever Edition", category: "Music", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775335590309_preview.jpg?alt=media", isAI: true },
-                { id: "YrXmxk5u7Bpr3IPWH4Cc", title: "Urban Blasted: Crate Chaos", category: "Arcade", imageUrl: "https://firebasestorage.googleapis.com/v0/b/dif-instantgames.appspot.com/o/ai_games%2FU4XFFYb6LtSI4MVdzNDxFOp5oO73%2F1775296947448_preview.jpg?alt=media", isAI: true }
-            ],
             gamesPool: [
                 {"id":"fHg6eu5uGbEAjwdh6vil","title":"Battle Simulator - Police Prison","imageUrl":"https://img.gamepix.com/games/police-prison-battle-simulator/icon/police-prison-battle-simulator.png?w=105","category":["ACTION"]},
                 {"id":"KnatsOgd4DDAtoNSedPN","title":"World Z Defense - Zombie Defense","imageUrl":"https://img.gamepix.com/games/world-z-defense-zombie-defense/icon/world-z-defense-zombie-defense.png?w=105","category":["ACTION"]},
@@ -398,6 +393,12 @@
         let isFetching = false;
 
         async function init() {
+            // The library preview is available immediately, even while Firebase starts.
+            const mixedGames = getMixedGames();
+            renderHorizontalRow('playNowRow', mixedGames.slice(0, 6));
+            renderPreviewGrid(mixedGames.slice(6, 18));
+            renderAIGamePreviews();
+
             // 1. Fetch Complete Category List (using the optimized 72h cache)
             const tab = document.getElementById('categoriesTab');
             const allCats = await firestoreService.fetchCategories();
@@ -417,12 +418,6 @@
                 tab.appendChild(chip);
             });
 
-            // Curate across genres so the first row and library preview do not repeat.
-            const mixedGames = getMixedGames();
-            renderHorizontalRow('playNowRow', mixedGames.slice(0, 6));
-            renderHorizontalRow('aiGamesRow', STATIC_HOME_DATA.aiGames);
-            renderPreviewGrid(mixedGames.slice(6, 18));
-
             // Background update check
             try {
                 firebase.database().ref('/Game Collection/bio_update_timestamp').once('value');
@@ -439,6 +434,32 @@
                 groups.forEach(group => { if (group[index]) mixed.push(group[index]); });
             }
             return mixed;
+        }
+
+        async function renderAIGamePreviews() {
+            let hadCachedGames = false;
+            try {
+                const cached = JSON.parse(localStorage.getItem('bio_games_cache') || 'null');
+                const games = Array.isArray(cached?.games) ? cached.games.filter(game => game.id && game.title) : [];
+                if (games.length) {
+                    renderHorizontalRow('aiGamesRow', games.slice(0, 3).map(game => ({ ...game, isAI: true })));
+                    hadCachedGames = true;
+                }
+            } catch (_) { /* The live query below can still populate the section. */ }
+
+            if (!hadCachedGames) showAIGalleryFallback();
+            const games = await firestoreService.fetchAIGames(3);
+            if (games.length) renderHorizontalRow('aiGamesRow', games);
+        }
+
+        function showAIGalleryFallback() {
+            const row = document.getElementById('aiGamesRow');
+            row.innerHTML = `
+                <a class="ai-gallery-fallback" href="/bio/">
+                    <img src="/images/ai_games_collage.png" alt="A collage of AI game worlds" loading="lazy">
+                    <span><strong>Explore games made with Skyloop</strong><small>Open the AI games gallery</small></span>
+                    <i class="material-icons" aria-hidden="true">arrow_forward</i>
+                </a>`;
         }
 
         function renderPreviewGrid(games) {
@@ -488,13 +509,23 @@
                 const card = document.createElement('a');
                 card.className = game.isAI ? 'horizontal-card ai-card-gradient' : 'horizontal-card';
                 card.href = game.isAI ? `/bio/?game=${encodeURIComponent(game.id)}` : `/game/?id=${encodeURIComponent(game.id)}`;
-                card.innerHTML = `
-                    <img src="${game.imageUrl}" alt="" loading="lazy" onerror="this.src='/images/cover.png'">
-                    <div class="h-card-info">
-                        <h6>${game.name || game.title}</h6>
-                        ${game.isAI ? '<span class="card-action">Preview game →</span>' : ''}
-                    </div>
-                `;
+                const img = document.createElement('img');
+                img.src = game.imageUrl || '/images/cover.png';
+                img.alt = '';
+                img.loading = 'lazy';
+                img.onerror = () => { img.onerror = null; img.src = '/images/cover.png'; };
+                const info = document.createElement('div');
+                info.className = 'h-card-info';
+                const title = document.createElement('h6');
+                title.textContent = game.name || game.title || 'Game';
+                info.appendChild(title);
+                if (game.isAI) {
+                    const action = document.createElement('span');
+                    action.className = 'card-action';
+                    action.textContent = 'Preview game →';
+                    info.appendChild(action);
+                }
+                card.append(img, info);
                 row.appendChild(card);
             });
         }

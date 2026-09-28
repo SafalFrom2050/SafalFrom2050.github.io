@@ -1014,7 +1014,7 @@
 
     <!-- Modal Dialog -->
     <div id="appModal" class="modal-overlay">
-        <div id="modalCard" class="modal-card">
+        <div id="modalCard" class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <button class="modal-close" type="button" aria-label="Close preview" onclick="closeModal()"><i class="material-icons" aria-hidden="true">close</i></button>
             <div id="modalPlayer" class="modal-player" style="display: none; position: relative;">
                 <iframe id="gameIframe" src=""></iframe>
@@ -1023,7 +1023,7 @@
                 </button>
             </div>
             <div id="browserHelp" class="browser-help">
-                <div class="help-title">笞・・BROWSER RESTRICTED</div>
+                <div class="help-title">BROWSER RESTRICTED</div>
                 <p class="help-text">Instagram blocks games for security. Open in Safari to play this AI creation!</p>
                 <div class="help-icon-guide">
                     <i class="material-icons" style="color:var(--accent)">more_horiz</i>
@@ -1050,8 +1050,7 @@
                     <button id="modalPlayBtn" class="modal-btn btn-play">
                         <i class="material-icons" style="font-size: 18px; margin-right: 5px;">play_arrow</i> PLAY NOW
                     </button>
-                    <button class="modal-btn btn-vibing"
-                       Vibing</button>
+                    <button class="modal-btn btn-vibing" type="button"
                         onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'ClosePreview', 'game_id': currentPlayerGame?.id });">Close preview</button>
                 </div>
             </div>
@@ -1156,14 +1155,24 @@
                 card.style.animationDelay = (index * 0.1) + 's';
                 card.style.cursor = 'pointer';
 
-                card.innerHTML = `
-                    <img src="${game.imageUrl}" class="link-img" alt="${game.title}" onerror="this.src='../images/cover.png'">
-                    <div class="link-content">
-                        <p class="link-title">${game.title}</p>
-                        <p class="link-subtitle">${game.category || 'AI Generated'}</p>
-                    </div>
-                    <i class="material-icons play-icon">play_arrow</i>
-                `;
+                const image = document.createElement('img');
+                image.src = game.imageUrl || '../images/cover.png';
+                image.className = 'link-img';
+                image.alt = game.title || 'AI game preview';
+                image.onerror = () => { image.onerror = null; image.src = '../images/cover.png'; };
+                const content = document.createElement('div');
+                content.className = 'link-content';
+                const title = document.createElement('p');
+                title.className = 'link-title';
+                title.textContent = game.title || 'Untitled game';
+                const category = document.createElement('p');
+                category.className = 'link-subtitle';
+                category.textContent = game.category || 'AI Generated';
+                const icon = document.createElement('i');
+                icon.className = 'material-icons play-icon';
+                icon.textContent = 'play_arrow';
+                content.append(title, category);
+                card.append(image, content, icon);
 
                 card.onclick = () => {
                     gtag('event', 'select_item', {
@@ -1226,8 +1235,10 @@
         const mPlayBtn = document.getElementById('modalPlayBtn');
 
         let currentPlayerGame = null;
+        let previousFocus = null;
 
         function openModal(game) {
+            previousFocus = document.activeElement;
             currentPlayerGame = game;
             mCard.classList.remove('playing', 'restricted');
             mBanner.src = game.imageUrl;
@@ -1236,15 +1247,20 @@
             mIframe.src = "about:blank";
 
             mTitle.innerText = game.title;
-            mCategory.innerHTML = `<i class="material-icons" style="font-size: 14px;">category</i> ${game.category || 'AI Game'}`;
+            const categoryIcon = document.createElement('i');
+            categoryIcon.className = 'material-icons';
+            categoryIcon.style.fontSize = '14px';
+            categoryIcon.textContent = 'category';
+            mCategory.replaceChildren(categoryIcon, document.createTextNode(` ${game.category || 'AI Game'}`));
 
-            const plays = game.playCount || 0;
-            const rating = game.rating ? ` | ${game.rating} stars` : '';
+            const plays = Number(game.playCount) || 0;
+            const score = Number(game.rating) || 0;
+            const rating = score ? ` | ${score} stars` : '';
 
             if (plays > 100) {
                 mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">play_arrow</i> ${plays} plays${rating}`;
-            } else if (game.rating) {
-                mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">star</i> ${game.rating} stars`;
+            } else if (score) {
+                mStats.innerHTML = `<i class="material-icons" style="font-size: 14px;">star</i> ${score} stars`;
             } else {
                 mStats.innerHTML = ``;
             }
@@ -1261,6 +1277,7 @@
 
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            mCard.querySelector('.modal-close').focus();
         }
 
         function toggleFullscreen() {
@@ -1410,7 +1427,30 @@
             modal.classList.remove('active');
             mIframe.src = "about:blank";
             document.body.style.overflow = '';
+            if (previousFocus?.isConnected) previousFocus.focus();
+            previousFocus = null;
         }
+
+        document.addEventListener('keydown', event => {
+            if (!modal.classList.contains('active')) return;
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeModal();
+            } else if (event.key === 'Tab') {
+                const focusable = Array.from(mCard.querySelectorAll('button, a[href], iframe'))
+                    .filter(element => element.getClientRects().length && !element.disabled);
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            }
+        });
 
         // Close on backdrop click
         modal.onclick = function (e) {

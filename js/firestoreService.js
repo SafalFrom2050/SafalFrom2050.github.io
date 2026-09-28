@@ -18,7 +18,6 @@ const firestoreService = {
             const querySnapshot = await this.db.collection('ai_games')
                 .where('isPublished', '==', true)
                 .where('publishStatus', '==', 'complete')
-                .where('bio_shared', '==', true)
                 .orderBy('createdAt', 'desc')
                 .limit(limit)
                 .get();

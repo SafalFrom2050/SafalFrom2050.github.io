@@ -11,6 +11,9 @@
     stylesheet.href = '/game/expressive.css?v=1';
     document.head.appendChild(stylesheet);
 
+    const footerMessage = document.querySelector('footer p.mb-4.opacity-7');
+    if (footerMessage) footerMessage.textContent = 'Play instantly on the web. Create with Skyloop on Android.';
+
     const nav = document.querySelector('#navbarMain .navbar-nav');
     if (!nav) return;
     nav.querySelectorAll('.nav-link .material-icons').forEach(icon => icon.remove());
@@ -76,7 +79,7 @@ async function loadGamePage() {
 
 function renderGameDetails(game) {
     document.title = `Play ${game.name || game.title} Free Online | alt games portal`;
-    document.getElementById("title").innerHTML = game.name || game.title;
+    document.getElementById("title").textContent = game.name || game.title;
     const title = document.getElementById('title');
     const context = document.createElement('div');
     context.className = 'game-context';
@@ -88,25 +91,32 @@ function renderGameDetails(game) {
     context.append(libraryLink, categoryLabel);
     title.before(context);
     
-    const iframeContent = `<iframe src="${game.url}" scrolling="no" allowfullscreen></iframe>`;
-    document.getElementById("iframeContainer").innerHTML = iframeContent;
+    const iframe = document.createElement('iframe');
+    iframe.src = game.url;
+    iframe.scrolling = 'no';
+    iframe.allowFullscreen = true;
+    iframe.title = game.name || game.title || 'Game';
+    document.getElementById("iframeContainer").replaceChildren(iframe);
     
     // Show the fullscreen button once the game is loaded
     const fsBtn = document.getElementById("fullscreenBtn");
     if (fsBtn) fsBtn.classList.add('visible');
 
     if (game.description && game.description.trim() !== "") {
-        document.getElementById("description").innerHTML = game.description;
+        document.getElementById("description").textContent = game.description;
     } else {
         // High-value fallback for AdSense:
         const cat = game.category ? (Array.isArray(game.category) ? game.category[0] : game.category) : "Instant Game";
-        const fallback = `Experience <strong>${game.name || game.title}</strong>, a thrilling ${cat} game on alt games portal. Our platform allows you to play high-quality titles with no installations required. Whether you are looking for a quick session or deep strategic gameplay, ${game.name || game.title} offers an engaging experience designed for players of all skill levels. Join thousands of other gamers and explore the future of instant gaming.`;
-        document.getElementById("description").innerHTML = fallback;
+        const fallback = `Experience ${game.name || game.title}, a ${cat} game on alt games portal. Play instantly in your browser with no installation required.`;
+        document.getElementById("description").textContent = fallback;
     }
 
     if (game.category) {
         const cat = Array.isArray(game.category) ? game.category[0] : game.category;
-        document.getElementById("categoryBadge").innerHTML = `<span class="badge badge-primary rounded-pill px-3 py-2">${cat.toUpperCase()}</span>`;
+        const badge = document.createElement('span');
+        badge.className = 'badge badge-primary rounded-pill px-3 py-2';
+        badge.textContent = String(cat).toUpperCase();
+        document.getElementById("categoryBadge").replaceChildren(badge);
     }
 
     // 3. Stats Rendering
@@ -114,14 +124,14 @@ function renderGameDetails(game) {
     
     // Ratings
     if (Number(stats.averageRating) > 0) {
-        document.getElementById("ratingValue").innerHTML = Number(stats.averageRating).toFixed(1) + " ★";
+        document.getElementById("ratingValue").textContent = Number(stats.averageRating).toFixed(1) + " ★";
     } else {
         document.getElementById("ratingValue").parentElement.hidden = true;
     }
 
     // Favorites
     if (Number(stats.favoriteCount) > 0) {
-        document.getElementById("favCount").innerHTML = stats.favoriteCount;
+        document.getElementById("favCount").textContent = String(stats.favoriteCount);
     } else {
         document.getElementById("favCount").parentElement.hidden = true;
     }
@@ -229,7 +239,7 @@ function renderGameDetails(game) {
                 "bestRating": "5"
             };
         }
-        schemaBlock.innerHTML = JSON.stringify(schema);
+        schemaBlock.textContent = JSON.stringify(schema);
     }
 }
 
@@ -256,28 +266,42 @@ function renderSimilarGames(games, category) {
     mobileGrid.innerHTML = '';
 
     games.forEach(game => {
-        // Desktop Sidebar Item
-        const sidebarHtml = `
-            <a class="sidebar-item" href="/game/${encodeURIComponent(game.id)}/">
-                <img src="${game.imageUrl}" alt="" onerror="this.src='/images/cover.png'">
-                <div>
-                    <h6 class="mb-1">${game.name || game.title}</h6>
-                    <span class="badge badge-dark small" style="font-size: 9px; opacity: 0.7;">${game.category && game.category[0] || 'Game'}</span>
-                </div>
-            </a>
-        `;
-        sidebar.innerHTML += sidebarHtml;
+        const gameUrl = `/game/${encodeURIComponent(game.id)}/`;
+        const name = game.name || game.title || 'Game';
+        const categoryName = Array.isArray(game.category) ? game.category[0] : game.category;
+        const makeImage = () => {
+            const image = document.createElement('img');
+            image.src = game.imageUrl || '/images/cover.png';
+            image.alt = '';
+            image.onerror = () => { image.onerror = null; image.src = '/images/cover.png'; };
+            return image;
+        };
 
-        // Mobile Grid Item (Using home screen card style)
-        const mobileHtml = `
-            <div class="col-6 p-2">
-                <a class="game-card" href="/game/${encodeURIComponent(game.id)}/">
-                    <img src="${game.imageUrl}" alt="" onerror="this.src='/images/cover.png'">
-                    <h6>${game.name || game.title}</h6>
-                </a>
-            </div>
-        `;
-        mobileGrid.innerHTML += mobileHtml;
+        const sidebarLink = document.createElement('a');
+        sidebarLink.className = 'sidebar-item';
+        sidebarLink.href = gameUrl;
+        const sidebarText = document.createElement('div');
+        const sidebarTitle = document.createElement('h6');
+        sidebarTitle.className = 'mb-1';
+        sidebarTitle.textContent = name;
+        const badge = document.createElement('span');
+        badge.className = 'badge badge-dark small';
+        badge.style.cssText = 'font-size: 9px; opacity: 0.7;';
+        badge.textContent = categoryName || 'Game';
+        sidebarText.append(sidebarTitle, badge);
+        sidebarLink.append(makeImage(), sidebarText);
+        sidebar.appendChild(sidebarLink);
+
+        const mobileCol = document.createElement('div');
+        mobileCol.className = 'col-6 p-2';
+        const mobileLink = document.createElement('a');
+        mobileLink.className = 'game-card';
+        mobileLink.href = gameUrl;
+        const mobileTitle = document.createElement('h6');
+        mobileTitle.textContent = name;
+        mobileLink.append(makeImage(), mobileTitle);
+        mobileCol.appendChild(mobileLink);
+        mobileGrid.appendChild(mobileCol);
     });
 }
 
