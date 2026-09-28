@@ -4,9 +4,9 @@ body > main > .container.mb-5 { margin-top: 20px; }
 .game-context {
     margin: 0 0 9px;
     color: #b3b7c0;
-    font: 700 12px/1.4 'Roboto', sans-serif;
+    font: 400 9px/1.5 'Press Start 2P', monospace;
     text-transform: uppercase;
-    letter-spacing: .08em;
+    letter-spacing: 0;
 }
 .game-context a { color: #b8dfff; text-decoration: none; }
 .game-context a:hover { color: #fff; }

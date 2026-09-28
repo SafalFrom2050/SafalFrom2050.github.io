@@ -8,13 +8,13 @@
 (function prepareGameChrome() {
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
-    stylesheet.href = '/game/expressive.css?v=1';
+    stylesheet.href = '/game/expressive.css?v=2';
     document.head.appendChild(stylesheet);
 
     const footerStyles = document.createElement('link');
     footerStyles.id = 'expressive-footer-styles';
     footerStyles.rel = 'stylesheet';
-    footerStyles.href = '/css/expressive-footer.css?v=1';
+    footerStyles.href = '/css/expressive-footer.css?v=2';
     document.head.appendChild(footerStyles);
     const footerScript = document.createElement('script');
     footerScript.src = '/js/footer.js?v=1';

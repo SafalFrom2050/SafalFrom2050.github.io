@@ -13,7 +13,7 @@
             const styles = document.createElement('link');
             styles.id = 'expressive-footer-styles';
             styles.rel = 'stylesheet';
-            styles.href = '/css/expressive-footer.css?v=1';
+            styles.href = '/css/expressive-footer.css?v=2';
             document.head.appendChild(styles);
         }
 
