@@ -543,6 +543,17 @@
             gap: 12px;
         }
 
+        .modal-launch-error {
+            margin: 12px 0 0;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 150, 120, 0.4);
+            border-radius: 14px;
+            background: rgba(154, 55, 39, 0.14);
+            color: #ffd5cb;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
         .modal-btn {
             padding: 14px;
             border-radius: 15px;
@@ -1053,6 +1064,7 @@
                     <button class="modal-btn btn-vibing" type="button"
                         onclick="closeModal(); gtag('event', 'engagement', { 'event_category': 'AI_Game', 'event_label': 'ClosePreview', 'game_id': currentPlayerGame?.id });">Close preview</button>
                 </div>
+                <p id="modalLaunchError" class="modal-launch-error" role="alert" hidden></p>
             </div>
         </div>
     </div>
@@ -1233,6 +1245,7 @@
         const mStats = document.getElementById('modalStats');
         const mDesc = document.getElementById('modalDescription');
         const mPlayBtn = document.getElementById('modalPlayBtn');
+        const mLaunchError = document.getElementById('modalLaunchError');
 
         let currentPlayerGame = null;
         let previousFocus = null;
@@ -1245,6 +1258,8 @@
             mBanner.style.display = 'block';
             mPlayer.style.display = 'none';
             mIframe.src = "about:blank";
+            mLaunchError.hidden = true;
+            mLaunchError.textContent = '';
 
             mTitle.innerText = game.title;
             const categoryIcon = document.createElement('i');
@@ -1268,7 +1283,7 @@
             mDesc.innerText = game.description || "No description available for this AI game.";
 
             // Initial button states
-            if (game.storageBasePath && game.fileManifest) {
+            if (game.storageBasePath && Array.isArray(game.fileManifest) && game.fileManifest.length) {
                 mPlayBtn.style.display = 'flex';
                 mPlayBtn.onclick = () => launchGame(game);
             } else {
@@ -1362,6 +1377,7 @@
 
             mPlayBtn.innerHTML = '<div class="dot-pulse" style="left:0;--accent:#0f172a"></div>';
             mPlayBtn.disabled = true;
+            mLaunchError.hidden = true;
 
             try {
                 const storage = firebase.storage();
@@ -1376,6 +1392,11 @@
                 });
 
                 await Promise.all(fetchPromises);
+                if (Object.keys(manifest).length !== game.fileManifest.length || !manifest['index.html']) {
+                    throw new Error('Game assets are unavailable');
+                }
+                const entryResponse = await fetch(manifest['index.html'], { mode: 'cors', credentials: 'omit' });
+                if (!entryResponse.ok) throw new Error('Game entry is unavailable');
 
                 // Register with Service Worker
                 const reg = await navigator.serviceWorker.ready;
@@ -1386,7 +1407,7 @@
                         manifest: manifest
                     });
                 } else {
-                    console.warn("Service Worker active instance not found.");
+                    throw new Error('Game runtime is unavailable');
                 }
 
                 // Update UI: Switch from Banner to Iframe
@@ -1410,7 +1431,8 @@
 
             } catch (err) {
                 console.error("Failed to launch game:", err);
-                alert("We couldn't load the game assets. Please try again in a moment.");
+                mLaunchError.textContent = "This game couldn't load right now. Please try again later.";
+                mLaunchError.hidden = false;
             } finally {
                 gtag('event', 'engagement', {
                     'event_category': 'AI_Game',
