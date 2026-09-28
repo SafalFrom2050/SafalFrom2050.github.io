@@ -112,7 +112,8 @@
     
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="style.css?v=3.3" rel="stylesheet">
+    <link href="style.css?v=3.4" rel="stylesheet">
+    <link id="expressive-footer-styles" href="/css/expressive-footer.css?v=2" rel="stylesheet">
     
     <!-- Firebase (v10 Compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -338,6 +339,7 @@
     <script src="js/popper.min.js"></script> 
     <script src="js/bootstrap-4.0.0.js"></script>
     <script src="js/logo.js"></script>
+    <script src="js/footer.js?v=2"></script>
     <script src="js/skyloop.js?v=4"></script>
     <script src="js/app-promo.js"></script>
     
@@ -511,13 +513,23 @@
                 const card = document.createElement('a');
                 card.className = game.isAI ? 'horizontal-card ai-card-gradient' : 'horizontal-card';
                 card.href = game.isAI ? `/ai-games/library/?game=${encodeURIComponent(game.id)}` : `/game/?id=${encodeURIComponent(game.id)}`;
-                card.innerHTML = `
-                    <img src="${game.imageUrl}" alt="" loading="lazy" onerror="this.src='/images/cover.png'">
-                    <div class="h-card-info">
-                        <h6>${game.name || game.title}</h6>
-                        ${game.isAI ? '<span class="card-action">Preview game →</span>' : ''}
-                    </div>
-                `;
+                const img = document.createElement('img');
+                img.src = game.imageUrl || '/images/cover.png';
+                img.alt = '';
+                img.loading = 'lazy';
+                img.onerror = () => { img.onerror = null; img.src = '/images/cover.png'; };
+                const info = document.createElement('div');
+                info.className = 'h-card-info';
+                const title = document.createElement('h6');
+                title.textContent = game.name || game.title || 'Game';
+                info.appendChild(title);
+                if (game.isAI) {
+                    const action = document.createElement('span');
+                    action.className = 'card-action';
+                    action.textContent = 'Preview game →';
+                    info.appendChild(action);
+                }
+                card.append(img, info);
                 row.appendChild(card);
             });
         }

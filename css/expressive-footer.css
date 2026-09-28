@@ -1,0 +1,134 @@
+/* Shared closing destination, using the app's dark surfaces and restrained brand color. */
+footer.site-footer {
+    display: block;
+    width: 100%;
+    margin-top: 72px;
+    padding: 55px 0 25px !important;
+    border-top: 1px solid #303744 !important;
+    background: #0b0d12 !important;
+    color: #f4f6f9 !important;
+    text-align: left !important;
+    font-family: 'Outfit', 'Roboto', sans-serif;
+    overflow: hidden;
+    backdrop-filter: none;
+}
+footer.site-footer::before { content: none; }
+.gallery-page footer.site-footer { width: calc(100% + 40px); margin-inline: -20px; align-self: stretch; }
+footer.site-footer .site-footer-inner { width: min(100% - 44px, 1160px); margin-inline: auto; }
+
+footer.site-footer .footer-invite {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-items: center;
+    gap: 40px;
+    padding: clamp(28px, 4vw, 46px);
+    border: 1px solid #3c4856;
+    border-radius: 46px 25px 46px 25px;
+    background: #181e27;
+}
+footer.site-footer .footer-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: #c4d0de;
+    font: 400 9px/1.5 'Press Start 2P', monospace;
+    letter-spacing: 0;
+}
+footer.site-footer .footer-kicker > span { width: 8px; height: 8px; border-radius: 50%; background: #fa5411; }
+footer.site-footer .footer-invite h2 {
+    margin: 0 0 10px;
+    color: #fff;
+    font: 800 clamp(30px, 4vw, 48px)/1.06 'Outfit', 'Roboto', sans-serif;
+    letter-spacing: -.045em;
+}
+footer.site-footer .footer-invite p { margin: 0; color: #c4ccd7; font: 400 16px/1.55 'Roboto', sans-serif; }
+footer.site-footer .footer-invite-actions { display: grid; gap: 10px; }
+footer.site-footer .footer-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 52px;
+    padding: 12px 16px;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    font: 700 14px/1.2 'Outfit', 'Roboto', sans-serif;
+    text-decoration: none !important;
+    transition: transform 190ms cubic-bezier(.2,0,0,1), border-radius 190ms cubic-bezier(.2,0,0,1), background 190ms cubic-bezier(.2,0,0,1);
+}
+footer.site-footer .footer-action-icon { font: 700 20px/1 'Outfit', sans-serif; }
+footer.site-footer .footer-action-library { color: #17202b; background: #f0f3f6; }
+footer.site-footer .footer-action-library:hover { color: #17202b; background: #fff; }
+footer.site-footer .footer-action-app { color: #d5e7f8; background: #252d39; border-color: #475a6e; }
+footer.site-footer .footer-action-app:hover { color: #fff; background: #303c4b; }
+footer.site-footer .footer-action:hover { transform: translateY(-2px); border-radius: 25px 13px 25px 13px; }
+footer.site-footer .footer-action:active { transform: scale(.98); border-radius: 13px; }
+.platform-android footer.site-footer .footer-action-library { color: #e4ebf3; background: #2c3440; border-color: #46505d; }
+.platform-android footer.site-footer .footer-action-app { color: #fff; background: #3475a8; border-color: #3475a8; }
+.platform-android footer.site-footer .footer-action-app:hover { background: #4286b9; }
+
+footer.site-footer .footer-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(125px, auto) minmax(125px, auto);
+    gap: clamp(32px, 7vw, 100px);
+    padding: 54px 5px 47px;
+}
+footer.site-footer .footer-identity { min-width: 0; }
+footer.site-footer .footer-brand {
+    display: inline-flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: #fff;
+    text-align: left;
+    text-decoration: none !important;
+    transform: none;
+}
+footer.site-footer .footer-brand:hover { transform: none; }
+footer.site-footer .footer-sprite {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    background: url('../images/frames.png') 0 0 / 2600% 100% no-repeat;
+    animation: sprite-play 2.4s steps(25) 1 forwards;
+    animation-play-state: paused;
+}
+footer.site-footer.is-visible .footer-sprite { animation-play-state: running; }
+footer.site-footer .footer-wordmark { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+footer.site-footer .footer-wordmark .brand-alt { display: inline-block; font: 700 13px/1 'Press Start 2P', 'Outfit', system-ui; color: #6bb6ff; letter-spacing: -.07em; }
+footer.site-footer .footer-wordmark .brand-games { display: inline-block; font: 800 19px/1.1 'Outfit', 'Roboto', sans-serif; color: #fff; letter-spacing: -.04em; }
+footer.site-footer .footer-identity p { margin: 15px 0 0; color: #aeb9c8; font: 400 14px/1.45 'Roboto', sans-serif; }
+footer.site-footer .footer-nav { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+footer.site-footer .footer-nav-heading { margin-bottom: 5px; color: #f3f5f8; font: 700 14px/1.2 'Outfit', sans-serif; }
+footer.site-footer .footer-nav a { color: #aeb9c8; font: 500 14px/1.35 'Roboto', sans-serif; text-decoration: none; transition: color 180ms ease; }
+footer.site-footer .footer-nav a[aria-current="page"] { color: #fff; }
+footer.site-footer .footer-nav a:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+footer.site-footer .footer-bottom { padding: 20px 5px 0; border-top: 1px solid #2c333e; color: #98a5b4; font: 400 12px/1.4 'Roboto', sans-serif; }
+footer.site-footer a:focus-visible { outline: 3px solid #6bb6ff; outline-offset: 4px; }
+
+@media (max-width: 760px) {
+    footer.site-footer { padding-top: 37px !important; }
+    footer.site-footer .footer-invite { grid-template-columns: 1fr; gap: 23px; }
+    footer.site-footer .footer-invite-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    footer.site-footer .footer-main { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 34px; padding-top: 42px; }
+    footer.site-footer .footer-identity { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+    .gallery-page footer.site-footer { width: calc(100% + 30px); margin-inline: -15px; }
+    footer.site-footer .site-footer-inner { width: min(100% - 32px, 1160px); }
+    footer.site-footer .footer-invite { gap: 20px; padding: 27px 23px; border-radius: 32px 19px 32px 19px; }
+    footer.site-footer .footer-invite h2 { font-size: 32px; }
+    footer.site-footer .footer-invite p { font-size: 14px; }
+    footer.site-footer .footer-invite-actions { grid-template-columns: 1fr; }
+    footer.site-footer .footer-action { min-height: 48px; }
+    footer.site-footer .footer-main { gap: 28px 14px; padding: 38px 2px 35px; }
+    footer.site-footer .footer-wordmark .brand-games { font-size: 17px; }
+    footer.site-footer .footer-identity p { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    footer.site-footer .footer-sprite { animation: none; background-position: 100% 0; }
+    footer.site-footer .footer-action, footer.site-footer .footer-nav a { transition-duration: .01ms; }
+}

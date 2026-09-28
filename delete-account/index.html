@@ -4,19 +4,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="../favicons/favicon.png">
+    <meta name="description" content="Verify your identity and permanently delete your alt games portal account.">
+    <link rel="canonical" href="https://gamesp.xyz/delete-account/">
+    <link rel="icon" type="image/png" href="/images/favicon-rounded.png">
+    <link rel="apple-touch-icon" href="/images/favicon-rounded.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
     <title>Delete Account | alt games portal</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Roboto:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Bootstrap -->
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="../style.css" rel="stylesheet">
+    <link href="../style.css?v=3.4" rel="stylesheet">
+    <link id="expressive-footer-styles" href="/css/expressive-footer.css?v=2" rel="stylesheet">
+    <link href="account.css?v=1" rel="stylesheet">
     
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -25,159 +30,77 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-check-compat.js"></script>
     <script src="../dataRetreve.js"></script>
 
-        :root {
-            --primary: #ff4757;
-            --primary-hover: #ff3344;
-            --bg-dark: #0f172a;
-            --card-glass: rgba(255, 255, 255, 0.03);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #22d3ee;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-dark);
-            background: radial-gradient(circle at top right, #3a0d13 0%, var(--bg-dark) 70%);
-            color: var(--text-main);
-            overflow-x: hidden;
-            padding-top: 80px;
-        }
-        .btn-google {
-            background-color: #4285F4;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(66, 133, 244, 0.2);
-        }
-        .btn-google:hover {
-            background-color: #357ae8;
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px rgba(66, 133, 244, 0.3);
-        }
-        .btn-delete-final {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            font-family: 'Press Start 2P', system-ui;
-            font-size: 10px;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0;
-        }
-        .btn-delete-final:hover {
-            background-color: var(--primary-hover);
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
-        }
-        #profilePic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            margin-bottom: 20px;
-        }
-        .warning-box {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-            padding: 20px;
-            border-radius: 16px;
-            text-align: left;
-            margin: 25px 0;
-        }
-    </style>
 </head>
-<body style="padding-top: 80px;">
-
-
-
-    
+<body class="account-deletion-page">
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark card-glass">
         <div class="container">
-            <a class="navbar-brand" href="/"><div class="sprite-logo"></div> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
+            <a class="navbar-brand" href="/" aria-label="alt games portal home"><span class="sprite-logo" aria-hidden="true"></span> <span class="brand-alt">alt</span> <span class="brand-games">games portal</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-label="Toggle navigation">
                 <i class="material-icons text-white" style="font-size: 30px;">menu</i>
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
                 <div class="navbar-nav ml-auto align-items-lg-center">
-                    <form class="form-inline my-2 my-lg-0 mr-lg-3" onsubmit="event.preventDefault(); window.location.href='/library/?q='+document.getElementById('gameSearch').value;">
-                        <input id="gameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-3" onsubmit="event.preventDefault(); window.location.href='/library/?q='+encodeURIComponent(document.getElementById('gameSearch').value);">
+                        <input id="gameSearch" class="form-control" type="search" placeholder="Search games..." aria-label="Search games">
                     </form>
                     <a href="/library/" class="nav-link">Library</a>
-                    <a href="/about" class="nav-link">About</a>
-                    <a href="/contact" class="nav-link">Contact</a>
-                    <a href="/privacy" class="nav-link">Privacy</a>
-                    <a href="/terms" class="nav-link">Terms</a>
+                    <a href="/ai-games/library/" class="nav-link">AI games</a>
+                    <a href="/bio/" class="nav-link">Get the app</a>
+                    <a href="/about/" class="nav-link">About</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7 col-md-10">
-                <div class="glass-container animate-in text-center">
-                    <h1 class="page-title text-center" style="font-size: 1.5rem;">Delete Account</h1>
-                    <p class="text-muted mb-5">Permanent account and data removal request.</p>
+    <main class="container account-main">
+        <section class="account-panel" aria-labelledby="delete-title">
+            <span class="account-kicker"><span class="account-kicker-dot" aria-hidden="true"></span> ACCOUNT &amp; PRIVACY</span>
+            <h1 id="delete-title">Delete your account</h1>
+            <p class="account-intro">Sign in to permanently remove your alt games portal account and profile.</p>
 
-                    <div id="loginSection">
-                        <div class="p-4 mb-4" style="background: rgba(255,255,255,0.03); border-radius: 20px;">
-                            <p class="mb-4">For your security, please sign in to verify your identity before proceeding with account deletion.</p>
-                            <button class="btn-google" onclick="signInWithGoogle()">
-                                Sign in with Google
-                            </button>
-                        </div>
-                    </div>
+            <div id="loginSection" class="account-state">
+                <span class="account-state-icon" aria-hidden="true"><i class="material-icons">verified_user</i></span>
+                <h2>Verify it’s you</h2>
+                <p>For your security, sign in with the Google account connected to your game profile before continuing.</p>
+                <button class="btn-google" type="button" onclick="signInWithGoogle()">
+                    Sign in with Google <i class="material-icons" aria-hidden="true">arrow_forward</i>
+                </button>
+            </div>
 
-                    <div id="userInfo" style="display:none;">
-                        <img id="profilePic" src="" alt="Profile">
-                        <h3 id="userName" class="text-white mb-1"></h3>
-                        <p id="userEmail" class="text-muted mb-4"></p>
-
-                        <div class="warning-box">
-                            <div class="d-flex">
-                                <i class="material-icons mr-3">warning</i>
-                                <div>
-                                    <strong style="font-weight: 800; display: block; margin-bottom: 5px;">Permanent Action</strong>
-                                    This is irreversible. All score points, achievements, favorites, and history associated with this account will be erased forever.
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="btn-delete-final" onclick="deleteAccount()">
-                            Permanently Delete My Data
-                        </button>
-                    </div>
-
-                    <div id="successMessage" style="display:none;" class="py-4">
-                        <div class="mb-4">
-                            <i class="material-icons" style="font-size: 80px; color: #4caf50;">check_circle</i>
-                        </div>
-                        <h2 class="text-white mb-3">Account Deleted</h2>
-                        <p class="text-muted mb-4">Your account and all associated data have been successfully removed from our servers.</p>
-                        <a href="/" class="btn btn-outline-light px-5 py-3" style="border-radius: 12px; font-weight: 600;">Back to Homepage</a>
-                    </div>
-
-                    <div id="errorMessage" style="display:none;" class="mt-4 p-3 bg-danger text-white rounded">
-                        <p id="errorText" class="mb-0"></p>
+            <div id="userInfo" class="account-state" style="display:none;">
+                <div class="account-profile">
+                    <img id="profilePic" src="/images/favicon-rounded.png" alt="Account profile image">
+                    <div>
+                        <h2 id="userName"></h2>
+                        <p id="userEmail"></p>
                     </div>
                 </div>
+
+                <div class="warning-box">
+                    <i class="material-icons" aria-hidden="true">warning_amber</i>
+                    <div>
+                        <strong>Permanent action</strong>
+                        <p>Your account and profile will be deleted. You may lose access to saved progress linked to this account. This cannot be undone.</p>
+                    </div>
+                </div>
+
+                <button class="btn-delete-final" type="button" onclick="deleteAccount()">Delete account permanently</button>
+                <p class="account-help">Need help with other data? <a href="/contact/">Contact us</a>.</p>
             </div>
-        </div>
-    </div>
+
+            <div id="successMessage" class="account-state" style="display:none;" role="status">
+                <i class="material-icons account-success-icon" aria-hidden="true">check_circle</i>
+                <h2>Account deleted</h2>
+                <p>Your account and profile have been removed.</p>
+                <a href="/" class="account-return">Back to homepage</a>
+            </div>
+
+            <div id="errorMessage" style="display:none;" role="alert">
+                <p id="errorText"></p>
+            </div>
+        </section>
+    </main>
 
     <footer class="mt-5 py-5 text-center">
         <div class="container">
@@ -191,7 +114,7 @@
                 </a>
             </div>
 
-            <p class="mb-4 opacity-7">Premium gaming experience, accessible anywhere.</p>
+            <p class="mb-4 opacity-7">Play instantly on the web. Create with Skyloop on Android.</p>
             
             <div class="d-flex justify-content-center flex-wrap footer-links">
                 <a href="/about" class="mx-3">About</a>
@@ -209,6 +132,7 @@
     <script src="../js/popper.min.js"></script>
     <script src="../js/bootstrap-4.0.0.js"></script>
     <script src="../js/logo.js"></script>
+    <script src="../js/footer.js?v=2"></script>
 
     <script>
         // Initialize App Check
