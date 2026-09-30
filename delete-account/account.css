@@ -1,10 +1,12 @@
+@import url('/css/typography.css?v=1');
+
 /* Account deletion keeps the portal's expressive shapes with a quieter, clear action flow. */
 body.account-deletion-page {
     min-height: 100vh;
     padding-top: 80px;
     background: #090a0e;
     color: #f4f6f9;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
 }
 .account-deletion-page footer.site-footer .footer-invite { display: none; }
 .account-deletion-page .account-main {
@@ -40,7 +42,7 @@ body.account-deletion-page {
     max-width: 650px;
     margin: 0 0 14px;
     color: #fff;
-    font: 800 clamp(36px, 5vw, 56px)/1.04 'Outfit', 'Roboto', sans-serif !important;
+    font: 800 clamp(36px, 5vw, 56px)/1.04 'JetBrains Mono', monospace !important;
     letter-spacing: -.045em;
 }
 .account-deletion-page .account-intro {
@@ -71,7 +73,7 @@ body.account-deletion-page {
 .account-deletion-page .account-state h2 {
     margin: 0 0 8px;
     color: #fff;
-    font: 700 clamp(22px, 3vw, 28px)/1.15 'Outfit', 'Roboto', sans-serif !important;
+    font: 800 clamp(22px, 3vw, 28px)/1.15 'JetBrains Mono', monospace !important;
     letter-spacing: -.025em;
 }
 .account-deletion-page .account-state p {
@@ -91,7 +93,7 @@ body.account-deletion-page {
     margin-top: 25px;
     padding: 12px 20px;
     border-radius: 18px;
-    font: 700 15px/1.25 'Outfit', 'Roboto', sans-serif;
+    font: 800 15px/1.25 'JetBrains Mono', monospace;
     cursor: pointer;
     transition: transform 190ms cubic-bezier(.2, 0, 0, 1), border-radius 190ms cubic-bezier(.2, 0, 0, 1), background 190ms cubic-bezier(.2, 0, 0, 1);
 }
@@ -120,7 +122,7 @@ body.account-deletion-page {
     border: 2px solid #6e8eaa;
     border-radius: 18px;
 }
-.account-deletion-page #userName { margin: 0 0 3px; font: 700 18px/1.25 'Outfit', sans-serif; }
+.account-deletion-page #userName { margin: 0 0 3px; font: 800 18px/1.25 'JetBrains Mono', monospace; }
 .account-deletion-page #userEmail { margin: 0; color: #bbc5d1; font-size: 13px; overflow-wrap: anywhere; }
 .account-deletion-page .warning-box {
     display: flex;
@@ -134,7 +136,7 @@ body.account-deletion-page {
     text-align: left;
 }
 .account-deletion-page .warning-box .material-icons { flex: 0 0 auto; color: #ffae9f; font-size: 23px; }
-.account-deletion-page .warning-box strong { display: block; margin-bottom: 5px; color: #fff; font: 700 16px 'Outfit', sans-serif; }
+.account-deletion-page .warning-box strong { display: block; margin-bottom: 5px; color: #fff; font: 800 16px 'JetBrains Mono', monospace; }
 .account-deletion-page .warning-box p { margin: 0; color: #efdedb; font-size: 14px; line-height: 1.55; }
 .account-deletion-page .btn-delete-final {
     width: 100%;

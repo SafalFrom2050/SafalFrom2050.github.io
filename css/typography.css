@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* JetBrains Mono v2.304, distributed under the SIL Open Font License.
+   Source: https://github.com/JetBrains/JetBrainsMono/tree/v2.304 */
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/jetbrains-mono/JetBrainsMono-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/jetbrains-mono/JetBrainsMono-MediumItalic.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/jetbrains-mono/JetBrainsMono-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/jetbrains-mono/JetBrainsMono-ExtraBoldItalic.woff2') format('woff2');
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --font-readable: 'JetBrains Mono', monospace;
+    --font-retro: 'Press Start 2P', monospace;
+}
+
+html, body {
+    font-family: var(--font-readable);
+    font-weight: 500;
+    font-variant-ligatures: none;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6, strong, b {
+    font-weight: 800;
+}
+
+p, p.small, small, .small, .markdown-body, .library-intro, .bio-text, .link-subtitle,
+.hint, #description, #status {
+    font-weight: 500;
+}
+
+button, select {
+    font-family: inherit;
+    font-weight: 800;
+}
+
+input, textarea {
+    font-family: inherit;
+    font-weight: 500;
+}
