@@ -21,4 +21,4 @@ Have you ever wanted to play the piano but didn't have the space for one? **Vitr
 Creating an AR app usually takes months of spatial computing knowledge. With our platform, simply describing your vision to the Game Developer Agent is enough to bring it to life instantly.
 
 <br>
-<a href="https://play.google.com/store/apps/details?id=dif.instantgames" style="display:inline-block; padding:12px 24px; background:#22d3ee; color:#0f172a; text-decoration:none; border-radius:15px; font-weight:800; font-family:'Outfit', sans-serif;">Try building your own game in just a minute</a>
+<a href="https://play.google.com/store/apps/details?id=dif.instantgames" style="display:inline-block; padding:12px 24px; background:#22d3ee; color:#0f172a; text-decoration:none; border-radius:15px; font-weight: 800; font-family:'JetBrains Mono', monospace;">Try building your own game in just a minute</a>

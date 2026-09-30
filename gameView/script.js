@@ -72,8 +72,8 @@ function loadGame(key){
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                     </svg>
                     <h2 style="font-family: 'Press Start 2P', cursive; font-size: 16px; margin-bottom: 15px; color: white;">Game Unavailable</h2>
-                    <p style="color: #94a3b8; max-width: 400px; font-family: 'Outfit', sans-serif; font-size: 14px;">Oops! We couldn't find the game you're looking for. It might have been moved or removed.</p>
-                    <a href="/" style="margin-top: 30px; color: #22d3ee; text-decoration: none; font-weight: 600; font-family: 'Outfit', sans-serif;">← Back to Portal</a>
+                    <p style="color: #94a3b8; max-width: 400px; font-family: 'JetBrains Mono', monospace; font-size: 14px;">Oops! We couldn't find the game you're looking for. It might have been moved or removed.</p>
+                    <a href="/" style="margin-top: 30px; color: #22d3ee; text-decoration: none; font-weight: 600; font-family: 'JetBrains Mono', monospace;">← Back to Portal</a>
                 </div>
             `;
             hideLoader();

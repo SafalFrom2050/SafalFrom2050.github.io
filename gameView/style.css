@@ -1,9 +1,11 @@
+@import url('/css/typography.css?v=1');
+
 body {
     background-color: #000;
     overflow: hidden;
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', 'Outfit', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 #gameView {

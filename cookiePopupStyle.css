@@ -1,10 +1,12 @@
+@import url('/css/typography.css?v=1');
+
 #cookieConsent {
     background: #191c24;
     min-height: 80px;
     font-size: 14px;
     color: #fff;
     padding: 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     position: fixed;
     bottom: 20px;
     left: 20px;
@@ -21,7 +23,7 @@
 #cookieConsent a {
     color: #b8dfff;
     text-decoration: underline;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .cookie-content {
@@ -47,7 +49,7 @@
     min-height: 48px;
     padding: 12px 24px;
     border-radius: 20px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     transition: transform 180ms cubic-bezier(.2,0,0,1), border-radius 180ms cubic-bezier(.2,0,0,1), background 180ms cubic-bezier(.2,0,0,1);
     border: none;
@@ -110,7 +112,7 @@
     background: #191c24;
     color: #fff;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }

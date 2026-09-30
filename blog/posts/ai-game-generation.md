@@ -42,4 +42,4 @@ Our players and creators are already pushing the boundaries of what the Game dev
 The barrier to entry has completely vanished. If you can imagine it, you can play it. 
 
 <br>
-<a href="https://play.google.com/store/apps/details?id=dif.instantgames" style="display:inline-block; padding:12px 24px; background:#22d3ee; color:#0f172a; text-decoration:none; border-radius:15px; font-weight:800; font-family:'Outfit', sans-serif;">Try building your own game in just a minute</a>
+<a href="https://play.google.com/store/apps/details?id=dif.instantgames" style="display:inline-block; padding:12px 24px; background:#22d3ee; color:#0f172a; text-decoration:none; border-radius:15px; font-weight: 800; font-family:'JetBrains Mono', monospace;">Try building your own game in just a minute</a>
